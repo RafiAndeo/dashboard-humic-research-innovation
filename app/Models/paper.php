@@ -15,7 +15,6 @@ class paper extends Model
         "jenis",
         "judul",
         "member",
-        "partner",
         "nama_jurnal",
         "issue",
         "volume",
@@ -23,6 +22,5 @@ class paper extends Model
         "quartile",
         "index",
         "link",
-        "status",
     ];
 }
