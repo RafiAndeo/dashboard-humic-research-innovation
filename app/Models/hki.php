@@ -16,7 +16,5 @@ class hki extends Model
         'judul',
         'jenis',
         'status',
-        'member',
-        'partner',
     ];
 }

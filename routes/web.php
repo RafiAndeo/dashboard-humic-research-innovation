@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\HKIController;
+use App\Http\Controllers\MemberController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/token', function () {
+    return csrf_token();
 });
+
+Route::get('/hki', [HKIController::class, 'index']);
+Route::post('/hki', [HKIController::class, 'store']);
+Route::put('/hki/{id}', [HKIController::class, 'update']);
+Route::delete('/hki/{id}', [HKIController::class, 'destroy']);
+
+Route::get('/member', [MemberController::class, 'index']);
+Route::post('/member', [MemberController::class, 'store']);
+Route::put('/member/{id}', [MemberController::class, 'update']);
+Route::delete('/member/{id}', [MemberController::class, 'destroy']);
