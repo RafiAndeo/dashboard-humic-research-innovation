@@ -21,7 +21,6 @@ class research extends Model
         'tipe_pendanaan',
         'pendanaan_external',
         'tipe_external',
-        'member',
         'lama_penelitian',
         'keterangan',
     ];

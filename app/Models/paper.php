@@ -14,7 +14,6 @@ class paper extends Model
     protected $fillable = [
         "jenis",
         "judul",
-        "member",
         "nama_jurnal",
         "issue",
         "volume",
