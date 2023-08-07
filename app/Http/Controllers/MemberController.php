@@ -7,26 +7,17 @@ use Illuminate\Http\Request;
 
 class MemberController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $data = member::all();
         return $data;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -41,6 +32,7 @@ class MemberController extends Controller
             'membership' => 'required',
             'status' => 'required',
             'NIP' => 'required',
+            'role' => 'required',
         ]);
 
         $data = new member();
@@ -55,30 +47,12 @@ class MemberController extends Controller
         $data->membership = $request->membership;
         $data->status = $request->status;
         $data->NIP = $request->NIP;
+        $data->role = $request->role;
         $data->save();
 
         return "berhasil membuat member";
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $request->validate([
@@ -93,6 +67,7 @@ class MemberController extends Controller
             'membership' => 'required',
             'status' => 'required',
             'NIP' => 'required',
+            'role' => 'required',
         ]);
         $data = member::find($id);
         $data->nama = $request->nama;
@@ -106,19 +81,17 @@ class MemberController extends Controller
         $data->membership = $request->membership;
         $data->status = $request->status;
         $data->NIP = $request->NIP;
+        $data->role = $request->role;
         $data->save();
 
         return "berhasil update member";
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         $data = member::find($id);
         $data->delete();
 
-        return "berhasil menghapus member";
+        return "berhasil delete member";
     }
 }

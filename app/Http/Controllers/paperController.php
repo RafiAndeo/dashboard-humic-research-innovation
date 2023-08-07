@@ -9,12 +9,10 @@ class paperController extends Controller
 {
     public function index()
     {
-
     }
 
     public function create()
     {
-
     }
 
     public function store(Request $request)
@@ -76,5 +74,4 @@ class paperController extends Controller
 
         $paper->save();
     }
-
 }

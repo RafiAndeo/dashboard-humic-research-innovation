@@ -23,5 +23,6 @@ class member extends Model
         "membership",
         "status",
         "NIP",
+        "role",
     ];
 }

@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('membership');
             $table->string('status');
             $table->bigInteger('NIP');
+            $table->string('role');
 
             $table->timestamps();
         });
