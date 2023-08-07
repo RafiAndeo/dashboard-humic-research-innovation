@@ -9,12 +9,13 @@ class paperController extends Controller
 {
     public function index()
     {
-
+        $paper = paper::all();
+        return $paper;
     }
 
     public function create()
     {
-
+        //
     }
 
     public function store(Request $request)
