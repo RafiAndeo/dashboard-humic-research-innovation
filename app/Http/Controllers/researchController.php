@@ -9,7 +9,8 @@ class researchController extends Controller
 {
     public function index()
     {
-
+        $research = research::all();
+        return $research;
     }
 
     public function store(Request $request)
