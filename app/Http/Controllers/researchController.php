@@ -25,8 +25,6 @@ class researchController extends Controller
             'tipe_pendanaan' => 'required',
             'pendanaan_external' => 'required',
             'tipe_external' => 'required',
-            'member' => 'required',
-            'partner' => 'required',
             'lama_penelitian' => 'required',
             'keterangan' => 'required',
         ]);
@@ -40,6 +38,7 @@ class researchController extends Controller
         $research->skema = $request->skema;
         $research->tipe_pendanaan = $request->tipe_pendanaan;
         $research->pendanaan_external = $request->tipe_pendanaan;
+        $research->tipe_external = $request->tipe_external;
         $research->lama_penelitian = $request->lama_penelitian;
         $research->keterangan = $request->keterangan;
 
@@ -61,13 +60,11 @@ class researchController extends Controller
             'tipe_pendanaan' => 'required',
             'pendanaan_external' => 'required',
             'tipe_external' => 'required',
-            'member' => 'required',
-            'partner' => 'required',
             'lama_penelitian' => 'required',
             'keterangan' => 'required',
         ]);
 
-        $research = research::where('research_id', $id);
+        $research = research::where('id', $id);
         $research->update([
             'tahun_diterima' => $request->tahun_diterima,
             'tahun_berakhir' => $request->tahun_berakhir,
@@ -78,18 +75,15 @@ class researchController extends Controller
             'tipe_pendanaan' => $request->tipe_pendanaan,
             'pendanaan_external' => $request->pendanaan_external,
             'tipe_external' => $request->tipe_external,
-            'member' => $request->member,
             'lama_penelitian' => $request->lama_penelitian,
             'keterangan' => $request->keterangan,
         ]);
-
-        $research->save();
 
         return "OK";
     }
     public function destroy(research $research, $id)
     {
-        $research = research::where('research_id', $id);
+        $research = research::where('id', $id);
         $research->delete();
 
         return "OK";

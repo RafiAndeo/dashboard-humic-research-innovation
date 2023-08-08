@@ -3,6 +3,7 @@
 use App\Http\Controllers\HKIController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\paperController;
+use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\researchController;
 use Illuminate\Support\Facades\Route;
 
@@ -40,3 +41,8 @@ Route::get('/paper', [paperController::class, 'index']);
 Route::post('/paper', [paperController::class, 'store']);
 Route::put('/paper/{id}', [paperController::class, 'update']);
 Route::delete('/paper/{id}', [paperController::class, 'destroy']);
+
+Route::get('/partner', [PartnerController::class, 'index']);
+Route::post('/partner', [PartnerController::class, 'store']);
+Route::put('/partner/{id}', [PartnerController::class, 'update']);
+Route::delete('/partner/{id}', [PartnerController::class, 'destroy']);

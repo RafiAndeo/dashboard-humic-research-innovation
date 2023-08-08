@@ -55,7 +55,7 @@ class PartnerController extends Controller
             "type" => 'required',
         ]);
 
-        $partner = partner::where('partner_id', $id);
+        $partner = partner::where('id', $id);
         $partner->update([
             'nama_partner' => $request->nama_partner,
             'sumber' => $request->sumber,
@@ -65,13 +65,11 @@ class PartnerController extends Controller
             'type' => $request->type,
         ]);
 
-        $partner->save();
-
         return "OK";
     }
     public function destroy(partner $partner, $id)
     {
-        $partner = partner::where('partner_id', $id);
+        $partner = partner::where('id', $id);
         $partner->delete();
 
         return "OK";
