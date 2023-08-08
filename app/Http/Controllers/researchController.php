@@ -82,7 +82,6 @@ class researchController extends Controller
             'tipe_pendanaan' => $request->tipe_pendanaan,
             'pendanaan_external' => $request->pendanaan_external,
             'tipe_external' => $request->tipe_external,
-            'member' => $request->member,
             'lama_penelitian' => $request->lama_penelitian,
             'keterangan' => $request->keterangan,
         ]);
