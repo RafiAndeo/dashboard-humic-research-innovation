@@ -3,6 +3,7 @@
 use App\Http\Controllers\HKIController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\paperController;
+use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\researchController;
 use Illuminate\Support\Facades\Route;
 

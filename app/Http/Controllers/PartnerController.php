@@ -55,13 +55,15 @@ class PartnerController extends Controller
             "type" => 'required',
         ]);
 
-        $partner = partner::find($id);
-        $partner->nama_partner = $request->nama_partner;
-        $partner->sumber = $request->sumber;
-        $partner->institusi = $request->institusi;
-        $partner->jabatan = $request->jabatan;
-        $partner->negara = $request->negara;
-        $partner->type = $request->type;
+        $partner = partner::where('partner_id', $id);
+        $partner->update([
+            'nama_partner' => $request->nama_partner,
+            'sumber' => $request->sumber,
+            'institusi' => $request->institusi,
+            'jabatan' => $request->jabatan,
+            'negara' => $request->negara,
+            'type' => $request->type,
+        ]);
 
         $partner->save();
 
@@ -70,7 +72,7 @@ class PartnerController extends Controller
 
     public function destroy(partner $partner, $id)
     {
-        $partner = partner::find($id);
+        $partner = partner::where('partner_id', $id);
         $partner->delete();
 
         return "OK";
