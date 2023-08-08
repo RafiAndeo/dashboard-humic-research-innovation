@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\research;
+use App\Models\member;
+use App\Models\member_research;
 use Illuminate\Http\Request;
 
 class researchController extends Controller
@@ -96,5 +98,32 @@ class researchController extends Controller
         $research->delete();
 
         return "OK";
+    }
+
+    public function delete_member_from_research(member_research $member_research, $research_id, $member_id)
+    {
+        $member_research = member_research::where([['research_id', $research_id], ['member_id', $member_id]]);
+        $member_research->delete();
+
+        return "OK";
+    }
+
+    public function add_member_to_research(Request $request)
+    {
+        $request->validate([
+            'research_id' => 'required',
+            'member_id' => 'required',
+        ]);
+
+        if (!(research::where('id', $request->research_id)->exists()) || !(member::where('id', $request->member_id)->exists())) {
+            return "Salah satu id tidak valid";
+        } else {
+            $research_member = new member_research;
+            $research_member->research_id = $request->research_id;
+            $research_member->member_id = $request->member_id;
+
+            $research_member->save();
+            return "OK";
+        }
     }
 }

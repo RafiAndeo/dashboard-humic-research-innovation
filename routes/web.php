@@ -39,6 +39,8 @@ Route::get('/research/{id}', [researchController::class, 'show']);
 Route::post('/research', [researchController::class, 'store']);
 Route::put('/research/{id}', [researchController::class, 'update']);
 Route::delete('/research/{id}', [researchController::class, 'destroy']);
+Route::post('/research/add_member', [researchController::class, 'add_member_to_research']);
+Route::delete('/research/{research_id}/{member_id}', [researchController::class, 'delete_member_from_research']);
 
 Route::get('/paper', [paperController::class, 'index']);
 Route::get('/paper/{id}', [paperController::class, 'show']);
