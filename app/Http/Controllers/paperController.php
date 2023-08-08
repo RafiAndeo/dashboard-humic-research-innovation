@@ -63,7 +63,7 @@ class paperController extends Controller
 
 
 
-        $paper = paper::where('paper_id', $id);
+        $paper = paper::where('id', $id);
         $paper->update([
             "jenis" => $request->jenis,
             "judul" => $request->judul,
@@ -83,7 +83,7 @@ class paperController extends Controller
 
     public function destroy(paper $paper, $id)
     {
-        $paper = paper::where('paper_id', $id);
+        $paper = paper::where('id', $id);
         $paper->delete();
 
         return "OK";

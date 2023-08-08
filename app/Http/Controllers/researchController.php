@@ -71,7 +71,7 @@ class researchController extends Controller
             'keterangan' => 'required',
         ]);
 
-        $research = research::where('research_id', $id);
+        $research = research::where('id', $id);
         $research->update([
             'tahun_diterima' => $request->tahun_diterima,
             'tahun_berakhir' => $request->tahun_berakhir,
@@ -94,7 +94,7 @@ class researchController extends Controller
 
     public function destroy(research $research, $id)
     {
-        $research = research::where('research_id', $id);
+        $research = research::where('id', $id);
         $research->delete();
 
         return "OK";
@@ -125,5 +125,11 @@ class researchController extends Controller
             $research_member->save();
             return "OK";
         }
+    }
+
+    public function find_members_of_research($id)
+    {
+        $research_member = member_research::where('research_id', $id)->get();
+        return $research_member;
     }
 }
