@@ -9,6 +9,8 @@ class paperController extends Controller
 {
     public function index()
     {
+        $paper = paper::all();
+        return $paper;
     }
 
     public function create()
@@ -41,6 +43,8 @@ class paperController extends Controller
         $paper->link = $request->link;
 
         $paper->save;
+
+        return "OK";
     }
 
     public function update(Request $request, $id)
@@ -73,5 +77,15 @@ class paperController extends Controller
         ]);
 
         $paper->save();
+
+        return "OK";
+    }
+
+    public function destroy(paper $paper, $id)
+    {
+        $paper = paper::where('paper_id', $id);
+        $paper->delete();
+
+        return "OK";
     }
 }

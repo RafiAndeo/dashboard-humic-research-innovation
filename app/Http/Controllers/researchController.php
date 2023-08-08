@@ -45,6 +45,8 @@ class researchController extends Controller
 
         $research->save();
 
+        return "OK";
+
     }
 
     public function update(Request $request, $id)
@@ -82,11 +84,15 @@ class researchController extends Controller
         ]);
 
         $research->save();
+
+        return "OK";
     }
     public function destroy(research $research, $id)
     {
         $research = research::where('research_id', $id);
         $research->delete();
+
+        return "OK";
     }
 
 }

@@ -41,6 +41,7 @@ class PartnerController extends Controller
 
         $partner->save();
 
+        return "OK";
     }
 
     public function update(Request $request, $id)
@@ -65,11 +66,15 @@ class PartnerController extends Controller
         ]);
 
         $partner->save();
+
+        return "OK";
     }
     public function destroy(partner $partner, $id)
     {
         $partner = partner::where('partner_id', $id);
         $partner->delete();
+
+        return "OK";
     }
 
 }
