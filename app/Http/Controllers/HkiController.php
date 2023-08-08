@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\hki;
 use Illuminate\Http\Request;
+use App\Models\member_hki;
+use App\Models\member;
 
 class HKIController extends Controller
 {
@@ -59,11 +61,44 @@ class HKIController extends Controller
         return "berhasil update hki";
     }
 
-    function destroy($id)
+    public function destroy($id)
     {
         $data = hki::find($id);
         $data->delete();
 
         return "berhasil delete hki";
+    }
+
+    public function delete_member_from_hki(member_hki $member_hki, $member_id, $hki_id)
+    {
+        $member_hki = member_hki::where([['hki_id', $hki_id], ['member_id', $member_id]]);
+        $member_hki->delete();
+
+        return "berhasil delete member dari hki";
+    }
+
+    public function add_member_to_hki(Request $request)
+    {
+        $request->validate([
+            'hki_id' => 'required',
+            'member_id' => 'required',
+        ]);
+
+        if (!(hki::where('id', $request->hki_id)->exists()) || !(member::where('id', $request->member_id)->exists())) {
+            return "hki atau member tidak ditemukan";
+        } else {
+            $hki_member = new member_hki;
+            $hki_member->hki_id = $request->hki_id;
+            $hki_member->member_id = $request->member_id;
+
+            $hki_member->save();
+            return "berhasil menambahkan member ke hki";
+        }
+    }
+
+    public function find_members_of_hki($id)
+    {
+        $data = member_hki::where('hki_id', $id)->get();
+        return $data;
     }
 }

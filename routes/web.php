@@ -27,6 +27,9 @@ Route::get('/hki/{id}', [HKIController::class, 'show']);
 Route::post('/hki', [HKIController::class, 'store']);
 Route::put('/hki/{id}', [HKIController::class, 'update']);
 Route::delete('/hki/{id}', [HKIController::class, 'destroy']);
+Route::post('/hki/add_member_to_hki', [HKIController::class, 'add_member_to_hki']);
+Route::delete('/hki/{hki_id}/{member_id}', [HKIController::class, 'delete_member_from_hki']);
+Route::get('/hki/{id}/members', [HKIController::class, 'find_members_of_hki']);
 
 Route::get('/member', [MemberController::class, 'index']);
 Route::get('/member/{id}', [MemberController::class, 'show']);
@@ -48,3 +51,6 @@ Route::get('/paper/{id}', [paperController::class, 'show']);
 Route::post('/paper', [paperController::class, 'store']);
 Route::put('/paper/{id}', [paperController::class, 'update']);
 Route::delete('/paper/{id}', [paperController::class, 'destroy']);
+Route::post('/paper/add_member_to_paper', [paperController::class, 'add_member_to_paper']);
+Route::delete('/paper/{paper_id}/{member_id}', [paperController::class, 'delete_member_from_paper']);
+Route::get('/paper/{id}/members', [paperController::class, 'find_members_of_paper']);

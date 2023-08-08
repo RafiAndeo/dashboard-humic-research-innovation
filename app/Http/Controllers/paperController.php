@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\paper;
 use Illuminate\Http\Request;
+use App\Models\member_paper;
+use App\Models\member;
 
 class paperController extends Controller
 {
@@ -87,5 +89,38 @@ class paperController extends Controller
         $paper->delete();
 
         return "OK";
+    }
+
+    public function delete_member_from_paper(member_paper $member_paper, $member_id, $paper_id)
+    {
+        $member_paper = member_paper::where([['paper_id', $paper_id], ['member_id', $member_id]]);
+        $member_paper->delete();
+
+        return "berhasil delete member dari paper";
+    }
+
+    public function add_member_to_paper(Request $request)
+    {
+        $request->validate([
+            'member_id' => 'required',
+            'paper_id' => 'required',
+        ]);
+
+        if (!(paper::where('id', $request->paper_id)->exists()) || !(member::where('id', $request->member_id)->exists())) {
+            return "paper atau member tidak ditemukan";
+        } else {
+            $paper_member = new member_paper;
+            $paper_member->paper_id = $request->paper_id;
+            $paper_member->member_id = $request->member_id;
+
+            $paper_member->save();
+            return "berhasil menambahkan member ke paper";
+        }
+    }
+
+    public function find_members_of_paper($id)
+    {
+        $data = member_paper::where('paper_id', $id)->get();
+        return $data;
     }
 }
