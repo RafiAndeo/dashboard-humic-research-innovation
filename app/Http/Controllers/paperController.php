@@ -13,8 +13,10 @@ class paperController extends Controller
         return $paper;
     }
 
-    public function create()
+    public function show($id)
     {
+        $paper = paper::find($id);
+        return $paper;
     }
 
     public function store(Request $request)
@@ -42,7 +44,7 @@ class paperController extends Controller
         $paper->index = $request->index;
         $paper->link = $request->link;
 
-        $paper->save;
+        $paper->save();
 
         return "OK";
     }
@@ -61,20 +63,16 @@ class paperController extends Controller
             "link" => 'required',
         ]);
 
-
-
-        $paper = paper::where('paper_id', $id);
-        $paper->update([
-            "jenis" => $request->jenis,
-            "judul" => $request->judul,
-            "nama_jurnal" => $request->nama_jurnal,
-            "issue" => $request->issue,
-            "volume" => $request->volume,
-            "tahun" => $request->tahun,
-            "quartile" => $request->quartile,
-            "index" => $request->index,
-            "link" => $request->link,
-        ]);
+        $paper = paper::find($id);
+        $paper->jenis = $request->jenis;
+        $paper->judul = $request->judul;
+        $paper->nama_jurnal = $request->nama_jurnal;
+        $paper->issue = $request->issue;
+        $paper->volume = $request->volume;
+        $paper->tahun = $request->tahun;
+        $paper->quartile = $request->quartile;
+        $paper->index = $request->index;
+        $paper->link = $request->link;
 
         $paper->save();
 
@@ -83,7 +81,7 @@ class paperController extends Controller
 
     public function destroy(paper $paper, $id)
     {
-        $paper = paper::where('paper_id', $id);
+        $paper = paper::find($id);
         $paper->delete();
 
         return "OK";

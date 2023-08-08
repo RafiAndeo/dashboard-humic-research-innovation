@@ -13,14 +13,14 @@ class PartnerController extends Controller
         return $partner;
     }
 
+    public function show($id)
+    {
+        $partner = partner::find($id);
+        return $partner;
+    }
+
     public function store(Request $request)
     {
-        // "nama_partner",
-        // "sumber",
-        // "institusi",
-        // "jabatan",
-        // "negara",
-        // "type",
 
         $request->validate([
             "nama_partner" => 'required',
@@ -55,26 +55,24 @@ class PartnerController extends Controller
             "type" => 'required',
         ]);
 
-        $partner = partner::where('partner_id', $id);
-        $partner->update([
-            'nama_partner' => $request->nama_partner,
-            'sumber' => $request->sumber,
-            'institusi' => $request->institusi,
-            'jabatan' => $request->jabatan,
-            'negara' => $request->negara,
-            'type' => $request->type,
-        ]);
+        $partner = partner::find($id);
+        $partner->nama_partner = $request->nama_partner;
+        $partner->sumber = $request->sumber;
+        $partner->institusi = $request->institusi;
+        $partner->jabatan = $request->jabatan;
+        $partner->negara = $request->negara;
+        $partner->type = $request->type;
 
         $partner->save();
 
         return "OK";
     }
+
     public function destroy(partner $partner, $id)
     {
-        $partner = partner::where('partner_id', $id);
+        $partner = partner::find($id);
         $partner->delete();
 
         return "OK";
     }
-
 }

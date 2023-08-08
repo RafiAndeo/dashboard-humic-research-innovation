@@ -13,6 +13,12 @@ class researchController extends Controller
         return $research;
     }
 
+    public function show($id)
+    {
+        $research = research::find($id);
+        return $research;
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -25,8 +31,6 @@ class researchController extends Controller
             'tipe_pendanaan' => 'required',
             'pendanaan_external' => 'required',
             'tipe_external' => 'required',
-            'member' => 'required',
-            'partner' => 'required',
             'lama_penelitian' => 'required',
             'keterangan' => 'required',
         ]);
@@ -40,13 +44,13 @@ class researchController extends Controller
         $research->skema = $request->skema;
         $research->tipe_pendanaan = $request->tipe_pendanaan;
         $research->pendanaan_external = $request->tipe_pendanaan;
+        $research->tipe_external = $request->tipe_external;
         $research->lama_penelitian = $request->lama_penelitian;
         $research->keterangan = $request->keterangan;
 
         $research->save();
 
         return "OK";
-
     }
 
     public function update(Request $request, $id)
@@ -61,38 +65,33 @@ class researchController extends Controller
             'tipe_pendanaan' => 'required',
             'pendanaan_external' => 'required',
             'tipe_external' => 'required',
-            'member' => 'required',
-            'partner' => 'required',
             'lama_penelitian' => 'required',
             'keterangan' => 'required',
         ]);
 
-        $research = research::where('research_id', $id);
-        $research->update([
-            'tahun_diterima' => $request->tahun_diterima,
-            'tahun_berakhir' => $request->tahun_berakhir,
-            'judul' => $request->judul,
-            'tkt' => $request->tkt,
-            'grant' => $request->grant,
-            'skema' => $request->skema,
-            'tipe_pendanaan' => $request->tipe_pendanaan,
-            'pendanaan_external' => $request->pendanaan_external,
-            'tipe_external' => $request->tipe_external,
-            'member' => $request->member,
-            'lama_penelitian' => $request->lama_penelitian,
-            'keterangan' => $request->keterangan,
-        ]);
+        $research = research::find($id);
+        $research->tahun_diterima = $request->tahun_diterima;
+        $research->tahun_berakhir = $request->tahun_berakhir;
+        $research->judul = $request->judul;
+        $research->tkt = $request->tkt;
+        $research->grant = $request->grant;
+        $research->skema = $request->skema;
+        $research->tipe_pendanaan = $request->tipe_pendanaan;
+        $research->pendanaan_external = $request->tipe_pendanaan;
+        $research->tipe_external = $request->tipe_external;
+        $research->lama_penelitian = $request->lama_penelitian;
+        $research->keterangan = $request->keterangan;
 
         $research->save();
 
         return "OK";
     }
+
     public function destroy(research $research, $id)
     {
-        $research = research::where('research_id', $id);
+        $research = research::find($id);
         $research->delete();
 
         return "OK";
     }
-
 }
