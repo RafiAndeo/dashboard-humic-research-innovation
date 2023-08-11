@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\hki;
+use App\Exports\HkiExport;
+use App\Imports\HkiImport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use App\Models\member_hki;
 use App\Models\member;
@@ -13,6 +16,17 @@ class HKIController extends Controller
     {
         $data = hki::all();
         return view('hki.index', ['data' => $data]);
+    }
+
+    public function hkiexport()
+    {
+        return Excel::download(new HkiExport, 'hki.xlsx');
+    }
+
+    public function hkiimport()
+    {
+        Excel::import(new HkiImport, public_path('hki.xlsx'));
+        return "hki berhasil diimport";
     }
 
     public function show($id)
