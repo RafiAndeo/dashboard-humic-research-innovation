@@ -22,6 +22,10 @@ Route::get('/token', function () {
     return csrf_token();
 });
 
+Route::get('/', function () {
+    return view('dashboard');
+})->name('dashboard');
+
 Route::get('/hki', [HKIController::class, 'index']);
 Route::get('/hki/{id}', [HKIController::class, 'show']);
 Route::post('/hki', [HKIController::class, 'store']);
@@ -37,14 +41,14 @@ Route::post('/member', [MemberController::class, 'store']);
 Route::put('/member/{id}', [MemberController::class, 'update']);
 Route::delete('/member/{id}', [MemberController::class, 'destroy']);
 
-Route::get('/research', [researchController::class, 'index']);
-Route::get('/research/{id}', [researchController::class, 'show']);
-Route::post('/research', [researchController::class, 'store']);
-Route::put('/research/{id}', [researchController::class, 'update']);
-Route::delete('/research/{id}', [researchController::class, 'destroy']);
-Route::post('/research/add_member_to_research', [researchController::class, 'add_member_to_research']);
-Route::delete('/research/{research_id}/{member_id}', [researchController::class, 'delete_member_from_research']);
-Route::get('/research/{id}/members', [researchController::class, 'find_members_of_research']);
+Route::get('/research', [researchController::class, 'index'])->name('research.index');
+Route::get('/research/{id}', [researchController::class, 'show'])->name('research.show');
+Route::post('/research', [researchController::class, 'store'])->name('research.store');
+Route::put('/research/{id}', [researchController::class, 'update'])->name('research.update');
+Route::delete('/research/{id}', [researchController::class, 'destroy'])->name('research.destroy');
+Route::post('/research/add_member_to_research', [researchController::class, 'add_member_to_research'])->name('research.add_member_to_research');
+Route::delete('/research/{research_id}/{member_id}', [researchController::class, 'delete_member_from_research'])->name('research.delete_member_from_research');
+Route::get('/research/{id}/members', [researchController::class, 'find_members_of_research'])->name('research.find_members_of_research');
 
 Route::get('/paper', [paperController::class, 'index']);
 Route::get('/paper/{id}', [paperController::class, 'show']);
