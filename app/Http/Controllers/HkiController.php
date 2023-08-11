@@ -25,7 +25,8 @@ class HKIController extends Controller
 
     public function hkiimport()
     {
-        Excel::import(new HkiImport, public_path('hki.xlsx'));
+        Excel::import(new HkiImport, 'hki.xlsx', 'public');
+
         return "hki berhasil diimport";
     }
 

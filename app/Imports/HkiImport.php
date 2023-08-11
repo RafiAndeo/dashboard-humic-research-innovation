@@ -4,8 +4,9 @@ namespace App\Imports;
 
 use App\Models\hki;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class HkiImport implements ToModel
+class HkiImport implements ToModel, WithHeadingRow
 {
     /**
      * @param array $row
@@ -15,10 +16,10 @@ class HkiImport implements ToModel
     public function model(array $row)
     {
         return new hki([
-            'tahun' => $row[0],
-            'judul' => $row[1],
-            'jenis' => $row[2],
-            'status' => $row[3],
+            'tahun' => $row['tahun'],
+            'judul' => $row['judul'],
+            'jenis' => $row['jenis'],
+            'status' => $row['status'],
         ]);
     }
 }
