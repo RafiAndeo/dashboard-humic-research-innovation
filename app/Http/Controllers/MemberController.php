@@ -10,7 +10,7 @@ class MemberController extends Controller
     public function index()
     {
         $data = member::all();
-        return $data;
+        return view('anggota.index', ['data' => $data]);
     }
 
     public function show($id)
