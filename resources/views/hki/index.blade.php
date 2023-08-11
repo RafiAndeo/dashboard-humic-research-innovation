@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('title')
-Research
+HKI
 @endsection
 
 @section('head')

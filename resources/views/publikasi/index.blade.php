@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('title')
-Research
+Publikasi
 @endsection
 
 @section('head')

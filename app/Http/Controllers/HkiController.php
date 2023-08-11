@@ -12,7 +12,7 @@ class HKIController extends Controller
     public function index()
     {
         $data = hki::all();
-        return $data;
+        return view('hki.index', ['data' => $data]);
     }
 
     public function show($id)

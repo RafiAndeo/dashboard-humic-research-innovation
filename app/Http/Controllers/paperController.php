@@ -11,8 +11,8 @@ class paperController extends Controller
 {
     public function index()
     {
-        $paper = paper::all();
-        return $paper;
+        $data = paper::all();
+        return view('publikasi.index', ['data' => $data]);
     }
 
     public function create()
