@@ -65,8 +65,6 @@ class PartnerController extends Controller
             'type' => $request->type,
         ]);
 
-        $partner->save();
-
         return "OK";
     }
 

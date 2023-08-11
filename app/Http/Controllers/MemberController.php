@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Member;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MemberController extends Controller
 {
@@ -34,6 +35,7 @@ class MemberController extends Controller
             'status' => 'required',
             'NIP' => 'required',
             'role' => 'required',
+            'password' => 'required'
         ]);
 
         $data = new member();
@@ -49,11 +51,27 @@ class MemberController extends Controller
         $data->status = $request->status;
         $data->NIP = $request->NIP;
         $data->role = $request->role;
+        $data->password = bcrypt($request->password);
 
         $data->save();
 
         return "berhasil membuat member";
     }
+
+    public function login(Request $request)
+    {
+        $request->validate([
+            'NIP' => 'required',
+            'password' => 'required'
+        ]);
+
+        if (Auth::attempt($request->only('NIP', 'password'))) {
+            return "OK";
+        } else {
+            return "ERROR";
+        }
+    }
+
 
     public function update(Request $request, string $id)
     {

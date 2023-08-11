@@ -78,8 +78,6 @@ class paperController extends Controller
             "link" => $request->link,
         ]);
 
-        $paper->save();
-
         return "OK";
     }
 

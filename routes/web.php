@@ -40,6 +40,7 @@ Route::get('/member/{id}', [MemberController::class, 'show'])->name('member.show
 Route::post('/member', [MemberController::class, 'store'])->name('member.store');
 Route::put('/member/{id}', [MemberController::class, 'update'])->name('member.update');
 Route::delete('/member/{id}', [MemberController::class, 'destroy'])->name('member.destroy');
+Route::post('/login', [MemberController::class, 'login']);
 
 Route::get('/research', [researchController::class, 'index'])->name('research.index');
 Route::get('/research/{id}', [researchController::class, 'show'])->name('research.show');

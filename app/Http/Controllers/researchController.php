@@ -86,7 +86,6 @@ class researchController extends Controller
             'keterangan' => $request->keterangan,
         ]);
 
-        $research->save();
 
         return "OK";
     }
