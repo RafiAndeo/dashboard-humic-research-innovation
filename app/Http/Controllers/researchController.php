@@ -6,6 +6,9 @@ use App\Models\research;
 use App\Models\member;
 use App\Models\member_research;
 use Illuminate\Http\Request;
+use App\Exports\ResearchExport;
+use App\Imports\ResearchImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class researchController extends Controller
 {
@@ -13,6 +16,18 @@ class researchController extends Controller
     {
         $research = research::all();
         return view('research.index', ['research' => $research]);
+    }
+
+    public function researchexport()
+    {
+        return Excel::download(new ResearchExport, 'research.xlsx');
+    }
+
+    public function researchimport()
+    {
+        Excel::import(new ResearchImport, 'research.xlsx', 'public');
+
+        return "research berhasil diimport";
     }
 
     public function show($id)

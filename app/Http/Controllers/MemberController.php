@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Exports\MemberExport;
+use App\Imports\MemberImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MemberController extends Controller
 {
@@ -12,6 +15,17 @@ class MemberController extends Controller
     {
         $data = member::all();
         return view('anggota.index', ['data' => $data]);
+    }
+
+    public function memberexport()
+    {
+        return Excel::download(new MemberExport, 'member.xlsx');
+    }
+
+    public function memberimport(Request $request)
+    {
+        Excel::import(new MemberImport, $request->file('file')->store('temp'));
+        return back();
     }
 
     public function show($id)

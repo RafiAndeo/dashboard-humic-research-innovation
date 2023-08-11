@@ -6,6 +6,9 @@ use App\Models\paper;
 use Illuminate\Http\Request;
 use App\Models\member_paper;
 use App\Models\member;
+use App\Exports\PaperExport;
+use App\Imports\PaperImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class paperController extends Controller
 {
@@ -15,8 +18,22 @@ class paperController extends Controller
         return view('publikasi.index', ['data' => $data]);
     }
 
-    public function create()
+    public function paperexport()
     {
+        return Excel::download(new PaperExport, 'paper.xlsx');
+    }
+
+    public function paperimport()
+    {
+        Excel::import(new PaperImport, 'paper.xlsx', 'public');
+
+        return "paper berhasil diimport";
+    }
+
+    public function show($id)
+    {
+        $data = paper::find($id);
+        return $data;
     }
 
     public function store(Request $request)

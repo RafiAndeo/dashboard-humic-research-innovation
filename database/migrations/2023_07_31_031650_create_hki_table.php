@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('hki', function (Blueprint $table) {
             $table->id();
 
-            $table->string('tahun');
+            $table->bigInteger('tahun');
             $table->string('judul');
             $table->string('jenis');
             $table->string('status');

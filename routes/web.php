@@ -43,6 +43,8 @@ Route::post('/member', [MemberController::class, 'store'])->name('member.store')
 Route::put('/member/{id}', [MemberController::class, 'update'])->name('member.update');
 Route::delete('/member/{id}', [MemberController::class, 'destroy'])->name('member.destroy');
 Route::post('/login', [MemberController::class, 'login']);
+Route::get('/member/export', [MemberController::class, 'memberexport'])->name('member.export');
+Route::post('/member/import', [MemberController::class, 'memberimport'])->name('member.import');
 
 Route::get('/research', [researchController::class, 'index'])->name('research.index');
 Route::get('/research/{id}', [researchController::class, 'show'])->name('research.show');
@@ -52,6 +54,8 @@ Route::delete('/research/{id}', [researchController::class, 'destroy'])->name('r
 Route::post('/research/add_member_to_research', [researchController::class, 'add_member_to_research'])->name('research.add_member_to_research');
 Route::delete('/research/{research_id}/{member_id}', [researchController::class, 'delete_member_from_research'])->name('research.delete_member_from_research');
 Route::get('/research/{id}/members', [researchController::class, 'find_members_of_research'])->name('research.find_members_of_research');
+Route::get('/research/export', [researchController::class, 'researchexport'])->name('research.export');
+Route::post('/research/import', [researchController::class, 'researchimport'])->name('research.import');
 
 Route::get('/paper', [paperController::class, 'index'])->name('paper.index');
 Route::get('/paper/{id}', [paperController::class, 'show'])->name('paper.show');
@@ -61,3 +65,5 @@ Route::delete('/paper/{id}', [paperController::class, 'destroy'])->name('paper.d
 Route::post('/paper/add_member_to_paper', [paperController::class, 'add_member_to_paper'])->name('paper.add_member_to_paper');
 Route::delete('/paper/{paper_id}/{member_id}', [paperController::class, 'delete_member_from_paper'])->name('paper.delete_member_from_paper');
 Route::get('/paper/{id}/members', [paperController::class, 'find_members_of_paper'])->name('paper.find_members_of_paper');
+Route::get('/paper/export', [paperController::class, 'paperexport'])->name('paper.export');
+Route::post('/paper/import', [paperController::class, 'paperimport'])->name('paper.import');
