@@ -35,7 +35,7 @@ Route::post('/hki/add_member_to_hki', [HKIController::class, 'add_member_to_hki'
 Route::delete('/hki/{hki_id}/{member_id}', [HKIController::class, 'delete_member_from_hki'])->name('hki.delete_member_from_hki');
 Route::get('/hki/{id}/members', [HKIController::class, 'find_members_of_hki'])->name('hki.find_members_of_hki');
 Route::get('/hki/export', [HKIController::class, 'hkiexport'])->name('hki.export');
-Route::post('/hki/import', [HKIController::class, 'hkiimport'])->name('hki.import');
+Route::post('/hki/import', [HKIController::class, 'hkiimport'])->name('hki.import')->middleware('auth', 'admin');
 
 Route::get('/member', [MemberController::class, 'index'])->name('member.index');
 Route::get('/member/{id}', [MemberController::class, 'show'])->name('member.show');
@@ -44,7 +44,7 @@ Route::put('/member/{id}', [MemberController::class, 'update'])->name('member.up
 Route::delete('/member/{id}', [MemberController::class, 'destroy'])->name('member.destroy');
 Route::post('/login', [MemberController::class, 'login']);
 Route::get('/member/export', [MemberController::class, 'memberexport'])->name('member.export');
-Route::post('/member/import', [MemberController::class, 'memberimport'])->name('member.import');
+Route::post('/member/import', [MemberController::class, 'memberimport'])->name('member.import')->middleware('auth', 'admin');
 
 Route::get('/research', [researchController::class, 'index'])->name('research.index');
 Route::get('/research/{id}', [researchController::class, 'show'])->name('research.show');
