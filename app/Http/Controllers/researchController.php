@@ -8,6 +8,7 @@ use App\Models\member_research;
 use Illuminate\Http\Request;
 use App\Exports\ResearchExport;
 use App\Imports\ResearchImport;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class researchController extends Controller
@@ -15,7 +16,28 @@ class researchController extends Controller
     public function index()
     {
         $research = research::all();
-        return view('research.index', ['research' => $research]);
+        $research_count = research::count();
+        return view('research.index', ['data' => $research, 'count' => $research_count]);
+    }
+
+    public function index_admin()
+    {
+        $research = research::all();
+        $research_count = research::count();
+        // count group_by tahun_berakhir
+        $tahun_diterima = research::select('tahun_diterima', DB::raw('count(*) as total'))
+            ->groupBy('tahun_diterima')
+            ->get();
+        // tahun diterima di pisah dengan 1 array
+        $tahun_diterima_0 = $tahun_diterima->pluck('tahun_diterima');
+        $tahun_diterima_1 = $tahun_diterima->pluck('total');
+        return view('research.input_index', ['data' => $research, 'count' => $research_count, 'tahun_diterima_0' => $tahun_diterima_0, 'tahun_diterima_1' => $tahun_diterima_1]);
+    }
+
+    public function create()
+    {
+        $research = research::all();
+        return view('research.input_add', ['data' => $research]);
     }
 
     public function researchexport()
@@ -32,8 +54,8 @@ class researchController extends Controller
 
     public function show($id)
     {
-        $research = research::find($id);
-        return $research;
+        $data = research::find($id);
+        return view('research.input_edit', ['data' => $data]);
     }
 
     public function store(Request $request)
@@ -67,8 +89,11 @@ class researchController extends Controller
 
         $research->save();
 
-        return "OK";
+        return redirect()->route('research.index_admin')->with('success', 'Berhasil Menambahkan Data');
+
+        // return "OK";
     }
+
 
     public function update(Request $request, $id)
     {
@@ -101,8 +126,8 @@ class researchController extends Controller
             'keterangan' => $request->keterangan,
         ]);
 
-
-        return "OK";
+        return redirect()->route('research.index_admin')->with('success', 'Berhasil Update Data');
+        // return "OK";
     }
 
     public function destroy(research $research, $id)
@@ -110,7 +135,8 @@ class researchController extends Controller
         $research = research::where('id', $id);
         $research->delete();
 
-        return "OK";
+        return redirect()->route('research.index_admin')->with('success', 'Berhasil Delete Data');
+        // return "OK";
     }
 
     public function delete_member_from_research(member_research $member_research, $research_id, $member_id)

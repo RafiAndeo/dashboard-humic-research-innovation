@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Exports\MemberExport;
 use App\Imports\MemberImport;
 use Maatwebsite\Excel\Facades\Excel;
+use Psy\CodeCleaner\FunctionReturnInWriteContextPass;
 
 class MemberController extends Controller
 {
@@ -72,6 +73,11 @@ class MemberController extends Controller
         return "berhasil membuat member";
     }
 
+    public function login_index()
+    {
+        return view('login');
+    }
+
     public function login(Request $request)
     {
         $request->validate([
@@ -80,10 +86,20 @@ class MemberController extends Controller
         ]);
 
         if (Auth::attempt($request->only('NIP', 'password'))) {
-            return "OK";
+            // return "OK";
+            return redirect()->route('dashboard')->with('success', 'Login Berhasil');
         } else {
-            return "ERROR";
+            // return "ERROR";
+            return back()->withErrors(['error' => 'NIP atau Password anda salah']);
         }
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('member.login_index')->with('success', 'Berhasil Logout');
     }
 
 
