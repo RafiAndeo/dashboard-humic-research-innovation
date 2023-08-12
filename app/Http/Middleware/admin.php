@@ -19,6 +19,6 @@ class admin
         if (Auth::user() && Auth::user()->role == 'admin') {
             return $next($request);
         }
-        return redirect('dashboard')->with("you are not an admin");
+        return redirect()->route('dashboard')->with("you are not an admin");
     }
 }

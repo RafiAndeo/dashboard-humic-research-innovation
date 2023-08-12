@@ -51,15 +51,15 @@
                         <path fill-rule="evenodd" d="M4.5 2A1.5 1.5 0 003 3.5v13A1.5 1.5 0 004.5 18h11a1.5 1.5 0 001.5-1.5V7.621a1.5 1.5 0 00-.44-1.06l-4.12-4.122A1.5 1.5 0 0011.378 2H4.5zm2.25 8.5a.75.75 0 000 1.5h6.5a.75.75 0 000-1.5h-6.5zm0 3a.75.75 0 000 1.5h6.5a.75.75 0 000-1.5h-6.5z" clip-rule="evenodd" />
                       </svg>
 
-                    <div class="font-medium">Input Publikasi</div>
+                    <div class="font-medium">Manage Publikasi</div>
                 </a>
-                <a href="{{route('research.index')}}" class="flex space-x-4 {{ Route::is('research.index') ? 'bg-red-200 text-red-primary' : '' }} hover:bg-red-200 px-6 py-2 rounded item-center hover:text-red-primary hover:cursor-pointer duration-100">
+                <a href="{{route('research.index_admin')}}" class="flex space-x-4 {{ Route::is('research.index_admin') ? 'bg-red-200 text-red-primary' : '' }} hover:bg-red-200 px-6 py-2 rounded item-center hover:text-red-primary hover:cursor-pointer duration-100">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
                         <path d="M8 10a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z" />
                         <path fill-rule="evenodd" d="M4.5 2A1.5 1.5 0 003 3.5v13A1.5 1.5 0 004.5 18h11a1.5 1.5 0 001.5-1.5V7.621a1.5 1.5 0 00-.44-1.06l-4.12-4.122A1.5 1.5 0 0011.378 2H4.5zm5 5a3 3 0 101.524 5.585l1.196 1.195a.75.75 0 101.06-1.06l-1.195-1.196A3 3 0 009.5 7z" clip-rule="evenodd" />
                       </svg>
 
-                    <div class="font-medium">Input Research</div>
+                    <div class="font-medium">Manage Research</div>
                 </a>
                 <a href="{{route('hki.index')}}" class="flex space-x-4 {{ Route::is('hki.index') ? 'bg-red-200 text-red-primary' : '' }} hover:bg-red-200 px-6 py-2 rounded item-center hover:text-red-primary hover:cursor-pointer duration-100">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
@@ -67,21 +67,21 @@
                       </svg>
 
 
-                    <div class="font-medium">Input HKI</div>
+                    <div class="font-medium">Manage HKI</div>
                 </a>
                 <a href="{{route('member.index')}}" class="flex space-x-4 {{ Route::is('member.index') ? 'bg-red-200 text-red-primary' : '' }} hover:bg-red-200 px-6 py-2 rounded item-center hover:text-red-primary hover:cursor-pointer duration-100">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
                         <path d="M10 9a3 3 0 100-6 3 3 0 000 6zM6 8a2 2 0 11-4 0 2 2 0 014 0zM1.49 15.326a.78.78 0 01-.358-.442 3 3 0 014.308-3.516 6.484 6.484 0 00-1.905 3.959c-.023.222-.014.442.025.654a4.97 4.97 0 01-2.07-.655zM16.44 15.98a4.97 4.97 0 002.07-.654.78.78 0 00.357-.442 3 3 0 00-4.308-3.517 6.484 6.484 0 011.907 3.96 2.32 2.32 0 01-.026.654zM18 8a2 2 0 11-4 0 2 2 0 014 0zM5.304 16.19a.844.844 0 01-.277-.71 5 5 0 019.947 0 .843.843 0 01-.277.71A6.975 6.975 0 0110 18a6.974 6.974 0 01-4.696-1.81z" />
                       </svg>
 
-                    <div class="font-medium">Input Anggota</div>
+                    <div class="font-medium">Manage Anggota</div>
                 </a>
                 <a href="{{route('member.index')}}" class="flex space-x-4 {{ Route::is('member.index') ? 'bg-red-200 text-red-primary' : '' }} hover:bg-red-200 px-6 py-2 rounded item-center hover:text-red-primary hover:cursor-pointer duration-100">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
                         <path d="M10 9a3 3 0 100-6 3 3 0 000 6zM6 8a2 2 0 11-4 0 2 2 0 014 0zM1.49 15.326a.78.78 0 01-.358-.442 3 3 0 014.308-3.516 6.484 6.484 0 00-1.905 3.959c-.023.222-.014.442.025.654a4.97 4.97 0 01-2.07-.655zM16.44 15.98a4.97 4.97 0 002.07-.654.78.78 0 00.357-.442 3 3 0 00-4.308-3.517 6.484 6.484 0 011.907 3.96 2.32 2.32 0 01-.026.654zM18 8a2 2 0 11-4 0 2 2 0 014 0zM5.304 16.19a.844.844 0 01-.277-.71 5 5 0 019.947 0 .843.843 0 01-.277.71A6.975 6.975 0 0110 18a6.974 6.974 0 01-4.696-1.81z" />
                       </svg>
 
-                    <div class="font-medium">Input Partner</div>
+                    <div class="font-medium">Manage Partner</div>
                 </a>
             </div>
         </div>

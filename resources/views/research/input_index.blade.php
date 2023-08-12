@@ -11,7 +11,7 @@ Research
 @section('content')
     <div class="flex space-x-5">
         <div class="w-3/12 space-y-5">
-            <x-card title="Research" value="30"/>
+            <x-card title="Research" :value="$count"/>
             <div class="bg-white flex justify-center py-8 rounded">
                 <div class="w-10/12">
                     <div class="mb-3 text-sm space-y-2">
@@ -32,7 +32,13 @@ Research
         </div>
     </div>
 
-    <div class="flex mt-10 space-x-5">
+    <div class="flex mt-10 space-x-5 mb-4">
+        <a href="{{route('research.create')}}" class="py-2 px-4 rounded bg-green-500 space-x-2 flex text-white hover:bg-green-600">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+              </svg>
+            <span>Tambah Data</span>
+        </a>
     </div>
 
     <div class="bg-white p-3 rounded">
@@ -51,6 +57,7 @@ Research
                     <th>Tipe External</th>
                     <th>Lama Penelitian</th>
                     <th>Keterangan</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -69,6 +76,16 @@ Research
                     <td>{{$d->tipe_external}}</td>
                     <td>{{$d->lama_penelitian}}</td>
                     <td>{{$d->keterangan}}</td>
+                    <td>
+                        <div class="flex space-x-3">
+                            <a href="{{route('research.show', ['id' => $d->id])}}" class="bg-yellow-400 block rounded py-2 px-4">Edit</a>
+                            <form action="{{route('research.destroy', ['id' => $d->id])}}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="bg-red-400 block rounded py-2 px-4">Delete</button>
+                            </form>
+                        </div>
+                    </td>
                 </tr>
                 <?php $nomor++; ?>
                 @endforeach
@@ -123,14 +140,10 @@ const piechart =new Chart(ctx2, config2);
 const ctx3 = document.getElementById('dougnatchart');
 
 const data3 = {
-  labels: [
-    'Red',
-    'Blue',
-    'Yellow'
-  ],
+  labels: {{$tahun_diterima_0}},
   datasets: [{
-    label: 'My First Dataset',
-    data: [300, 50, 100],
+    label: 'Jumlah Hasil Research Pertahun',
+    data: {{$tahun_diterima_1}},
     backgroundColor: [
       'rgb(255, 99, 132)',
       'rgb(54, 162, 235)',
