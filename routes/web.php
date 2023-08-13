@@ -55,6 +55,7 @@ Route::get('/research/input/edit/{id}', [researchController::class, 'show'])->na
 Route::post('/research/input', [researchController::class, 'store'])->name('research.store')->middleware('auth', 'admin');
 Route::put('/research/input/{id}', [researchController::class, 'update'])->name('research.update')->middleware('auth', 'admin');
 Route::delete('/research/input/delete/{id}', [researchController::class, 'destroy'])->name('research.destroy')->middleware('auth', 'admin');
+Route::get('/research/input/add_member_to_research/{id}', [researchController::class, 'add_member_to_research_view'])->name('research.add_member_to_research_view')->middleware('auth', 'admin');
 Route::post('/research/input/add_member_to_research', [researchController::class, 'add_member_to_research'])->name('research.add_member_to_research')->middleware('auth', 'admin');
 Route::delete('/research/input/{research_id}/{member_id}', [researchController::class, 'delete_member_from_research'])->name('research.delete_member_from_research')->middleware('auth', 'admin');
 Route::get('/research/input/{id}/members', [researchController::class, 'find_members_of_research'])->name('research.find_members_of_research')->middleware('auth', 'admin');

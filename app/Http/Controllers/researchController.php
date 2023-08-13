@@ -90,8 +90,6 @@ class researchController extends Controller
         $research->save();
 
         return redirect()->route('research.index_admin')->with('success', 'Berhasil Menambahkan Data');
-
-        // return "OK";
     }
 
 
@@ -127,7 +125,6 @@ class researchController extends Controller
         ]);
 
         return redirect()->route('research.index_admin')->with('success', 'Berhasil Update Data');
-        // return "OK";
     }
 
     public function destroy(research $research, $id)
@@ -136,7 +133,6 @@ class researchController extends Controller
         $research->delete();
 
         return redirect()->route('research.index_admin')->with('success', 'Berhasil Delete Data');
-        // return "OK";
     }
 
     public function delete_member_from_research(member_research $member_research, $research_id, $member_id)
@@ -144,7 +140,15 @@ class researchController extends Controller
         $member_research = member_research::where([['research_id', $research_id], ['member_id', $member_id]]);
         $member_research->delete();
 
-        return "OK";
+        return redirect()->back()->with('success', 'Berhasil Menghapus Member');
+    }
+
+    public function add_member_to_research_view($id)
+    {
+        $research = research::find($id);
+        $member = member::all();
+        $research_member = member_research::join('member', 'member.id', '=', 'member_research.member_id')->where('member_research.research_id', $id)->get();
+        return view('research.input_member', ['data' => $research, 'member' => $member, 'research_member' => $research_member, 'id' => $id]);
     }
 
     public function add_member_to_research(Request $request)
@@ -162,7 +166,7 @@ class researchController extends Controller
             $research_member->member_id = $request->member_id;
 
             $research_member->save();
-            return "OK";
+            return redirect()->back()->with('success', 'Berhasil Menambahkan Member');
         }
     }
 
