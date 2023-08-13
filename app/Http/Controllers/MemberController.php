@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Exports\MemberExport;
 use App\Imports\MemberImport;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Psy\CodeCleaner\FunctionReturnInWriteContextPass;
 
@@ -18,6 +19,23 @@ class MemberController extends Controller
         return view('anggota.index', ['data' => $data]);
     }
 
+    public function index_admin()
+    {
+        $data = member::all();
+        $count = member::count();
+        $raw = member::select('fakultas', DB::raw('count(*) as total'))
+            ->groupBy('fakultas')
+            ->get();
+        $label = $raw->pluck('fakultas');
+        $total = $raw->pluck('total');
+        return view('anggota.input_index', ['data' => $data, 'count' => $count, 'label' => $label, 'total' => $total]);
+    }
+
+    public function create()
+    {
+        return view('anggota.input_add');
+    }
+
     public function memberexport()
     {
         return Excel::download(new MemberExport, 'member.xlsx');
@@ -27,6 +45,12 @@ class MemberController extends Controller
     {
         Excel::import(new MemberImport, $request->file('file')->store('temp'));
         return back();
+    }
+
+    public function edit($id)
+    {
+        $data = member::find($id);
+        return view('anggota.input_edit', ['data' => $data, 'id' => $id]);
     }
 
     public function show($id)
@@ -70,7 +94,7 @@ class MemberController extends Controller
 
         $data->save();
 
-        return "berhasil membuat member";
+        return redirect()->route('member.index_admin')->with('success', 'Berhasil Menambahkan Data');
     }
 
     public function login_index()
@@ -136,7 +160,7 @@ class MemberController extends Controller
 
         $member->save();
 
-        return "berhasil update member";
+        return redirect()->route('member.index_admin')->with('success', 'Berhasil Update Data');
     }
 
     public function destroy(string $id)
@@ -144,6 +168,6 @@ class MemberController extends Controller
         $data = member::find($id);
         $data->delete();
 
-        return "berhasil delete member";
+        return redirect()->route('member.index_admin')->with('success', 'Berhasil Menghapus Data');
     }
 }

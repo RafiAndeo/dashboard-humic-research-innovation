@@ -37,14 +37,18 @@ Route::get('/hki/{id}/members', [HKIController::class, 'find_members_of_hki'])->
 Route::get('/hki/export', [HKIController::class, 'hkiexport'])->name('hki.export');
 Route::post('/hki/import', [HKIController::class, 'hkiimport'])->name('hki.import')->middleware('auth', 'admin');
 
-Route::get('/member', [MemberController::class, 'index'])->name('member.index');
-Route::get('/member/{id}', [MemberController::class, 'show'])->name('member.show');
-Route::post('/member', [MemberController::class, 'store'])->name('member.store');
-Route::put('/member/{id}', [MemberController::class, 'update'])->name('member.update');
-Route::delete('/member/{id}', [MemberController::class, 'destroy'])->name('member.destroy');
-Route::get('/login', [MemberController::class, 'login_index'])->name('member.login_index');
 Route::post('/login', [MemberController::class, 'login'])->name('member.login_proses');
 Route::post('/logout', [MemberController::class, 'logout'])->name('member.logout');
+
+Route::get('/member', [MemberController::class, 'index'])->name('member.index');
+Route::get('/member/input/', [MemberController::class, 'index_admin'])->name('member.index_admin')->middleware('auth', 'admin');
+// Route::get('/member/input/{id}', [MemberController::class, 'show'])->name('member.show')->middleware('auth', 'admin');
+Route::get('/member/input/add', [MemberController::class, 'create'])->name('member.create')->middleware('auth', 'admin');
+Route::post('/member/input/add', [MemberController::class, 'store'])->name('member.store')->middleware('auth', 'admin');
+Route::get('/member/input/edit/{id}', [MemberController::class, 'edit'])->name('member.edit')->middleware('auth', 'admin');
+Route::put('/member/input/edit/{id}', [MemberController::class, 'update'])->name('member.update')->middleware('auth', 'admin');
+Route::delete('/member/input/{id}', [MemberController::class, 'destroy'])->name('member.destroy')->middleware('auth', 'admin');
+Route::get('/login', [MemberController::class, 'login_index'])->name('member.login_index');
 Route::get('/member/export', [MemberController::class, 'memberexport'])->name('member.export');
 Route::post('/member/import', [MemberController::class, 'memberimport'])->name('member.import')->middleware('auth', 'admin');
 
@@ -54,7 +58,6 @@ Route::post('/partner/input/add', [PartnerController::class, 'store'])->name('pa
 Route::get('/partner/input/edit/{id}', [PartnerController::class, 'edit'])->name('partner.edit');
 Route::put('/partner/input/edit/{id}', [PartnerController::class, 'update'])->name('partner.update');
 Route::delete('/partner/input/delete/{id}', [PartnerController::class, 'destroy'])->name('partner.destroy');
-
 
 Route::get('/research', [researchController::class, 'index'])->name('research.index');
 Route::get('/research/input', [researchController::class, 'index_admin'])->name('research.index_admin')->middleware('auth', 'admin');
