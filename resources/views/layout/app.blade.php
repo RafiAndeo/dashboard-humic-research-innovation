@@ -34,7 +34,7 @@
     </div>
     <div class="flex min-h-screen pt-10">
         <x-sidebar/>
-        <div class="w-10/12 bg-white-secondary px-10 pt-10">
+        <div class="w-10/12 bg-white-secondary px-10 py-10">
             @if (Session::has('success'))
             <div id="success"
                 class="w-full px-5 bg-green-500 text-white py-3 rounded my-4 items-center">

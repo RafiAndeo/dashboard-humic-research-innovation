@@ -4,19 +4,38 @@ namespace App\Http\Controllers;
 
 use App\Models\partner;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PartnerController extends Controller
 {
     public function index()
     {
         $partner = partner::all();
-        return $partner;
+        $count = partner::count();
+        // pluck negara
+        $negara_raw = partner::select('negara', DB::raw('count(*) as total'))
+            ->groupBy('negara')
+            ->get();
+        $negara = $negara_raw->pluck('negara');
+        $total = $negara_raw->pluck('total');
+        return view('partner.input_index', ['data' => $partner, 'count' => $count, 'negara' => $negara, 'total' => $total]);
+    }
+
+    public function create()
+    {
+        return view('partner.input_add');
     }
 
     public function show($id)
     {
         $partner = partner::find($id);
         return $partner;
+    }
+
+    public function edit($id)
+    {
+        $partner = partner::find($id);
+        return view('partner.input_edit', ['data' => $partner, 'id' => $id]);
     }
 
     public function store(Request $request)
@@ -41,7 +60,7 @@ class PartnerController extends Controller
 
         $partner->save();
 
-        return "OK";
+        return redirect()->route('partner.index')->with('success', 'Berhasil Menambahkan Data');
     }
 
     public function update(Request $request, $id)
@@ -65,7 +84,7 @@ class PartnerController extends Controller
             'type' => $request->type,
         ]);
 
-        return "OK";
+        return redirect()->route('partner.index')->with('success', 'Berhasil Update Data');
     }
 
     public function destroy(partner $partner, $id)
@@ -73,6 +92,6 @@ class PartnerController extends Controller
         $partner = partner::where('id', $id);
         $partner->delete();
 
-        return "OK";
+        return redirect()->route('partner.index')->with('success', 'Berhasil Menghapus Data');
     }
 }
