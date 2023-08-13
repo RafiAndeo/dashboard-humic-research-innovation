@@ -78,6 +78,7 @@ Research
                     <td>{{$d->keterangan}}</td>
                     <td>
                         <div class="flex space-x-3">
+                            <a href="{{route('research.add_member_to_research_view', ['id' => $d->id])}}" class="bg-green-400 block rounded py-2 px-4">Add Member</a>
                             <a href="{{route('research.show', ['id' => $d->id])}}" class="bg-yellow-400 block rounded py-2 px-4">Edit</a>
                             <form action="{{route('research.destroy', ['id' => $d->id])}}" method="post">
                                 @csrf
