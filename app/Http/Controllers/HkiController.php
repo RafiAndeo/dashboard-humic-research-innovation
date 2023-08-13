@@ -9,6 +9,8 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use App\Models\member_hki;
 use App\Models\member;
+use App\Models\partner;
+use App\Models\partner_hki;
 
 class HKIController extends Controller
 {
@@ -92,6 +94,14 @@ class HKIController extends Controller
         return "berhasil delete member dari hki";
     }
 
+    public function delete_partner_from_hki(partner_hki $partner_hki, $partner_id, $hki_id)
+    {
+        $partner_hki = partner_hki::where([['hki_id', $hki_id], ['partner_id', $partner_id]]);
+        $partner_hki->delete();
+
+        return "berhasil delete partner dari hki";
+    }
+
     public function add_member_to_hki(Request $request)
     {
         $request->validate([
@@ -111,9 +121,34 @@ class HKIController extends Controller
         }
     }
 
+    public function add_partner_to_hki(Request $request)
+    {
+        $request->validate([
+            'hki_id' => 'required',
+            'partner_id' => 'required',
+        ]);
+
+        if (!(hki::where('id', $request->hki_id)->exists()) || !(partner::where('id', $request->partner_id)->exists())) {
+            return "hki atau partner tidak ditemukan";
+        } else {
+            $hki_partner = new partner_hki;
+            $hki_partner->hki_id = $request->hki_id;
+            $hki_partner->partner_id = $request->partner_id;
+
+            $hki_partner->save();
+            return "berhasil menambahkan partner ke hki";
+        }
+    }
+
     public function find_members_of_hki($id)
     {
         $data = member_hki::where('hki_id', $id)->get();
+        return $data;
+    }
+
+    public function find_partners_of_hki($id)
+    {
+        $data = partner_hki::where('hki_id', $id)->get();
         return $data;
     }
 }

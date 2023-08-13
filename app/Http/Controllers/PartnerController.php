@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\partner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Exports\PartnerExport;
+use App\Imports\PartnerImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PartnerController extends Controller
 {
@@ -24,6 +27,17 @@ class PartnerController extends Controller
     public function create()
     {
         return view('partner.input_add');
+    }
+
+    public function partnerexport()
+    {
+        return Excel::download(new PartnerExport, 'partner.xlsx');
+    }
+
+    public function partnerimport(Request $request)
+    {
+        Excel::import(new PartnerImport, $request->file('file')->store('temp'));
+        return back();
     }
 
     public function show($id)

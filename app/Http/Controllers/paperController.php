@@ -9,6 +9,8 @@ use App\Models\member;
 use App\Exports\PaperExport;
 use App\Imports\PaperImport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Models\partner_paper;
+use App\Models\partner;
 
 class paperController extends Controller
 {
@@ -114,6 +116,14 @@ class paperController extends Controller
         return "berhasil delete member dari paper";
     }
 
+    public function delete_partner_from_paper(partner_paper $partner_paper, $partner_id, $paper_id)
+    {
+        $partner_paper = partner_paper::where([['paper_id', $paper_id], ['partner_id', $partner_id]]);
+        $partner_paper->delete();
+
+        return "berhasil delete partner dari paper";
+    }
+
     public function add_member_to_paper(Request $request)
     {
         $request->validate([
@@ -133,9 +143,34 @@ class paperController extends Controller
         }
     }
 
+    public function add_partner_to_paper(Request $request)
+    {
+        $request->validate([
+            'partner_id' => 'required',
+            'paper_id' => 'required',
+        ]);
+
+        if (!(paper::where('id', $request->paper_id)->exists()) || !(partner::where('id', $request->partner_id)->exists())) {
+            return "paper atau partner tidak ditemukan";
+        } else {
+            $paper_partner = new partner_paper;
+            $paper_partner->paper_id = $request->paper_id;
+            $paper_partner->partner_id = $request->partner_id;
+
+            $paper_partner->save();
+            return "berhasil menambahkan partner ke paper";
+        }
+    }
+
     public function find_members_of_paper($id)
     {
         $data = member_paper::where('paper_id', $id)->get();
+        return $data;
+    }
+
+    public function find_partners_of_paper($id)
+    {
+        $data = partner_paper::where('paper_id', $id)->get();
         return $data;
     }
 }
