@@ -48,6 +48,14 @@ Route::post('/logout', [MemberController::class, 'logout'])->name('member.logout
 Route::get('/member/export', [MemberController::class, 'memberexport'])->name('member.export');
 Route::post('/member/import', [MemberController::class, 'memberimport'])->name('member.import')->middleware('auth', 'admin');
 
+Route::get('/partner/input', [PartnerController::class, 'index'])->name('partner.index');
+Route::get('/partner/input/add', [PartnerController::class, 'create'])->name('partner.create');
+Route::post('/partner/input/add', [PartnerController::class, 'store'])->name('partner.store');
+Route::get('/partner/input/edit/{id}', [PartnerController::class, 'edit'])->name('partner.edit');
+Route::put('/partner/input/edit/{id}', [PartnerController::class, 'update'])->name('partner.update');
+Route::delete('/partner/input/delete/{id}', [PartnerController::class, 'destroy'])->name('partner.destroy');
+
+
 Route::get('/research', [researchController::class, 'index'])->name('research.index');
 Route::get('/research/input', [researchController::class, 'index_admin'])->name('research.index_admin')->middleware('auth', 'admin');
 Route::get('/research/input/add', [researchController::class, 'create'])->name('research.create')->middleware('auth', 'admin');
