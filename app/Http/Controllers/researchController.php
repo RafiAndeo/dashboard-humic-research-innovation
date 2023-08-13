@@ -145,14 +145,6 @@ class researchController extends Controller
         return redirect()->back()->with('success', 'Berhasil Menghapus Member');
     }
 
-    public function delete_partner_from_research(partner_research $partner_research, $partner_id, $research_id)
-    {
-        $partner_research = partner_research::where([['research_id', $research_id], ['partner_id', $partner_id]]);
-        $partner_research->delete();
-
-        return "berhasil delete partner dari research";
-    }
-
     public function add_member_to_research_view($id)
     {
         $research = research::find($id);
@@ -180,34 +172,9 @@ class researchController extends Controller
         }
     }
 
-    public function add_partner_to_research(Request $request)
-    {
-        $request->validate([
-            'research_id' => 'required',
-            'partner_id' => 'required',
-        ]);
-
-        if (!(research::where('id', $request->research_id)->exists()) || !(partner::where('id', $request->partner_id)->exists())) {
-            return "Salah satu id tidak valid";
-        } else {
-            $research_partner = new partner_research;
-            $research_partner->research_id = $request->research_id;
-            $research_partner->partner_id = $request->partner_id;
-
-            $research_partner->save();
-            return "berhasil menambahkan partner ke research";
-        }
-    }
-
     public function find_members_of_research($id)
     {
         $research_member = member_research::where('research_id', $id)->get();
         return $research_member;
-    }
-
-    public function find_partners_of_research($id)
-    {
-        $research_partner = partner_research::where('research_id', $id)->get();
-        return $research_partner;
     }
 }
