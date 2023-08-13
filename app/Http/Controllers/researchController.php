@@ -10,8 +10,6 @@ use App\Exports\ResearchExport;
 use App\Imports\ResearchImport;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Models\partner_research;
-use App\Models\partner;
 
 class researchController extends Controller
 {

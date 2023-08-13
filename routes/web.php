@@ -35,10 +35,6 @@ Route::post('/hki/add_member_to_hki', [HKIController::class, 'add_member_to_hki'
 Route::delete('/hki/{hki_id}/{member_id}', [HKIController::class, 'delete_member_from_hki'])->name('hki.delete_member_from_hki');
 Route::get('/hki/{id}/members', [HKIController::class, 'find_members_of_hki'])->name('hki.find_members_of_hki');
 Route::get('/hki/export', [HKIController::class, 'hkiexport'])->name('hki.export');
-Route::post('/hki/add_partner_to_hki', [HKIController::class, 'add_partner_to_hki'])->name('hki.add_partner_to_hki');
-Route::delete('/hki/{hki_id}/{partner_id}', [HKIController::class, 'delete_partner_from_hki'])->name('hki.delete_partner_from_hki');
-Route::get('/hki/{id}/partners', [HKIController::class, 'find_partners_of_hki'])->name('hki.find_partners_of_hki');
-Route::get('/hki/export', [HKIController::class, 'hkiexport'])->name('hki.export');
 Route::post('/hki/import', [HKIController::class, 'hkiimport'])->name('hki.import')->middleware('auth', 'admin');
 
 Route::post('/login', [MemberController::class, 'login'])->name('member.login_proses');
@@ -74,9 +70,6 @@ Route::get('/research/input/add_member_to_research/{id}', [researchController::c
 Route::post('/research/input/add_member_to_research', [researchController::class, 'add_member_to_research'])->name('research.add_member_to_research')->middleware('auth', 'admin');
 Route::delete('/research/input/{research_id}/{member_id}', [researchController::class, 'delete_member_from_research'])->name('research.delete_member_from_research')->middleware('auth', 'admin');
 Route::get('/research/input/{id}/members', [researchController::class, 'find_members_of_research'])->name('research.find_members_of_research')->middleware('auth', 'admin');
-Route::post('/research/input/add_partner_to_research', [researchController::class, 'add_partner_to_research'])->name('research.add_partner_to_research')->middleware('auth', 'admin');
-Route::delete('/research/input/{research_id}/{partner_id}', [researchController::class, 'delete_partner_from_research'])->name('research.delete_partner_from_research')->middleware('auth', 'admin');
-Route::get('/research/input/{id}/partners', [researchController::class, 'find_partners_of_research'])->name('research.find_partners_of_research')->middleware('auth', 'admin');
 Route::get('/research/export', [researchController::class, 'researchexport'])->name('research.export')->middleware('auth', 'admin');
 Route::post('/research/import', [researchController::class, 'researchimport'])->name('research.import')->middleware('auth', 'admin');
 
@@ -88,8 +81,5 @@ Route::delete('/paper/{id}', [paperController::class, 'destroy'])->name('paper.d
 Route::post('/paper/add_member_to_paper', [paperController::class, 'add_member_to_paper'])->name('paper.add_member_to_paper');
 Route::delete('/paper/{paper_id}/{member_id}', [paperController::class, 'delete_member_from_paper'])->name('paper.delete_member_from_paper');
 Route::get('/paper/{id}/members', [paperController::class, 'find_members_of_paper'])->name('paper.find_members_of_paper');
-Route::post('/paper/add_partner_to_paper', [paperController::class, 'add_partner_to_paper'])->name('paper.add_partner_to_paper');
-Route::delete('/paper/{paper_id}/{partner_id}', [paperController::class, 'delete_partner_from_paper'])->name('paper.delete_partner_from_paper');
-Route::get('/paper/{id}/partners', [paperController::class, 'find_partners_of_paper'])->name('paper.find_partners_of_paper');
 Route::get('/paper/export', [paperController::class, 'paperexport'])->name('paper.export');
 Route::post('/paper/import', [paperController::class, 'paperimport'])->name('paper.import');
