@@ -27,16 +27,26 @@ Route::get('/', function () {
 })->name('dashboard');
 
 Route::get('/hki', [HKIController::class, 'index'])->name('hki.index');
-Route::get('/hki/{id}', [HKIController::class, 'show'])->name('hki.show');
-Route::post('/hki', [HKIController::class, 'store'])->name('hki.store');
-Route::put('/hki/{id}', [HKIController::class, 'update'])->name('hki.update');
-Route::delete('/hki/{id}', [HKIController::class, 'destroy'])->name('hki.destroy');
-Route::post('/hki/add_member_to_hki', [HKIController::class, 'add_member_to_hki'])->name('hki.add_member_to_hki');
-Route::delete('/hki/{hki_id}/{member_id}', [HKIController::class, 'delete_member_from_hki'])->name('hki.delete_member_from_hki');
-Route::get('/hki/{id}/members', [HKIController::class, 'find_members_of_hki'])->name('hki.find_members_of_hki');
-Route::post('/hki/add_partner_to_hki', [HKIController::class, 'add_partner_to_hki'])->name('hki.add_partner_to_hki');
-Route::delete('/hki/{hki_id}/{partner_id}', [HKIController::class, 'delete_partner_from_hki'])->name('hki.delete_partner_from_hki');
-Route::get('/hki/{id}/partners', [HKIController::class, 'find_partners_of_hki'])->name('hki.find_partners_of_hki');
+// Route::get('/hki/{id}', [HKIController::class, 'show'])->name('hki.show');
+Route::get('/hki/input', [HKIController::class, 'index_admin'])->name('hki.index_admin')->middleware('auth', 'admin');;
+Route::get('/hki/input/add', [HKIController::class, 'create'])->name('hki.create')->middleware('auth', 'admin');;
+Route::post('/hki/input/add', [HKIController::class, 'store'])->name('hki.store')->middleware('auth', 'admin');;
+Route::get('/hki/input/edit/{id}', [HKIController::class, 'edit'])->name('hki.edit')->middleware('auth', 'admin');;
+Route::put('/hki/input/{id}', [HKIController::class, 'update'])->name('hki.update')->middleware('auth', 'admin');;
+Route::delete('/hki/input/{id}', [HKIController::class, 'destroy'])->name('hki.destroy')->middleware('auth', 'admin');;
+// member hki
+Route::get('/hki/input/add_member_to_hki/{id}', [HKIController::class, 'add_member_to_hki_view'])->name('hki.add_member_to_hki_view')->middleware('auth', 'admin');;
+Route::post('/hki/input/add_member_to_hki', [HKIController::class, 'add_member_to_hki'])->name('hki.add_member_to_hki')->middleware('auth', 'admin');;
+Route::delete('/hki/input/{hki_id}/{member_id}', [HKIController::class, 'delete_member_from_hki'])->name('hki.delete_member_from_hki')->middleware('auth', 'admin');;
+Route::get('/hki/input/{id}/members', [HKIController::class, 'find_members_of_hki'])->name('hki.find_members_of_hki')->middleware('auth', 'admin');;
+// partner hki
+Route::get('/hki/input/add_partner_to_hki/{id}', [HKIController::class, 'add_partner_to_hki_view'])->name('hki.add_partner_to_hki_view')->middleware('auth', 'admin');;
+Route::post('/hki/input/add_partner_to_hki', [HKIController::class, 'add_partner_to_hki'])->name('hki.add_partner_to_hki')->middleware('auth', 'admin');;
+Route::delete('/hki/input/partner/{hki_id}/{partner_id}', [HKIController::class, 'delete_partner_from_hki'])->name('hki.delete_partner_from_hki')->middleware('auth', 'admin');;
+Route::get('/hki/input/{id}/partners', [HKIController::class, 'find_partners_of_hki'])->name('hki.find_partners_of_hki')->middleware('auth', 'admin');;
+// verify hki
+Route::get('/hki/input/verify/{id}', [HKIController::class, 'verifikasi'])->name('hki.verifikasi')->middleware('auth', 'admin');;
+// excel
 Route::get('/hki/export', [HKIController::class, 'hkiexport'])->name('hki.export');
 Route::post('/hki/import', [HKIController::class, 'hkiimport'])->name('hki.import')->middleware('auth', 'admin');
 
