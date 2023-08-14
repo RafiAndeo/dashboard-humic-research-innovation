@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\partner;
 use App\Models\partner_research;
+use Illuminate\Support\Facades\Auth;
 
 class researchController extends Controller
 {
@@ -88,12 +89,25 @@ class researchController extends Controller
         $research->tipe_external = $request->tipe_external;
         $research->lama_penelitian = $request->lama_penelitian;
         $research->keterangan = $request->keterangan;
-
+        $research->isVerified = false;
         $research->save();
+
+        if (Auth::user() && Auth::user()->role == 'user') {
+            $research_member = new member_research;
+            $research_member->research_id = $research->id;
+            $research_member->member_id = Auth::user()::id;
+            $research_member->save();
+        }
 
         return redirect()->route('research.index_admin')->with('success', 'Berhasil Menambahkan Data');
     }
 
+    public function verifikasi($id)
+    {
+        $research = research::where('id', $id);
+        $research->update(['isVerified' => true]);
+        return "OK";
+    }
 
     public function update(Request $request, $id)
     {

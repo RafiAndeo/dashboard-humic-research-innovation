@@ -13,6 +13,7 @@ class member extends Authenticatable
     protected $table = "member";
 
     protected $fillable = [
+        "id",
         "nama",
         "fakultas",
         "pendidikan",

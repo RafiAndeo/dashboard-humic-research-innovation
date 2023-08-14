@@ -24,6 +24,7 @@ return new class extends Migration {
             $table->string('tipe_external');
             $table->integer('lama_penelitian');
             $table->string('keterangan');
+            $table->boolean('isVerified');
 
             $table->timestamps();
         });

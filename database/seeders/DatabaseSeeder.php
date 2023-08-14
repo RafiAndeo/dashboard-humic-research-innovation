@@ -43,6 +43,7 @@ class DatabaseSeeder extends Seeder
             'tipe_external' => Str::random(10),
             'lama_penelitian' => random_int(1, 10),
             'keterangan' => Str::random(10),
+            'isVerified' => false
         ]);
 
         DB::table('paper')->insert([
@@ -55,6 +56,7 @@ class DatabaseSeeder extends Seeder
             "quartile" => Str::random(10),
             "index" => Str::random(10),
             "link" => Str::random(10),
+            'isVerified' => false
         ]);
 
         DB::table('hki')->insert([
@@ -62,6 +64,7 @@ class DatabaseSeeder extends Seeder
             'judul' => Str::random(10),
             'jenis' => Str::random(10),
             'status' => Str::random(10),
+            'isVerified' => false
         ]);
 
         DB::table('partner')->insert([
