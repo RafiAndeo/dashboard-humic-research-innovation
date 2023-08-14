@@ -89,14 +89,19 @@ Route::get('/paper', [paperController::class, 'index'])->name('paper.index');
 Route::get('/paper/input', [paperController::class, 'index_admin'])->name('paper.index_admin');
 Route::get('/paper/input/add', [paperController::class, 'create'])->name('paper.create');
 Route::post('/paper/input/add', [paperController::class, 'store'])->name('paper.store');
+Route::get('/paper/input/edit/{id}', [paperController::class, 'edit'])->name('paper.edit');
 Route::put('/paper/input/edit/{id}', [paperController::class, 'update'])->name('paper.update');
 Route::delete('/paper/input/delete/{id}', [paperController::class, 'destroy'])->name('paper.destroy');
-
-Route::post('/paper/add_member_to_paper', [paperController::class, 'add_member_to_paper'])->name('paper.add_member_to_paper');
-Route::delete('/paper/{paper_id}/{member_id}', [paperController::class, 'delete_member_from_paper'])->name('paper.delete_member_from_paper');
-Route::get('/paper/{id}/members', [paperController::class, 'find_members_of_paper'])->name('paper.find_members_of_paper');
+// member paper
+Route::get('/paper/input/add_member_to_paper/{id}', [paperController::class, 'add_member_to_paper_view'])->name('paper.add_member_to_paper_view');
+Route::post('/paper/input/add_member_to_paper', [paperController::class, 'add_member_to_paper'])->name('paper.add_member_to_paper');
+Route::delete('/paper/input/{paper_id}/{member_id}', [paperController::class, 'delete_member_from_paper'])->name('paper.delete_member_from_paper');
+Route::get('/paper/input/{id}/members', [paperController::class, 'find_members_of_paper'])->name('paper.find_members_of_paper');
+// partner paper
+Route::get('/paper/input/add_partner_to_paper/{id}', [paperController::class, 'add_partner_to_paper_view'])->name('paper.add_partner_to_paper_view');
 Route::post('/paper/add_partner_to_paper', [paperController::class, 'add_partner_to_paper'])->name('paper.add_partner_to_paper');
 Route::delete('/paper/{paper_id}/{partner_id}', [paperController::class, 'delete_partner_from_paper'])->name('paper.delete_partner_from_paper');
 Route::get('/paper/{id}/partners', [paperController::class, 'find_partners_of_paper'])->name('paper.find_partners_of_paper');
+// partner excel
 Route::get('/paper/export', [paperController::class, 'paperexport'])->name('paper.export');
 Route::post('/paper/import', [paperController::class, 'paperimport'])->name('paper.import');

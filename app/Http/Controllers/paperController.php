@@ -95,14 +95,20 @@ class paperController extends Controller
             $member_paper->save();
         }
 
-        return "OK";
+        return redirect()->route('paper.index_admin')->with('success', 'Berhasil Menambahkan Data');
     }
 
     public function verifikasi($id)
     {
         $research = paper::where('id', $id);
         $research->update(['isVerified' => true]);
-        return "OK";
+        return redirect()->route('paper.index_admin')->with('success', 'Berhasil Verifikasi Data');
+    }
+
+    public function edit($id)
+    {
+        $data = paper::find($id);
+        return view('publikasi.input_edit', ['data' => $data, 'id' => $id]);
     }
 
     public function update(Request $request, $id)
@@ -134,7 +140,7 @@ class paperController extends Controller
             "link" => $request->link,
         ]);
 
-        return "OK";
+        return redirect()->route('paper.index_admin')->with('success', 'Berhasil Update Data');
     }
 
     public function destroy(paper $paper, $id)
@@ -142,23 +148,32 @@ class paperController extends Controller
         $paper = paper::where('id', $id);
         $paper->delete();
 
-        return "OK";
+        return redirect()->route('paper.index_admin')->with('success', 'Berhasil Menghapus Data');
     }
 
-    public function delete_member_from_paper(member_paper $member_paper, $member_id, $paper_id)
+    public function delete_member_from_paper(member_paper $member_paper, $paper_id, $member_id)
     {
         $member_paper = member_paper::where([['paper_id', $paper_id], ['member_id', $member_id]]);
         $member_paper->delete();
 
-        return "berhasil delete member dari paper";
+        return redirect()->back()->with('success', 'Berhasil Menghapus Member');
     }
 
-    public function delete_partner_from_paper(partner_paper $partner_paper, $partner_id, $paper_id)
+    public function delete_partner_from_paper(partner_paper $partner_paper, $paper_id, $partner_id)
     {
         $partner_paper = partner_paper::where([['paper_id', $paper_id], ['partner_id', $partner_id]]);
         $partner_paper->delete();
 
-        return "berhasil delete partner dari paper";
+        return redirect()->back()->with('success', 'Berhasil Menghapus Partner');
+    }
+
+
+    public function add_member_to_paper_view($id)
+    {
+        $data = paper::find($id);
+        $member = member::all();
+        $paper_member = member_paper::join('member', 'member.id', '=', 'member_paper.member_id')->where('member_paper.paper_id', $id)->get();
+        return view('publikasi.input_member', ['data' => $data, 'member' => $member, 'paper_member' => $paper_member, 'id' => $id]);
     }
 
     public function add_member_to_paper(Request $request)
@@ -176,8 +191,16 @@ class paperController extends Controller
             $paper_member->member_id = $request->member_id;
 
             $paper_member->save();
-            return "berhasil menambahkan member ke paper";
+            return redirect()->back()->with('success', 'Berhasil Menambahkan Member');
         }
+    }
+
+    public function add_partner_to_paper_view($id)
+    {
+        $data = paper::find($id);
+        $partner = partner::all();
+        $paper_partner = partner_paper::join('partner', 'partner.id', '=', 'partner_paper.partner_id')->where('partner_paper.paper_id', $id)->get();
+        return view('publikasi.input_partner', ['data' => $data, 'partner' => $partner, 'paper_partner' => $paper_partner, 'id' => $id]);
     }
 
     public function add_partner_to_paper(Request $request)
@@ -195,7 +218,7 @@ class paperController extends Controller
             $paper_partner->partner_id = $request->partner_id;
 
             $paper_partner->save();
-            return "berhasil menambahkan partner ke paper";
+            return redirect()->back()->with('success', 'Berhasil Menambahkan Partner');
         }
     }
 
