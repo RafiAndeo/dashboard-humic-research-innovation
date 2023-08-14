@@ -74,10 +74,10 @@ Paper
                     <td>{{$d->link}}</td>
                     <td>
                         <div class="flex space-x-3">
-                            <a href="{{route('research.add_partner_to_research_view', ['id' => $d->id])}}" class="bg-cyan-400 block rounded py-2 px-4">Add Partner</a>
-                            <a href="{{route('research.add_member_to_research_view', ['id' => $d->id])}}" class="bg-green-400 block rounded py-2 px-4">Add Member</a>
-                            <a href="{{route('research.show', ['id' => $d->id])}}" class="bg-yellow-400 block rounded py-2 px-4">Edit</a>
-                            <form action="{{route('research.destroy', ['id' => $d->id])}}" method="post">
+                            <a href="{{route('paper.add_partner_to_paper_view', ['id' => $d->id])}}" class="bg-cyan-400 block rounded py-2 px-4">Add Partner</a>
+                            <a href="{{route('paper.add_member_to_paper_view', ['id' => $d->id])}}" class="bg-green-400 block rounded py-2 px-4">Add Member</a>
+                            <a href="{{route('paper.edit', ['id' => $d->id])}}" class="bg-yellow-400 block rounded py-2 px-4">Edit</a>
+                            <form action="{{route('paper.destroy', ['id' => $d->id])}}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="bg-red-400 block rounded py-2 px-4">Delete</button>

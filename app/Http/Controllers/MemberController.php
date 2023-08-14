@@ -110,11 +110,11 @@ class MemberController extends Controller
         ]);
 
         if (Auth::attempt($request->only('NIP', 'password'))) {
-            return "OK";
-            // return redirect()->route('dashboard')->with('success', 'Login Berhasil');
+            // return "OK";
+            return redirect()->route('dashboard')->with('success', 'Login Berhasil');
         } else {
-            return "ERROR";
-            // return back()->withErrors(['error' => 'NIP atau Password anda salah']);
+            // return "ERROR";
+            return back()->withErrors(['error' => 'NIP atau Password anda salah']);
         }
     }
 
