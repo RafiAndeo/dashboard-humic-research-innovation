@@ -12,6 +12,7 @@ use App\Models\member;
 use App\Models\partner;
 use App\Models\partner_hki;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class HKIController extends Controller
 {
@@ -19,6 +20,23 @@ class HKIController extends Controller
     {
         $data = hki::all();
         return view('hki.index', ['data' => $data]);
+    }
+
+    public function index_admin()
+    {
+        $data = hki::all();
+        $count = hki::count();
+        $raw = hki::select('jenis', DB::raw('count(*) as total'))
+            ->groupBy('jenis')
+            ->get();
+        $label = $raw->pluck('jenis');
+        $total = $raw->pluck('total');
+        return view('hki.input_index', ['data' => $data, 'count' => $count, 'label' => $label, 'total' => $total]);
+    }
+
+    public function create()
+    {
+        return view('hki.input_add');
     }
 
     public function hkiexport()
@@ -37,6 +55,12 @@ class HKIController extends Controller
     {
         $data = hki::find($id);
         return $data;
+    }
+
+    public function edit($id)
+    {
+        $data = hki::find($id);
+        return view('hki.input_edit', ['data' => $data, 'id' => $id]);
     }
 
     public function store(Request $request)
@@ -64,14 +88,14 @@ class HKIController extends Controller
             $hki_member->save();
         }
 
-        return "berhasil membuat hki";
+        return redirect()->route('hki.index_admin')->with('success', 'Berhasil Tambah Data');
     }
 
     public function verifikasi($id)
     {
         $research = hki::where('id', $id);
         $research->update(['isVerified' => true]);
-        return "OK";
+        return redirect()->route('hki.index_admin')->with('success', 'Berhasil Verifikasi Data');
     }
 
     public function update(Request $request, $id)
@@ -91,7 +115,7 @@ class HKIController extends Controller
 
         $hki->save();
 
-        return "berhasil update hki";
+        return redirect()->route('hki.index_admin')->with('success', 'Berhasil Update Data');
     }
 
     public function destroy($id)
@@ -99,23 +123,33 @@ class HKIController extends Controller
         $data = hki::find($id);
         $data->delete();
 
-        return "berhasil delete hki";
+        return redirect()->route('hki.index_admin')->with('success', 'Berhasil Hapus Data');
     }
 
-    public function delete_member_from_hki(member_hki $member_hki, $member_id, $hki_id)
+    public function delete_member_from_hki(member_hki $member_hki, $hki_id, $member_id)
     {
         $member_hki = member_hki::where([['hki_id', $hki_id], ['member_id', $member_id]]);
         $member_hki->delete();
 
-        return "berhasil delete member dari hki";
+        return redirect()->back()->with('success', 'Berhasil Hapus Member');
     }
 
-    public function delete_partner_from_hki(partner_hki $partner_hki, $partner_id, $hki_id)
+    public function delete_partner_from_hki(partner_hki $partner_hki, $hki_id, $partner_id)
     {
         $partner_hki = partner_hki::where([['hki_id', $hki_id], ['partner_id', $partner_id]]);
         $partner_hki->delete();
 
-        return "berhasil delete partner dari hki";
+        return redirect()->back()->with('success', 'Berhasil Hapus Partner');
+    }
+
+    public function add_member_to_hki_view($id)
+    {
+        $data = hki::find($id);
+        $member = member::all();
+        $hki_member = member_hki::join('member', 'member.id', '=', 'member_hki.member_id')
+            ->where('hki_id', $id)
+            ->get();
+        return view('hki.input_member', ['data' => $data, 'member' => $member, 'hki_member' => $hki_member, 'id' => $id]);
     }
 
     public function add_member_to_hki(Request $request)
@@ -133,8 +167,18 @@ class HKIController extends Controller
             $hki_member->member_id = $request->member_id;
 
             $hki_member->save();
-            return "berhasil menambahkan member ke hki";
+            return redirect()->back()->with('success', 'Berhasil Tambah Member');
         }
+    }
+
+    public function add_partner_to_hki_view($id)
+    {
+        $data = hki::find($id);
+        $partner = partner::all();
+        $hki_partner = partner_hki::join('partner', 'partner.id', '=', 'partner_hki.partner_id')
+            ->where('hki_id', $id)
+            ->get();
+        return view('hki.input_partner', ['data' => $data, 'partner' => $partner, 'hki_partner' => $hki_partner, 'id' => $id]);
     }
 
     public function add_partner_to_hki(Request $request)
@@ -152,7 +196,7 @@ class HKIController extends Controller
             $hki_partner->partner_id = $request->partner_id;
 
             $hki_partner->save();
-            return "berhasil menambahkan partner ke hki";
+            return redirect()->back()->with('success', 'Berhasil Tambah Partner');
         }
     }
 
