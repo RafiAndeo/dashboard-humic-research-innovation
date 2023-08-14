@@ -11,6 +11,7 @@ use App\Imports\PaperImport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\partner_paper;
 use App\Models\partner;
+use Illuminate\Support\Facades\Auth;
 
 class paperController extends Controller
 {
@@ -62,9 +63,24 @@ class paperController extends Controller
         $paper->quartile = $request->quartile;
         $paper->index = $request->index;
         $paper->link = $request->link;
+        $paper->isVerified = false;
 
         $paper->save();
 
+        if (Auth::user() && Auth::user()->role == 'user') {
+            $member_paper = new member_paper;
+            $member_paper->paper_id = $paper->id;
+            $member_paper->member_id = Auth::user()::id;
+            $member_paper->save();
+        }
+
+        return "OK";
+    }
+
+    public function verifikasi($id)
+    {
+        $research = paper::where('id', $id);
+        $research->update(['isVerified' => true]);
         return "OK";
     }
 

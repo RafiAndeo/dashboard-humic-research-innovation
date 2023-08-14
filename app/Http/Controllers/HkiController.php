@@ -11,6 +11,7 @@ use App\Models\member_hki;
 use App\Models\member;
 use App\Models\partner;
 use App\Models\partner_hki;
+use Illuminate\Support\Facades\Auth;
 
 class HKIController extends Controller
 {
@@ -52,10 +53,25 @@ class HKIController extends Controller
         $data->judul = $request->judul;
         $data->tahun = $request->tahun;
         $data->status = $request->status;
+        $data->isVerified = false;
 
         $data->save();
 
+        if (Auth::user() && Auth::user()->role == 'user') {
+            $hki_member = new member_hki;
+            $hki_member->hki_id = $data->id;
+            $hki_member->member_id = Auth::user()->id;
+            $hki_member->save();
+        }
+
         return "berhasil membuat hki";
+    }
+
+    public function verifikasi($id)
+    {
+        $research = hki::where('id', $id);
+        $research->update(['isVerified' => true]);
+        return "OK";
     }
 
     public function update(Request $request, $id)

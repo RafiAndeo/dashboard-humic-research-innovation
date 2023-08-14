@@ -12,6 +12,7 @@ class partner extends Model
     protected $table = "partner";
 
     protected $fillable = [
+        "id",
         "nama_partner",
         "sumber",
         "institusi",
