@@ -180,6 +180,14 @@ class researchController extends Controller
         }
     }
 
+    public function add_partner_to_research_view($id)
+    {
+        $research = research::find($id);
+        $partner = partner::all();
+        $research_partner = partner_research::join('partner', 'partner.id', '=', 'partner_research.partner_id')->where('partner_research.research_id', $id)->get();
+        return view('research.input_partner', ['data' => $research, 'partner' => $partner, 'research_partner' => $research_partner, 'id' => $id]);
+    }
+
     public function add_partner_to_research(Request $request)
     {
         $request->validate([
@@ -195,7 +203,7 @@ class researchController extends Controller
             $research_partner->partner_id = $request->partner_id;
 
             $research_partner->save();
-            return "Berhasil Menambahkan Partner";
+            return redirect()->back()->with('success', 'Berhasil Menambahkan Partner');
         }
     }
 

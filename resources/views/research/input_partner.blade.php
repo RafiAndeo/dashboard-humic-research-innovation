@@ -22,15 +22,15 @@ Add Data Research Member
         <div>Tahun Berakhir : <span class="font-semibold">{{$data->tahun_berakhir}}</span></div>
         <div>TKT : <span class="font-semibold">{{$data->tkt}}</span></div>
     </div>
-    <form action="{{route('research.add_member_to_research')}}" method="post" class="flex pb-10">
+    <form action="{{route('research.add_partner_to_research')}}" method="post" class="flex pb-10">
         @method('POST')
         @csrf
         <div class="w-1/2 space-y-4">
             <div class="space-y-2">
-                <label for="member_id" class="">Member</label>
-                <select name="member_id" value="{{old('member_id')}}" class="w-full py-2 px-4 rounded border border-black" placeholder="Member" required>
-                    @foreach ($member as $m)
-                        <option value="{{$m->id}}">{{$m->nama}} </option>
+                <label for="partner_id" class="">partner</label>
+                <select name="partner_id" value="{{old('partner_id')}}" class="w-full py-2 px-4 rounded border border-black" placeholder="Partner" required>
+                    @foreach ($partner as $m)
+                        <option value="{{$m->id}}">{{$m->nama_partner}} </option>
                     @endforeach
                 </select>
                 <input type="hidden" name="research_id" value="{{$id}}">
@@ -53,13 +53,13 @@ Add Data Research Member
                 </thead>
                 <tbody>
                     <?php  $nomor=1; ?>
-                    @foreach ($research_member as $d)
+                    @foreach ($research_partner as $d)
                     <tr>
                         <td>{{$nomor}}</td>
-                        <td>{{$d->nama}}</td>
+                        <td>{{$d->nama_partner}} - {{$d->partner_id}}</td>
                         <td>
                             <div class="flex space-x-3">
-                                <form action="{{route('research.delete_member_from_research', ['research_id' => $id, 'member_id' => $d->member_id])}}" method="post">
+                                <form action="{{route('research.delete_partner_from_research', ['research_id' => $id, 'partner_id' => $d->partner_id])}}" method="post">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="bg-red-400 block rounded py-2 px-4">Delete</button>
