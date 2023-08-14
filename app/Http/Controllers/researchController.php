@@ -106,7 +106,7 @@ class researchController extends Controller
     {
         $research = research::where('id', $id);
         $research->update(['isVerified' => true]);
-        return "OK";
+        return redirect()->route('research.index_admin')->with('success', 'Berhasil Verifikasi Data');
     }
 
     public function update(Request $request, $id)

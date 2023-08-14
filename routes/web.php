@@ -69,6 +69,8 @@ Route::get('/research/input/edit/{id}', [researchController::class, 'show'])->na
 Route::post('/research/input', [researchController::class, 'store'])->name('research.store')->middleware('auth', 'admin');
 Route::put('/research/input/{id}', [researchController::class, 'update'])->name('research.update')->middleware('auth', 'admin');
 Route::delete('/research/input/delete/{id}', [researchController::class, 'destroy'])->name('research.destroy')->middleware('auth', 'admin');
+// verify research
+Route::get('/research/input/verify/{id}', [researchController::class, 'verifikasi'])->name('research.verifikasi')->middleware('auth', 'admin');
 // add member research
 Route::get('/research/input/add_member_to_research/{id}', [researchController::class, 'add_member_to_research_view'])->name('research.add_member_to_research_view')->middleware('auth', 'admin');
 Route::post('/research/input/add_member_to_research', [researchController::class, 'add_member_to_research'])->name('research.add_member_to_research')->middleware('auth', 'admin');
@@ -92,6 +94,8 @@ Route::post('/paper/input/add', [paperController::class, 'store'])->name('paper.
 Route::get('/paper/input/edit/{id}', [paperController::class, 'edit'])->name('paper.edit');
 Route::put('/paper/input/edit/{id}', [paperController::class, 'update'])->name('paper.update');
 Route::delete('/paper/input/delete/{id}', [paperController::class, 'destroy'])->name('paper.destroy');
+// verify Paper
+Route::get('/paper/input/verify/{id}', [paperController::class, 'verifikasi'])->name('paper.verifikasi')->middleware('auth', 'admin');
 // member paper
 Route::get('/paper/input/add_member_to_paper/{id}', [paperController::class, 'add_member_to_paper_view'])->name('paper.add_member_to_paper_view');
 Route::post('/paper/input/add_member_to_paper', [paperController::class, 'add_member_to_paper'])->name('paper.add_member_to_paper');

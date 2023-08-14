@@ -74,6 +74,9 @@ Paper
                     <td>{{$d->link}}</td>
                     <td>
                         <div class="flex space-x-3">
+                            @if($d->isVerified == 0)
+                            <a href="{{route('paper.verifikasi', ['id' => $d->id])}}" class="bg-blue-400 block rounded py-2 px-4">Verify</a>
+                            @endif
                             <a href="{{route('paper.add_partner_to_paper_view', ['id' => $d->id])}}" class="bg-cyan-400 block rounded py-2 px-4">Add Partner</a>
                             <a href="{{route('paper.add_member_to_paper_view', ['id' => $d->id])}}" class="bg-green-400 block rounded py-2 px-4">Add Member</a>
                             <a href="{{route('paper.edit', ['id' => $d->id])}}" class="bg-yellow-400 block rounded py-2 px-4">Edit</a>
