@@ -69,9 +69,9 @@ Manage Member
                     <td>{{$d->nama}}</td>
                     <td>{{$d->fakultas}}</td>
                     <td>{{$d->pendidikan}}</td>
-                    <td>{{$d->bidang}} Ilmu</td>
+                    <td>{{$d->bidang_ilmu}}</td>
                     <td>{{$d->jabatan}}</td>
-                    <td>{{$d->kelompok_keahlian}} Keahlian</td>
+                    <td>{{$d->kelompok_keahlian}}</td>
                     <td>{{$d->email}}</td>
                     <td>{{$d->photo}}</td>
                     <td>{{$d->membership}}</td>

@@ -69,21 +69,29 @@ Route::get('/research/input/edit/{id}', [researchController::class, 'show'])->na
 Route::post('/research/input', [researchController::class, 'store'])->name('research.store')->middleware('auth', 'admin');
 Route::put('/research/input/{id}', [researchController::class, 'update'])->name('research.update')->middleware('auth', 'admin');
 Route::delete('/research/input/delete/{id}', [researchController::class, 'destroy'])->name('research.destroy')->middleware('auth', 'admin');
+// add member research
 Route::get('/research/input/add_member_to_research/{id}', [researchController::class, 'add_member_to_research_view'])->name('research.add_member_to_research_view')->middleware('auth', 'admin');
 Route::post('/research/input/add_member_to_research', [researchController::class, 'add_member_to_research'])->name('research.add_member_to_research')->middleware('auth', 'admin');
 Route::delete('/research/input/{research_id}/{member_id}', [researchController::class, 'delete_member_from_research'])->name('research.delete_member_from_research')->middleware('auth', 'admin');
 Route::get('/research/input/{id}/members', [researchController::class, 'find_members_of_research'])->name('research.find_members_of_research')->middleware('auth', 'admin');
+// add partner research
+Route::get('/research/input/add_partner_to_research/{id}', [researchController::class, 'add_partner_to_research_view'])->name('research.add_partner_to_research_view');
 Route::post('/research/input/add_partner_to_research', [researchController::class, 'add_partner_to_research'])->name('research.add_partner_to_research');
 Route::delete('/research/input/{research_id}/{partner_id}', [researchController::class, 'delete_partner_from_research'])->name('research.delete_partner_from_research');
 Route::get('/research/input/{id}/partners', [researchController::class, 'find_partners_of_research'])->name('research.find_partners_of_research');
+// excel
 Route::get('/research/export', [researchController::class, 'researchexport'])->name('research.export')->middleware('auth', 'admin');
 Route::post('/research/import', [researchController::class, 'researchimport'])->name('research.import')->middleware('auth', 'admin');
 
+// PAPER
 Route::get('/paper', [paperController::class, 'index'])->name('paper.index');
-Route::get('/paper/{id}', [paperController::class, 'show'])->name('paper.show');
-Route::post('/paper', [paperController::class, 'store'])->name('paper.store');
-Route::put('/paper/{id}', [paperController::class, 'update'])->name('paper.update');
-Route::delete('/paper/{id}', [paperController::class, 'destroy'])->name('paper.destroy');
+// Route::get('/paper/{id}', [paperController::class, 'show'])->name('paper.show');
+Route::get('/paper/input', [paperController::class, 'index_admin'])->name('paper.index_admin');
+Route::get('/paper/input/add', [paperController::class, 'create'])->name('paper.create');
+Route::post('/paper/input/add', [paperController::class, 'store'])->name('paper.store');
+Route::put('/paper/input/edit/{id}', [paperController::class, 'update'])->name('paper.update');
+Route::delete('/paper/input/delete/{id}', [paperController::class, 'destroy'])->name('paper.destroy');
+
 Route::post('/paper/add_member_to_paper', [paperController::class, 'add_member_to_paper'])->name('paper.add_member_to_paper');
 Route::delete('/paper/{paper_id}/{member_id}', [paperController::class, 'delete_member_from_paper'])->name('paper.delete_member_from_paper');
 Route::get('/paper/{id}/members', [paperController::class, 'find_members_of_paper'])->name('paper.find_members_of_paper');

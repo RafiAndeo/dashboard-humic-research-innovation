@@ -11,6 +11,7 @@ use App\Imports\PaperImport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\partner_paper;
 use App\Models\partner;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class paperController extends Controller
@@ -19,6 +20,26 @@ class paperController extends Controller
     {
         $data = paper::all();
         return view('publikasi.index', ['data' => $data]);
+    }
+
+    public function index_admin()
+    {
+        $data = paper::all();
+        $data_count = paper::count();
+        // count group_by tahun_berakhir
+        $tahun = paper::select('tahun', DB::raw('count(*) as total'))
+            ->groupBy('tahun')
+            ->get();
+        // tahun diterima di pisah dengan 1 array
+        $label = $tahun->pluck('tahun');
+        $total = $tahun->pluck('total');
+        return view('publikasi.input_index', ['data' => $data, 'count' => $data_count, 'label' => $label, 'total' => $total]);
+    }
+
+    public function create()
+    {
+        $data = paper::all();
+        return view('publikasi.input_add', ['data' => $data]);
     }
 
     public function paperexport()
