@@ -28,42 +28,42 @@ Route::get('/', function () {
 
 Route::get('/hki', [HKIController::class, 'index'])->name('hki.index');
 // Route::get('/hki/{id}', [HKIController::class, 'show'])->name('hki.show');
-Route::get('/hki/input', [HKIController::class, 'index_admin'])->name('hki.index_admin')->middleware('auth', 'admin');;
-Route::get('/hki/input/add', [HKIController::class, 'create'])->name('hki.create')->middleware('auth', 'admin');;
-Route::post('/hki/input/add', [HKIController::class, 'store'])->name('hki.store')->middleware('auth', 'admin');;
-Route::get('/hki/input/edit/{id}', [HKIController::class, 'edit'])->name('hki.edit')->middleware('auth', 'admin');;
-Route::put('/hki/input/{id}', [HKIController::class, 'update'])->name('hki.update')->middleware('auth', 'admin');;
-Route::delete('/hki/input/{id}', [HKIController::class, 'destroy'])->name('hki.destroy')->middleware('auth', 'admin');;
+Route::get('/hki/input', [HKIController::class, 'index_admin'])->name('hki.index_admin')->middleware('auth');;
+Route::get('/hki/input/add', [HKIController::class, 'create'])->name('hki.create')->middleware('auth');;
+Route::post('/hki/input/add', [HKIController::class, 'store'])->name('hki.store')->middleware('auth');;
+Route::get('/hki/input/edit/{id}', [HKIController::class, 'edit'])->name('hki.edit')->middleware('auth');;
+Route::put('/hki/input/{id}', [HKIController::class, 'update'])->name('hki.update')->middleware('auth');;
+Route::delete('/hki/input/{id}', [HKIController::class, 'destroy'])->name('hki.destroy')->middleware('auth');;
 // member hki
-Route::get('/hki/input/add_member_to_hki/{id}', [HKIController::class, 'add_member_to_hki_view'])->name('hki.add_member_to_hki_view')->middleware('auth', 'admin');;
-Route::post('/hki/input/add_member_to_hki', [HKIController::class, 'add_member_to_hki'])->name('hki.add_member_to_hki')->middleware('auth', 'admin');;
-Route::delete('/hki/input/{hki_id}/{member_id}', [HKIController::class, 'delete_member_from_hki'])->name('hki.delete_member_from_hki')->middleware('auth', 'admin');;
-Route::get('/hki/input/{id}/members', [HKIController::class, 'find_members_of_hki'])->name('hki.find_members_of_hki')->middleware('auth', 'admin');;
+Route::get('/hki/input/add_member_to_hki/{id}', [HKIController::class, 'add_member_to_hki_view'])->name('hki.add_member_to_hki_view')->middleware('auth');;
+Route::post('/hki/input/add_member_to_hki', [HKIController::class, 'add_member_to_hki'])->name('hki.add_member_to_hki')->middleware('auth');;
+Route::delete('/hki/input/{hki_id}/{member_id}', [HKIController::class, 'delete_member_from_hki'])->name('hki.delete_member_from_hki')->middleware('auth');;
+Route::get('/hki/input/{id}/members', [HKIController::class, 'find_members_of_hki'])->name('hki.find_members_of_hki')->middleware('auth');;
 // partner hki
-Route::get('/hki/input/add_partner_to_hki/{id}', [HKIController::class, 'add_partner_to_hki_view'])->name('hki.add_partner_to_hki_view')->middleware('auth', 'admin');;
-Route::post('/hki/input/add_partner_to_hki', [HKIController::class, 'add_partner_to_hki'])->name('hki.add_partner_to_hki')->middleware('auth', 'admin');;
-Route::delete('/hki/input/partner/{hki_id}/{partner_id}', [HKIController::class, 'delete_partner_from_hki'])->name('hki.delete_partner_from_hki')->middleware('auth', 'admin');;
-Route::get('/hki/input/{id}/partners', [HKIController::class, 'find_partners_of_hki'])->name('hki.find_partners_of_hki')->middleware('auth', 'admin');;
+Route::get('/hki/input/add_partner_to_hki/{id}', [HKIController::class, 'add_partner_to_hki_view'])->name('hki.add_partner_to_hki_view')->middleware('auth');;
+Route::post('/hki/input/add_partner_to_hki', [HKIController::class, 'add_partner_to_hki'])->name('hki.add_partner_to_hki')->middleware('auth');;
+Route::delete('/hki/input/partner/{hki_id}/{partner_id}', [HKIController::class, 'delete_partner_from_hki'])->name('hki.delete_partner_from_hki')->middleware('auth');;
+Route::get('/hki/input/{id}/partners', [HKIController::class, 'find_partners_of_hki'])->name('hki.find_partners_of_hki')->middleware('auth');;
 // verify hki
-Route::get('/hki/input/verify/{id}', [HKIController::class, 'verifikasi'])->name('hki.verifikasi')->middleware('auth', 'admin');;
+Route::get('/hki/input/verify/{id}', [HKIController::class, 'verifikasi'])->name('hki.verifikasi')->middleware('auth');;
 // excel
 Route::get('/hki/export', [HKIController::class, 'hkiexport'])->name('hki.export');
-Route::post('/hki/import', [HKIController::class, 'hkiimport'])->name('hki.import')->middleware('auth', 'admin');
+Route::post('/hki/import', [HKIController::class, 'hkiimport'])->name('hki.import')->middleware('auth');
 
 Route::post('/login', [MemberController::class, 'login'])->name('member.login_proses');
 Route::post('/logout', [MemberController::class, 'logout'])->name('member.logout');
 
 Route::get('/member', [MemberController::class, 'index'])->name('member.index');
-Route::get('/member/input/', [MemberController::class, 'index_admin'])->name('member.index_admin')->middleware('auth', 'admin');
-// Route::get('/member/input/{id}', [MemberController::class, 'show'])->name('member.show')->middleware('auth', 'admin');
-Route::get('/member/input/add', [MemberController::class, 'create'])->name('member.create')->middleware('auth', 'admin');
-Route::post('/member/input/add', [MemberController::class, 'store'])->name('member.store')->middleware('auth', 'admin');
-Route::get('/member/input/edit/{id}', [MemberController::class, 'edit'])->name('member.edit')->middleware('auth', 'admin');
-Route::put('/member/input/edit/{id}', [MemberController::class, 'update'])->name('member.update')->middleware('auth', 'admin');
-Route::delete('/member/input/{id}', [MemberController::class, 'destroy'])->name('member.destroy')->middleware('auth', 'admin');
+Route::get('/member/input/', [MemberController::class, 'index_admin'])->name('member.index_admin')->middleware('auth');
+// Route::get('/member/input/{id}', [MemberController::class, 'show'])->name('member.show')->middleware('auth');
+Route::get('/member/input/add', [MemberController::class, 'create'])->name('member.create')->middleware('auth');
+Route::post('/member/input/add', [MemberController::class, 'store'])->name('member.store')->middleware('auth');
+Route::get('/member/input/edit/{id}', [MemberController::class, 'edit'])->name('member.edit')->middleware('auth');
+Route::put('/member/input/edit/{id}', [MemberController::class, 'update'])->name('member.update')->middleware('auth');
+Route::delete('/member/input/{id}', [MemberController::class, 'destroy'])->name('member.destroy')->middleware('auth');
 Route::get('/login', [MemberController::class, 'login_index'])->name('member.login_index');
 Route::get('/member/export', [MemberController::class, 'memberexport'])->name('member.export');
-Route::post('/member/import', [MemberController::class, 'memberimport'])->name('member.import')->middleware('auth', 'admin');
+Route::post('/member/import', [MemberController::class, 'memberimport'])->name('member.import')->middleware('auth');
 
 Route::get('/partner/input', [PartnerController::class, 'index'])->name('partner.index');
 Route::get('/partner/input/add', [PartnerController::class, 'create'])->name('partner.create');
@@ -73,27 +73,27 @@ Route::put('/partner/input/edit/{id}', [PartnerController::class, 'update'])->na
 Route::delete('/partner/input/delete/{id}', [PartnerController::class, 'destroy'])->name('partner.destroy');
 
 Route::get('/research', [researchController::class, 'index'])->name('research.index');
-Route::get('/research/input', [researchController::class, 'index_admin'])->name('research.index_admin')->middleware('auth', 'admin');
-Route::get('/research/input/add', [researchController::class, 'create'])->name('research.create')->middleware('auth', 'admin');
-Route::get('/research/input/edit/{id}', [researchController::class, 'show'])->name('research.show')->middleware('auth', 'admin');
-Route::post('/research/input', [researchController::class, 'store'])->name('research.store')->middleware('auth', 'admin');
-Route::put('/research/input/{id}', [researchController::class, 'update'])->name('research.update')->middleware('auth', 'admin');
-Route::delete('/research/input/delete/{id}', [researchController::class, 'destroy'])->name('research.destroy')->middleware('auth', 'admin');
+Route::get('/research/input', [researchController::class, 'index_admin'])->name('research.index_admin')->middleware('auth');
+Route::get('/research/input/add', [researchController::class, 'create'])->name('research.create')->middleware('auth');
+Route::get('/research/input/edit/{id}', [researchController::class, 'show'])->name('research.show')->middleware('auth');
+Route::post('/research/input', [researchController::class, 'store'])->name('research.store')->middleware('auth');
+Route::put('/research/input/{id}', [researchController::class, 'update'])->name('research.update')->middleware('auth');
+Route::delete('/research/input/delete/{id}', [researchController::class, 'destroy'])->name('research.destroy')->middleware('auth');
 // verify research
-Route::get('/research/input/verify/{id}', [researchController::class, 'verifikasi'])->name('research.verifikasi')->middleware('auth', 'admin');
+Route::get('/research/input/verify/{id}', [researchController::class, 'verifikasi'])->name('research.verifikasi')->middleware('auth');
 // add member research
-Route::get('/research/input/add_member_to_research/{id}', [researchController::class, 'add_member_to_research_view'])->name('research.add_member_to_research_view')->middleware('auth', 'admin');
-Route::post('/research/input/add_member_to_research', [researchController::class, 'add_member_to_research'])->name('research.add_member_to_research')->middleware('auth', 'admin');
-Route::delete('/research/input/{research_id}/{member_id}', [researchController::class, 'delete_member_from_research'])->name('research.delete_member_from_research')->middleware('auth', 'admin');
-Route::get('/research/input/{id}/members', [researchController::class, 'find_members_of_research'])->name('research.find_members_of_research')->middleware('auth', 'admin');
+Route::get('/research/input/add_member_to_research/{id}', [researchController::class, 'add_member_to_research_view'])->name('research.add_member_to_research_view')->middleware('auth');
+Route::post('/research/input/add_member_to_research', [researchController::class, 'add_member_to_research'])->name('research.add_member_to_research')->middleware('auth');
+Route::delete('/research/input/{research_id}/{member_id}', [researchController::class, 'delete_member_from_research'])->name('research.delete_member_from_research')->middleware('auth');
+Route::get('/research/input/{id}/members', [researchController::class, 'find_members_of_research'])->name('research.find_members_of_research')->middleware('auth');
 // add partner research
 Route::get('/research/input/add_partner_to_research/{id}', [researchController::class, 'add_partner_to_research_view'])->name('research.add_partner_to_research_view');
 Route::post('/research/input/add_partner_to_research', [researchController::class, 'add_partner_to_research'])->name('research.add_partner_to_research');
 Route::delete('/research/input/{research_id}/{partner_id}', [researchController::class, 'delete_partner_from_research'])->name('research.delete_partner_from_research');
 Route::get('/research/input/{id}/partners', [researchController::class, 'find_partners_of_research'])->name('research.find_partners_of_research');
 // excel
-Route::get('/research/export', [researchController::class, 'researchexport'])->name('research.export')->middleware('auth', 'admin');
-Route::post('/research/import', [researchController::class, 'researchimport'])->name('research.import')->middleware('auth', 'admin');
+Route::get('/research/export', [researchController::class, 'researchexport'])->name('research.export')->middleware('auth');
+Route::post('/research/import', [researchController::class, 'researchimport'])->name('research.import')->middleware('auth');
 
 // PAPER
 Route::get('/paper', [paperController::class, 'index'])->name('paper.index');
@@ -105,7 +105,7 @@ Route::get('/paper/input/edit/{id}', [paperController::class, 'edit'])->name('pa
 Route::put('/paper/input/edit/{id}', [paperController::class, 'update'])->name('paper.update');
 Route::delete('/paper/input/delete/{id}', [paperController::class, 'destroy'])->name('paper.destroy');
 // verify Paper
-Route::get('/paper/input/verify/{id}', [paperController::class, 'verifikasi'])->name('paper.verifikasi')->middleware('auth', 'admin');
+Route::get('/paper/input/verify/{id}', [paperController::class, 'verifikasi'])->name('paper.verifikasi')->middleware('auth');
 // member paper
 Route::get('/paper/input/add_member_to_paper/{id}', [paperController::class, 'add_member_to_paper_view'])->name('paper.add_member_to_paper_view');
 Route::post('/paper/input/add_member_to_paper', [paperController::class, 'add_member_to_paper'])->name('paper.add_member_to_paper');

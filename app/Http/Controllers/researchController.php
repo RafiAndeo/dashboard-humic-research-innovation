@@ -25,7 +25,14 @@ class researchController extends Controller
 
     public function index_admin()
     {
-        $research = research::all();
+        if (Auth::user()->role == 'admin') {
+            $research = research::all();
+        } else {
+            $research = research::join('member_research', 'research.id', '=', 'member_research.research_id')
+                ->where('member_research.member_id', Auth::user()->id)
+                // ->where('paper.isVerified', true)
+                ->get();
+        }
         $research_count = research::count();
         // count group_by tahun_berakhir
         $tahun_diterima = research::select('tahun_diterima', DB::raw('count(*) as total'))
@@ -95,7 +102,7 @@ class researchController extends Controller
         if (Auth::user() && Auth::user()->role == 'user') {
             $research_member = new member_research;
             $research_member->research_id = $research->id;
-            $research_member->member_id = Auth::user()::id;
+            $research_member->member_id = Auth::user()->id;
             $research_member->save();
         }
 

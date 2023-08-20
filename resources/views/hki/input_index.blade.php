@@ -50,6 +50,9 @@ Paper
                     <th>Judul</th>
                     <th>Jenis</th>
                     <th>Status</th>
+                    @if(Auth::user()->role == 'user')
+                    <th>Status Verifikasi</th>
+                    @endif
                     <th>Action</th>
                 </tr>
             </thead>
@@ -62,19 +65,35 @@ Paper
                     <td>{{$d->judul}}</td>
                     <td>{{$d->jenis}}</td>
                     <td>{{$d->status}}</td>
+                    @if(Auth::user()->role == 'user')
+                    <td>
+                        @if ($d->isVerified == false)
+                            <div class="bg-red-400 block rounded py-2 px-4">Belum diverifikasi</div>
+                        @else
+                            <div class="bg-green-400 block rounded py-2 px-4">Sudah diverifikasi</div>
+                        @endif
+
+                    </td>
+                    @endif
                     <td>
                         <div class="flex space-x-3">
-                            @if($d->isVerified == 0)
-                            <a href="{{route('hki.verifikasi', ['id' => $d->id])}}" class="bg-blue-400 block rounded py-2 px-4">Verify</a>
+                            @if(Auth::user()->role == 'admin')
+                                @if($d->isVerified == false)
+                                <a href="{{route('hki.verifikasi', ['id' => $d->id])}}" class="bg-blue-400 block rounded py-2 px-4">Verify</a>
+                                @endif
                             @endif
-                            <a href="{{route('hki.add_partner_to_hki_view', ['id' => $d->id])}}" class="bg-cyan-400 block rounded py-2 px-4">Add Partner</a>
-                            <a href="{{route('hki.add_member_to_hki_view', ['id' => $d->id])}}" class="bg-green-400 block rounded py-2 px-4">Add Member</a>
-                            <a href="{{route('hki.edit', ['id' => $d->id])}}" class="bg-yellow-400 block rounded py-2 px-4">Edit</a>
-                            <form action="{{route('hki.destroy', ['id' => $d->id])}}" method="post">
+
+                            <a href="{{route('hki.add_partner_to_hki_view', ['id' => (Auth::user()->role == 'admin' ? $d->id : $d->hki_id)])}}" class="bg-cyan-400 block rounded py-2 px-4">Add Partner</a>
+                            <a href="{{route('hki.add_member_to_hki_view', ['id' => (Auth::user()->role == 'admin' ? $d->id : $d->hki_id)])}}" class="bg-green-400 block rounded py-2 px-4">Add Member</a>
+
+                            @if(Auth::user()->role == 'admin' ||(Auth::user()->role == 'user' && $d->isVerified == false))
+                            <a href="{{route('hki.edit', ['id' => (Auth::user()->role == 'admin' ? $d->id : $d->hki_id)])}}" class="bg-yellow-400 block rounded py-2 px-4">Edit</a>
+                            <form action="{{route('hki.destroy', ['id' => (Auth::user()->role == 'admin' ? $d->id : $d->hki_id)])}}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="bg-red-400 block rounded py-2 px-4">Delete</button>
                             </form>
+                            @endif
                         </div>
                     </td>
                 </tr>

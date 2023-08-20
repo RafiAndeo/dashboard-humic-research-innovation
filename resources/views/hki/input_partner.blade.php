@@ -19,6 +19,7 @@ Add Data HKI Partner
     <div class="my-5 text-lg">
         <div>Judul HKI : <span class="font-semibold">{{$data->judul}}</span></div>
     </div>
+    @if (Auth::user()->role == 'admin' ||  $data->isVerified == false)
     <form action="{{route('hki.add_partner_to_hki')}}" method="post" class="flex pb-10">
         @method('POST')
         @csrf
@@ -38,6 +39,7 @@ Add Data HKI Partner
 
         </div>
     </form>
+    @endif
     <div>
         <div class="bg-white p-3 rounded">
             <table id="example" class="display nowrap" style="width:100%">
@@ -45,7 +47,9 @@ Add Data HKI Partner
                     <tr>
                         <th>No</th>
                         <th>Nama</th>
+                        @if (Auth::user()->role == 'admin' ||  $data->isVerified == false)
                         <th>Action</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -54,6 +58,7 @@ Add Data HKI Partner
                     <tr>
                         <td>{{$nomor}}</td>
                         <td>{{$d->nama_partner}}</td>
+                        @if (Auth::user()->role == 'admin' ||  $data->isVerified == false)
                         <td>
                             <div class="flex space-x-3">
                                 <form action="{{route('hki.delete_partner_from_hki', ['hki_id' => $id, 'partner_id' => $d->partner_id])}}" method="post">
@@ -63,6 +68,7 @@ Add Data HKI Partner
                                 </form>
                             </div>
                         </td>
+                        @endif
                     </tr>
                     <?php $nomor++; ?>
                     @endforeach

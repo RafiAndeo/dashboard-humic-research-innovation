@@ -24,7 +24,14 @@ class HKIController extends Controller
 
     public function index_admin()
     {
-        $data = hki::all();
+        if (Auth::user()->role == 'admin') {
+            $data = hki::all();
+        } else {
+            $data = hki::join('member_hki', 'hki.id', '=', 'member_hki.hki_id')
+                ->where('member_hki.member_id', Auth::user()->id)
+                // ->where('paper.isVerified', true)
+                ->get();
+        }
         $count = hki::count();
         $raw = hki::select('jenis', DB::raw('count(*) as total'))
             ->groupBy('jenis')
