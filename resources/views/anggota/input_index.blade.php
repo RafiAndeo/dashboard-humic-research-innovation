@@ -31,7 +31,7 @@ Manage Member
             </div>
         </div>
     </div>
-
+    @if(Auth::user()->role == 'admin')
     <div class="flex mt-10 space-x-5 mb-4">
         <a href="{{route('member.create')}}" class="py-2 px-4 rounded bg-green-500 space-x-2 flex text-white hover:bg-green-600">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
@@ -40,6 +40,7 @@ Manage Member
             <span>Tambah Data</span>
         </a>
     </div>
+    @endif
 
     <div class="bg-white p-3 rounded">
         <table id="example" class="display nowrap" style="width:100%">
@@ -57,7 +58,9 @@ Manage Member
                     <th>Photo</th>
                     <th>Membership</th>
                     <th>Status</th>
+                    @if(Auth::user()->role == 'admin')
                     <th>Action</th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -76,6 +79,7 @@ Manage Member
                     <td>{{$d->photo}}</td>
                     <td>{{$d->membership}}</td>
                     <td>{{$d->status}}</td>
+                    @if(Auth::user()->role == 'admin')
                     <td>
                         <div class="flex space-x-3">
                             <a href="{{route('member.edit', ['id' => $d->id])}}" class="bg-yellow-400 block rounded py-2 px-4">Edit</a>
@@ -86,6 +90,7 @@ Manage Member
                             </form>
                         </div>
                     </td>
+                    @endif
                 </tr>
                 <?php $nomor++; ?>
                 @endforeach

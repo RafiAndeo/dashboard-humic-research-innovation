@@ -22,6 +22,7 @@ Add Data Research Member
         <div>Tahun Berakhir : <span class="font-semibold">{{$data->tahun_berakhir}}</span></div>
         <div>TKT : <span class="font-semibold">{{$data->tkt}}</span></div>
     </div>
+    @if (Auth::user()->role == 'admin' || $data->isVerified == false)
     <form action="{{route('research.add_member_to_research')}}" method="post" class="flex pb-10">
         @method('POST')
         @csrf
@@ -41,6 +42,7 @@ Add Data Research Member
 
         </div>
     </form>
+    @endif
     <div>
         <div class="bg-white p-3 rounded">
             <table id="example" class="display nowrap" style="width:100%">
@@ -48,7 +50,9 @@ Add Data Research Member
                     <tr>
                         <th>No</th>
                         <th>Nama</th>
+                        @if (Auth::user()->role == 'admin' || $data->isVerified == false)
                         <th>Action</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -57,6 +61,7 @@ Add Data Research Member
                     <tr>
                         <td>{{$nomor}}</td>
                         <td>{{$d->nama}}</td>
+                        @if (Auth::user()->role == 'admin' || $data->isVerified == false)
                         <td>
                             <div class="flex space-x-3">
                                 <form action="{{route('research.delete_member_from_research', ['research_id' => $id, 'member_id' => $d->member_id])}}" method="post">
@@ -66,6 +71,7 @@ Add Data Research Member
                                 </form>
                             </div>
                         </td>
+                        @endif
                     </tr>
                     <?php $nomor++; ?>
                     @endforeach

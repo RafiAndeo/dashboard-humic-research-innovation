@@ -24,7 +24,15 @@ class paperController extends Controller
 
     public function index_admin()
     {
-        $data = paper::all();
+        if (Auth::user()->role == 'admin') {
+            $data = paper::all();
+        } else {
+            $data = paper::join('member_paper', 'paper.id', '=', 'member_paper.paper_id')
+                ->where('member_paper.member_id', Auth::user()->id)
+                // ->where('paper.isVerified', true)
+                ->get();
+        }
+
         $data_count = paper::count();
         // count group_by tahun_berakhir
         $tahun = paper::select('tahun', DB::raw('count(*) as total'))
@@ -88,10 +96,10 @@ class paperController extends Controller
 
         $paper->save();
 
-        if (Auth::user() && Auth::user()->role == 'user') {
+        if (Auth::user()->role == 'user') {
             $member_paper = new member_paper;
             $member_paper->paper_id = $paper->id;
-            $member_paper->member_id = Auth::user()::id;
+            $member_paper->member_id = Auth::user()->id;
             $member_paper->save();
         }
 

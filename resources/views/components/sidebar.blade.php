@@ -44,9 +44,8 @@
             </div>
         </div>
         @auth
-        @if (Auth::user()->role == "admin")
         <div class="space-y-2">
-            <div class="text-sm pb-3">Admin</div>
+            <div class="text-sm pb-3">Manage</div>
             <div class="space-y-6">
                 <a href="{{route('paper.index_admin')}}" class="flex space-x-4 {{ Route::is('paper.index_admin') ? 'bg-red-200 text-red-primary' : '' }} hover:bg-red-200 px-6 py-2 rounded item-center hover:text-red-primary hover:cursor-pointer duration-100">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
@@ -87,7 +86,6 @@
                 </a>
             </div>
         </div>
-        @endif
         @endauth
     </div>
 </div>
