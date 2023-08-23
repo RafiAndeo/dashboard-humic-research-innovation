@@ -14,5 +14,6 @@ class partner_hki extends Model
     protected $fillable = [
         "partner_id",
         "hki_id",
+        "role",
     ];
 }

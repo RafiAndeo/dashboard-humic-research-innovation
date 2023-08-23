@@ -13,6 +13,7 @@ class partner_paper extends Model
     protected $fillable = [
         "partner_id",
         "paper_id",
+        "role",
     ];
     use HasFactory;
 }

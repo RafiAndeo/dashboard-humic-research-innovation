@@ -14,5 +14,6 @@ class member_research extends Model
     protected $fillable = [
         "member_id",
         "research_id",
+        "role",
     ];
 }

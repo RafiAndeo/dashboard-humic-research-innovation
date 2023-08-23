@@ -14,5 +14,6 @@ class member_paper extends Model
     protected $fillable = [
         "member_id",
         "paper_id",
+        "role",
     ];
 }

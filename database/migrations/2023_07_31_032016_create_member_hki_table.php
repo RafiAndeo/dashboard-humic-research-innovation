@@ -16,6 +16,7 @@ return new class extends Migration
 
             $table->bigInteger('member_id');
             $table->bigInteger('hki_id');
+            $table->string('role');
 
             $table->timestamps();
         });

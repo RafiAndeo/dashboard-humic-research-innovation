@@ -164,6 +164,7 @@ class HKIController extends Controller
         $request->validate([
             'hki_id' => 'required',
             'member_id' => 'required',
+            'role' => 'required',
         ]);
 
         if (!(hki::where('id', $request->hki_id)->exists()) || !(member::where('id', $request->member_id)->exists())) {
@@ -172,6 +173,7 @@ class HKIController extends Controller
             $hki_member = new member_hki;
             $hki_member->hki_id = $request->hki_id;
             $hki_member->member_id = $request->member_id;
+            $hki_member->role = $request->role;
 
             $hki_member->save();
             return redirect()->back()->with('success', 'Berhasil Tambah Member');
@@ -193,6 +195,7 @@ class HKIController extends Controller
         $request->validate([
             'hki_id' => 'required',
             'partner_id' => 'required',
+            'role' => 'required',
         ]);
 
         if (!(hki::where('id', $request->hki_id)->exists()) || !(partner::where('id', $request->partner_id)->exists())) {
@@ -201,6 +204,7 @@ class HKIController extends Controller
             $hki_partner = new partner_hki;
             $hki_partner->hki_id = $request->hki_id;
             $hki_partner->partner_id = $request->partner_id;
+            $hki_partner->role = $request->role;
 
             $hki_partner->save();
             return redirect()->back()->with('success', 'Berhasil Tambah Partner');

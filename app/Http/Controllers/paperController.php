@@ -189,6 +189,7 @@ class paperController extends Controller
         $request->validate([
             'member_id' => 'required',
             'paper_id' => 'required',
+            'role' => 'required'
         ]);
 
         if (!(paper::where('id', $request->paper_id)->exists()) || !(member::where('id', $request->member_id)->exists())) {
@@ -197,6 +198,7 @@ class paperController extends Controller
             $paper_member = new member_paper;
             $paper_member->paper_id = $request->paper_id;
             $paper_member->member_id = $request->member_id;
+            $paper_member->role = $request->role;
 
             $paper_member->save();
             return redirect()->back()->with('success', 'Berhasil Menambahkan Member');
@@ -224,6 +226,7 @@ class paperController extends Controller
             $paper_partner = new partner_paper;
             $paper_partner->paper_id = $request->paper_id;
             $paper_partner->partner_id = $request->partner_id;
+            $paper_partner->role = $request->role;
 
             $paper_partner->save();
             return redirect()->back()->with('success', 'Berhasil Menambahkan Partner');

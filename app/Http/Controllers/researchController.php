@@ -187,6 +187,7 @@ class researchController extends Controller
         $request->validate([
             'research_id' => 'required',
             'member_id' => 'required',
+            'role' => 'required',
         ]);
 
         if (!(research::where('id', $request->research_id)->exists()) || !(member::where('id', $request->member_id)->exists())) {
@@ -195,6 +196,7 @@ class researchController extends Controller
             $research_member = new member_research;
             $research_member->research_id = $request->research_id;
             $research_member->member_id = $request->member_id;
+            $research_member->role = $request->role;
 
             $research_member->save();
             return redirect()->back()->with('success', 'Berhasil Menambahkan Member');
@@ -214,6 +216,7 @@ class researchController extends Controller
         $request->validate([
             'research_id' => 'required',
             'partner_id' => 'required',
+            'role' => 'required',
         ]);
 
         if (!(research::where('id', $request->research_id)->exists()) || !(partner::where('id', $request->partner_id)->exists())) {
@@ -222,6 +225,7 @@ class researchController extends Controller
             $research_partner = new partner_research;
             $research_partner->research_id = $request->research_id;
             $research_partner->partner_id = $request->partner_id;
+            $research_partner->role = $request->role;
 
             $research_partner->save();
             return redirect()->back()->with('success', 'Berhasil Menambahkan Partner');
