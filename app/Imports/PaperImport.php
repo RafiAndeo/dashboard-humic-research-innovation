@@ -25,6 +25,7 @@ class PaperImport implements ToModel, WithHeadingRow
             'quartile' => $row['quartile'],
             'index' => $row['index'],
             'link' => $row['link'],
+            'isVerified' => false,
         ]);
     }
 }

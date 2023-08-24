@@ -20,6 +20,7 @@ class HkiImport implements ToModel, WithHeadingRow
             'judul' => $row['judul'],
             'jenis' => $row['jenis'],
             'status' => $row['status'],
+            'isVerified' => false,
         ]);
     }
 }

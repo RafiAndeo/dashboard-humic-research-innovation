@@ -5,6 +5,7 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\paperController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\researchController;
+use App\Http\Controllers\ImportController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,24 +29,39 @@ Route::get('/', function () {
 
 Route::get('/hki', [HKIController::class, 'index'])->name('hki.index');
 // Route::get('/hki/{id}', [HKIController::class, 'show'])->name('hki.show');
-Route::get('/hki/input', [HKIController::class, 'index_admin'])->name('hki.index_admin')->middleware('auth');;
-Route::get('/hki/input/add', [HKIController::class, 'create'])->name('hki.create')->middleware('auth');;
-Route::post('/hki/input/add', [HKIController::class, 'store'])->name('hki.store')->middleware('auth');;
-Route::get('/hki/input/edit/{id}', [HKIController::class, 'edit'])->name('hki.edit')->middleware('auth');;
-Route::put('/hki/input/{id}', [HKIController::class, 'update'])->name('hki.update')->middleware('auth');;
-Route::delete('/hki/input/{id}', [HKIController::class, 'destroy'])->name('hki.destroy')->middleware('auth');;
+Route::get('/hki/input', [HKIController::class, 'index_admin'])->name('hki.index_admin')->middleware('auth');
+;
+Route::get('/hki/input/add', [HKIController::class, 'create'])->name('hki.create')->middleware('auth');
+;
+Route::post('/hki/input/add', [HKIController::class, 'store'])->name('hki.store')->middleware('auth');
+;
+Route::get('/hki/input/edit/{id}', [HKIController::class, 'edit'])->name('hki.edit')->middleware('auth');
+;
+Route::put('/hki/input/{id}', [HKIController::class, 'update'])->name('hki.update')->middleware('auth');
+;
+Route::delete('/hki/input/{id}', [HKIController::class, 'destroy'])->name('hki.destroy')->middleware('auth');
+;
 // member hki
-Route::get('/hki/input/add_member_to_hki/{id}', [HKIController::class, 'add_member_to_hki_view'])->name('hki.add_member_to_hki_view')->middleware('auth');;
-Route::post('/hki/input/add_member_to_hki', [HKIController::class, 'add_member_to_hki'])->name('hki.add_member_to_hki')->middleware('auth');;
-Route::delete('/hki/input/{hki_id}/{member_id}', [HKIController::class, 'delete_member_from_hki'])->name('hki.delete_member_from_hki')->middleware('auth');;
-Route::get('/hki/input/{id}/members', [HKIController::class, 'find_members_of_hki'])->name('hki.find_members_of_hki')->middleware('auth');;
+Route::get('/hki/input/add_member_to_hki/{id}', [HKIController::class, 'add_member_to_hki_view'])->name('hki.add_member_to_hki_view')->middleware('auth');
+;
+Route::post('/hki/input/add_member_to_hki', [HKIController::class, 'add_member_to_hki'])->name('hki.add_member_to_hki')->middleware('auth');
+;
+Route::delete('/hki/input/{hki_id}/{member_id}', [HKIController::class, 'delete_member_from_hki'])->name('hki.delete_member_from_hki')->middleware('auth');
+;
+Route::get('/hki/input/{id}/members', [HKIController::class, 'find_members_of_hki'])->name('hki.find_members_of_hki')->middleware('auth');
+;
 // partner hki
-Route::get('/hki/input/add_partner_to_hki/{id}', [HKIController::class, 'add_partner_to_hki_view'])->name('hki.add_partner_to_hki_view')->middleware('auth');;
-Route::post('/hki/input/add_partner_to_hki', [HKIController::class, 'add_partner_to_hki'])->name('hki.add_partner_to_hki')->middleware('auth');;
-Route::delete('/hki/input/partner/{hki_id}/{partner_id}', [HKIController::class, 'delete_partner_from_hki'])->name('hki.delete_partner_from_hki')->middleware('auth');;
-Route::get('/hki/input/{id}/partners', [HKIController::class, 'find_partners_of_hki'])->name('hki.find_partners_of_hki')->middleware('auth');;
+Route::get('/hki/input/add_partner_to_hki/{id}', [HKIController::class, 'add_partner_to_hki_view'])->name('hki.add_partner_to_hki_view')->middleware('auth');
+;
+Route::post('/hki/input/add_partner_to_hki', [HKIController::class, 'add_partner_to_hki'])->name('hki.add_partner_to_hki')->middleware('auth');
+;
+Route::delete('/hki/input/partner/{hki_id}/{partner_id}', [HKIController::class, 'delete_partner_from_hki'])->name('hki.delete_partner_from_hki')->middleware('auth');
+;
+Route::get('/hki/input/{id}/partners', [HKIController::class, 'find_partners_of_hki'])->name('hki.find_partners_of_hki')->middleware('auth');
+;
 // verify hki
-Route::get('/hki/input/verify/{id}', [HKIController::class, 'verifikasi'])->name('hki.verifikasi')->middleware('auth');;
+Route::get('/hki/input/verify/{id}', [HKIController::class, 'verifikasi'])->name('hki.verifikasi')->middleware('auth');
+;
 // excel
 Route::get('/hki/export', [HKIController::class, 'hkiexport'])->name('hki.export');
 Route::post('/hki/import', [HKIController::class, 'hkiimport'])->name('hki.import')->middleware('auth');
@@ -119,3 +135,7 @@ Route::get('/paper/{id}/partners', [paperController::class, 'find_partners_of_pa
 // partner excel
 Route::get('/paper/export', [paperController::class, 'paperexport'])->name('paper.export');
 Route::post('/paper/import', [paperController::class, 'paperimport'])->name('paper.import');
+
+
+//import all
+Route::post('/importall', [ImportController::class, 'import_all']);

@@ -21,5 +21,6 @@ class paper extends Model
         "quartile",
         "index",
         "link",
+        "isVerified",
     ];
 }

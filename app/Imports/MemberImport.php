@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\Models\member;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Illuminate\Support\Facades\Hash;
 
 class MemberImport implements ToModel, WithHeadingRow
 {
@@ -26,8 +27,9 @@ class MemberImport implements ToModel, WithHeadingRow
             'photo' => $row['photo'],
             'membership' => $row['membership'],
             'status' => $row['status'],
-            'NIP' => $row['NIP'],
-            'role' => $row['role'],
+            'role' => "user",
+            'NIP' => $row['nip'],
+            'password' => Hash::make("password"),
         ]);
     }
 }

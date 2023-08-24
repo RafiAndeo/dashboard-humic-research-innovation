@@ -16,5 +16,6 @@ class hki extends Model
         'judul',
         'jenis',
         'status',
+        'isVerified',
     ];
 }

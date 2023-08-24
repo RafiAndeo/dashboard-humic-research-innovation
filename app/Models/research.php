@@ -23,5 +23,6 @@ class research extends Model
         'tipe_external',
         'lama_penelitian',
         'keterangan',
+        "isVerified",
     ];
 }

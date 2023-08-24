@@ -27,6 +27,7 @@ class ResearchImport implements ToModel, WithHeadingRow
             'tipe_external' => $row['tipe_external'],
             'lama_penelitian' => $row['lama_penelitian'],
             'keterangan' => $row['keterangan'],
+            'isVerified' => false,
         ]);
     }
 }
