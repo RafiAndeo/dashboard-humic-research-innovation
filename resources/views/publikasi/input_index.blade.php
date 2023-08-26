@@ -164,11 +164,6 @@ const data3 = {
   datasets: [{
     label: 'Jumlah Hasil Research Pertahun',
     data: {{$total}},
-    backgroundColor: [
-      'rgb(255, 99, 132)',
-      'rgb(54, 162, 235)',
-      'rgb(255, 205, 86)'
-    ],
     hoverOffset: 4
   }]
 };
@@ -183,23 +178,19 @@ const dougnatchart =new Chart(ctx3, config3);
 {{-- LINE CHART --}}
 <script>
     const ctx = document.getElementById('linechart');
-    const labels = ["Q1", 'Q2', 'Q3', 'Q4'];
+    const labels = {!! $label_jenis !!}
     const data = {
     labels: labels,
     datasets: [
         {
-        label: 'HKI',
-        data: ["0",'2','3',"4",'4','5']
+        label: 'Paper',
+        data: {!! $total_jenis !!}
         },
-        {
-        label: 'PUBLIKASI',
-        data: ["2",'4','10',100]
-        }
     ]
     };
 
     const config = {
-    type: 'line',
+    type: 'bar',
     data: data,
     options: {
         responsive: true,

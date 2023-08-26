@@ -6,9 +6,10 @@ Dashboard
 
 @section('content')
     <div class="grid grid-cols-4 space-x-5">
-        <x-card title="Research" value="30"/>
-        <x-card title="Research" value="30"/>
-        <x-card title="Research" value="30"/>
+        <x-card title="Paper" :value="$paper_count" />
+        <x-card title="Research" :value="$research_count"/>
+        <x-card title="HKI" :value="$hki_count"/>
+        <x-card title="Member" :value="$member_count"/>
     </div>
 
     <div class="flex mt-10 space-x-5">
@@ -23,7 +24,7 @@ Dashboard
             <div class="bg-white flex justify-center py-8 rounded">
                 <div class="w-9/12">
                     <div class="mb-3 text-sm space-y-2">
-                        <div class="font-medium">Grafik Data Jenis Papper</div>
+                        <div class="font-medium">Grafik Quartile Paper</div>
                     </div>
                     <canvas id="piechart"></canvas>
                 </div>
@@ -51,24 +52,15 @@ const DATA_COUNT = 5;
 const NUMBER_CFG = {count: DATA_COUNT, min: 0, max: 100};
 
 const data2 = {
-  labels: [
-    'Red',
-    'Blue',
-    'Yellow'
-  ],
+  labels: {!! $label_quartile !!},
   datasets: [{
-    label: 'My First Dataset',
-    data: [300, 50, 100],
-    backgroundColor: [
-      'rgb(255, 99, 132)',
-      'rgb(54, 162, 235)',
-      'rgb(255, 205, 86)'
-    ],
+    label: 'Paper',
+    data: {!! $value_quartile !!},
     hoverOffset: 4
   }]
 };
 const config2 = {
-  type: 'pie',
+  type: 'doughnut',
   data: data2,
 };
 const piechart =new Chart(ctx2, config2);
@@ -79,19 +71,10 @@ const piechart =new Chart(ctx2, config2);
 const ctx3 = document.getElementById('dougnatchart');
 
 const data3 = {
-  labels: [
-    'Red',
-    'Blue',
-    'Yellow'
-  ],
+  labels: {!! $label_jenis !!},
   datasets: [{
-    label: 'My First Dataset',
-    data: [300, 50, 100],
-    backgroundColor: [
-      'rgb(255, 99, 132)',
-      'rgb(54, 162, 235)',
-      'rgb(255, 205, 86)'
-    ],
+    label: 'Paper',
+    data: {!! $value_jenis !!},
     hoverOffset: 4
   }]
 };
@@ -106,26 +89,37 @@ const dougnatchart =new Chart(ctx3, config3);
 {{-- LINE CHART --}}
 <script>
     const ctx = document.getElementById('linechart');
-    const labels = ["Q1", 'Q2', 'Q3', 'Q4'];
     const data = {
-    labels: labels,
+    labels: [{{$label}}],
     datasets: [
         {
-        label: 'HKI',
-        data: ["0",'2','3',"4",'4','5']
+        label: 'PAPER',
+        data: [{!! $paper_count_by_year !!}]
         },
         {
-        label: 'PUBLIKASI',
-        data: ["2",'4','10',100]
+        label: 'HKI',
+        data: [{!! $hki_count_by_year !!}]
+        },
+        {
+        label: 'RESEARCH',
+        data: [{!! $research_count_by_year !!}]
         }
     ]
     };
 
     const config = {
-    type: 'line',
+    type: 'bar',
     data: data,
     options: {
         responsive: true,
+        scales: {
+            x: {
+                stacked: true,
+            },
+            y: {
+                stacked: true
+            }
+        },
         plugins: {
         legend: {
             position: 'top',
@@ -143,7 +137,8 @@ const dougnatchart =new Chart(ctx3, config3);
             text: 'Grafik Jumlah Riset & Inovasi per Triwulan',
         }
         }
-    }}
+    }
+}
 
     const chartline = new Chart(ctx, config);
 </script>

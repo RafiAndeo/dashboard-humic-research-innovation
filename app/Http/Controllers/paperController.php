@@ -16,10 +16,55 @@ use Illuminate\Support\Facades\Auth;
 
 class paperController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data = paper::all();
-        return view('publikasi.index', ['data' => $data]);
+        $data = paper::query();
+        $data_count = paper::query();
+        $paper_jenis = paper::select('jenis', DB::raw('count(*) as total'))->groupBy('jenis');
+        $tahun = paper::select('tahun', DB::raw('count(*) as total'))->groupBy('tahun');
+
+        if ($request->has('quartile') && $request->quartile != 'all') {
+            $data = $data->where('quartile', $request->quartile);
+
+            $paper_jenis = $paper_jenis->where('quartile', $request->quartile);
+            $tahun = $tahun->where('quartile', $request->quartile);
+            $data_count = $data_count->where('quartile', $request->quartile);
+        }
+
+        if ($request->has('tahun') && $request->tahun != 'all') {
+            $data = $data->where('tahun', $request->tahun);
+
+            $paper_jenis = $paper_jenis->where('tahun', $request->tahun);
+            $tahun = $tahun->where('tahun', $request->tahun);
+            $data_count = $data_count->where('tahun', $request->tahun);
+        }
+
+        $data = $data->get();
+        $data_count = $data_count->count();
+
+        $paper_jenis = $paper_jenis->get();
+        $label_jenis = $paper_jenis->pluck('jenis');
+        $total_jenis = $paper_jenis->pluck('total');
+
+        $tahun = $tahun->get();
+        $label = $tahun->pluck('tahun');
+        $total = $tahun->pluck('total');
+
+        $quartile_option = paper::select('quartile')->distinct()->pluck('quartile');
+        $tahun_option = paper::select('tahun')->distinct()->pluck('tahun');
+
+        return view('publikasi.index', [
+            'data' => $data,
+            'label_jenis' => $label_jenis,
+            'total_jenis' => $total_jenis,
+            'count' => $data_count,
+            'label' => $label,
+            'total' => $total,
+            'quartile' => $quartile_option,
+            'tahun' => $tahun_option,
+            'quartile_selected' => $request->quartile,
+            'tahun_selected' => $request->tahun,
+        ]);
     }
 
     public function index_admin()
@@ -41,7 +86,15 @@ class paperController extends Controller
         // tahun diterima di pisah dengan 1 array
         $label = $tahun->pluck('tahun');
         $total = $tahun->pluck('total');
-        return view('publikasi.input_index', ['data' => $data, 'count' => $data_count, 'label' => $label, 'total' => $total]);
+
+        $paper_jenis = paper::select('jenis', DB::raw('count(*) as total'))
+            ->groupBy('jenis')
+            ->get();
+
+        $label_jenis = $paper_jenis->pluck('jenis');
+        $total_jenis = $paper_jenis->pluck('total');
+
+        return view('publikasi.input_index', ['data' => $data, 'count' => $data_count, 'label' => $label, 'total' => $total, 'label_jenis' => $label_jenis, 'total_jenis' => $total_jenis]);
     }
 
     public function create()

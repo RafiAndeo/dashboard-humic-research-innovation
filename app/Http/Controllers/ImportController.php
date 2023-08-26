@@ -16,7 +16,6 @@ class ImportController extends Controller
     public function import_all()
     {
         Excel::import(new HkiImport, 'hki.xlsx', 'public');
-        //Excel::import(new MemberImport, 'member.xlsx', 'public');
         Excel::import(new PaperImport, 'paper.xlsx', 'public');
         Excel::import(new PartnerImport, 'partner.xlsx', 'public');
         Excel::import(new ResearchImport, 'research.xlsx', 'public');
