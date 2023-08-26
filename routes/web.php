@@ -6,6 +6,8 @@ use App\Http\Controllers\paperController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\researchController;
 use App\Http\Controllers\ImportController;
+use App\Models\paper;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,44 +26,102 @@ Route::get('/token', function () {
 });
 
 Route::get('/', function () {
-    return view('dashboard');
+    // ->where('isVerified', '=', 1)
+    $paper_count = DB::table('paper')->count();
+    $research_count = DB::table('research')->count();
+    $hki_count = DB::table('hki')->count();
+    $member_count = DB::table('member')->count();
+
+    $raw_paper = DB::table('paper')->select('tahun')->get();
+    $raw_research = DB::table('research')->select('tahun_diterima')->get();
+    $raw_hki = DB::table('hki')->select('tahun')->get();
+
+    $paper = [];
+    $research = [];
+    $hki = [];
+
+    foreach ($raw_paper as $p) {
+        $paper[] = $p->tahun;
+    }
+
+    foreach ($raw_research as $r) {
+        $research[] = $r->tahun_diterima;
+    }
+
+    foreach ($raw_hki as $h) {
+        $hki[] = $h->tahun;
+    }
+
+    $label = array_unique(array_merge($paper, $research, $hki));
+    sort($label);
+
+
+    $paper_count_by_year = [];
+    $research_count_by_year = [];
+    $hki_count_by_year = [];
+
+    foreach ($label as $l) {
+        $paper_count_by_year[] = DB::table('paper')->where('tahun', $l)->count();
+        $research_count_by_year[] = DB::table('research')->where('tahun_diterima', $l)->count();
+        $hki_count_by_year[] = DB::table('hki')->where('tahun', $l)->count();
+    }
+
+    // to string
+    $label = implode(",", $label);
+    $paper_count_by_year = implode(",", $paper_count_by_year);
+    $research_count_by_year = implode(",", $research_count_by_year);
+    $hki_count_by_year = implode(",", $hki_count_by_year);
+
+    $paper_quartile = paper::select('quartile', DB::raw('count(*) as total'))
+        ->groupBy('quartile')
+        ->get();
+    $label_quartile = $paper_quartile->pluck('quartile');
+    $value_quartile = $paper_quartile->pluck('total');
+
+    $paper_jenis = paper::select('jenis', DB::raw('count(*) as total'))
+        ->groupBy('jenis')
+        ->get();
+    $label_jenis = $paper_jenis->pluck('jenis');
+    $value_jenis = $paper_jenis->pluck('total');
+
+    // dd($label);
+
+    return view('dashboard', [
+        'paper_count' => $paper_count,
+        'research_count' => $research_count,
+        'hki_count' => $hki_count,
+        'member_count' => $member_count,
+        'label' => $label,
+        'paper_count_by_year' => $paper_count_by_year,
+        'research_count_by_year' => $research_count_by_year,
+        'hki_count_by_year' => $hki_count_by_year,
+        'label_quartile' => $label_quartile,
+        'value_quartile' => $value_quartile,
+        'label_jenis' => $label_jenis,
+        'value_jenis' => $value_jenis,
+    ]);
 })->name('dashboard');
 
 Route::get('/hki', [HKIController::class, 'index'])->name('hki.index');
 // Route::get('/hki/{id}', [HKIController::class, 'show'])->name('hki.show');
 Route::get('/hki/input', [HKIController::class, 'index_admin'])->name('hki.index_admin')->middleware('auth');
-;
 Route::get('/hki/input/add', [HKIController::class, 'create'])->name('hki.create')->middleware('auth');
-;
 Route::post('/hki/input/add', [HKIController::class, 'store'])->name('hki.store')->middleware('auth');
-;
 Route::get('/hki/input/edit/{id}', [HKIController::class, 'edit'])->name('hki.edit')->middleware('auth');
-;
 Route::put('/hki/input/{id}', [HKIController::class, 'update'])->name('hki.update')->middleware('auth');
-;
 Route::delete('/hki/input/{id}', [HKIController::class, 'destroy'])->name('hki.destroy')->middleware('auth');
-;
 // member hki
 Route::get('/hki/input/add_member_to_hki/{id}', [HKIController::class, 'add_member_to_hki_view'])->name('hki.add_member_to_hki_view')->middleware('auth');
-;
 Route::post('/hki/input/add_member_to_hki', [HKIController::class, 'add_member_to_hki'])->name('hki.add_member_to_hki')->middleware('auth');
-;
 Route::delete('/hki/input/{hki_id}/{member_id}', [HKIController::class, 'delete_member_from_hki'])->name('hki.delete_member_from_hki')->middleware('auth');
-;
 Route::get('/hki/input/{id}/members', [HKIController::class, 'find_members_of_hki'])->name('hki.find_members_of_hki')->middleware('auth');
-;
 // partner hki
 Route::get('/hki/input/add_partner_to_hki/{id}', [HKIController::class, 'add_partner_to_hki_view'])->name('hki.add_partner_to_hki_view')->middleware('auth');
-;
 Route::post('/hki/input/add_partner_to_hki', [HKIController::class, 'add_partner_to_hki'])->name('hki.add_partner_to_hki')->middleware('auth');
-;
 Route::delete('/hki/input/partner/{hki_id}/{partner_id}', [HKIController::class, 'delete_partner_from_hki'])->name('hki.delete_partner_from_hki')->middleware('auth');
-;
 Route::get('/hki/input/{id}/partners', [HKIController::class, 'find_partners_of_hki'])->name('hki.find_partners_of_hki')->middleware('auth');
-;
 // verify hki
-Route::get('/hki/input/verify/{id}', [HKIController::class, 'verifikasi'])->name('hki.verifikasi')->middleware('auth');
-;
+Route::get('/hki/input/verify/{id}', [HKIController::class, 'verifikasi'])->name('hki.verifikasi')->middleware('auth');;
 // excel
 Route::get('/hki/export', [HKIController::class, 'hkiexport'])->name('hki.export');
 Route::post('/hki/import', [HKIController::class, 'hkiimport'])->name('hki.import')->middleware('auth');

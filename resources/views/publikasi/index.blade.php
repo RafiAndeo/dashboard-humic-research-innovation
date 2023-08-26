@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('title')
-Publikasi
+Paper
 @endsection
 
 @section('head')
@@ -11,11 +11,11 @@ Publikasi
 @section('content')
     <div class="flex space-x-5">
         <div class="w-3/12 space-y-5">
-            <x-card title="Research" value="30"/>
+            <x-card title="Paper" :value="$count"/>
             <div class="bg-white flex justify-center py-8 rounded">
                 <div class="w-10/12">
                     <div class="mb-3 text-sm space-y-2">
-                        <div class="font-medium">Jumlah Hasil Research Pertahun</div>
+                        <div class="font-medium">Jumlah Hasil Paper Pertahun</div>
                     </div>
                     <canvas id="dougnatchart"></canvas>
                 </div>
@@ -24,100 +24,93 @@ Publikasi
         <div class="w-9/12">
             <div class="bg-white rounded py-8 px-5">
                 <div class="mb-3 text-sm space-y-2">
-                    <div class="font-medium">Grafik Jumlah Riset & Inovasi per Triwulan</div>
-                    <div>Tahun 2023</div>
+                    <div class="font-medium">Grafik Jenis Riset</div>
+                    <div>Tahun
+                        @if($quartile_selected)
+                        {{$tahun_selected}}
+                        @else
+                        2023
+                        @endif
+                    </div>
                 </div>
                 <canvas id="linechart"></canvas>
             </div>
         </div>
     </div>
 
-    <div class="flex mt-10 space-x-5">
-    </div>
 
-    <div class="bg-white p-3 rounded">
-        <table id="example" class="display " style="width:100%">
+    <div class="block mt-10 mb-2 font-bold text-lg">
+        Filter
+    </div>
+    <form action="paper" class="flex items-end w-full mb-10 space-x-5">
+        <div class="flex w-2/12">
+            <div class="w-full">
+                <label for="" class="block font-medium">Tahun</label>
+                <select name="tahun" class="w-full py-2 rounded block" id="">
+                    {{-- get request tahun --}}
+                    @if($quartile_selected)
+                    <option value="{{$tahun_selected}}">{{$tahun_selected}}</option>
+                    @endif
+                    <option value="all">ALL</option>
+                    @foreach ($tahun as $a)
+                    <option value="{{$a}}">{{$a}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        <div class="flex w-2/12">
+            <div class="w-full">
+                <label for="" class="block font-medium">Quartile</label>
+                <select name="quartile" class="w-full py-2 rounded block" id="">
+                    {{-- get request quartile --}}
+                    @if($quartile_selected)
+                    <option value="{{$quartile_selected}}">{{$quartile_selected}}</option>
+                    @endif
+                    <option value="all">ALL</option>
+                    @foreach ($quartile as $a)
+                    <option value="{{$a}}">{{$a}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        <div>
+            <button type="submit" class="bg-blue-500 text-white px-5 py-2 rounded">Filter</button>
+        </div>
+    </form>
+
+    <div class="bg-white p-3 rounded w-full">
+        <table id="example" class="display nowrap overflow-auto" style="width:100%">
             <thead>
                 <tr>
+                    <th>No</th>
                     <th>Judul</th>
-                    <th>Tahun Diterima</th>
-                    <th>Tahun Berakhir</th>
-                    <th>TKT</th>
-                    <th>Grant</th>
-                    <th>Skema</th>
-                    <th>Tipe Pendanaan</th>
-                    <th>Pendanaan External</th>
-                    <th>Tipe External</th>
-                    <th>Lama Penelitian</th>
-                    <th>Keterangan</th>
+                    <th>Jenis</th>
+                    <th>Nama Jurnal</th>
+                    <th>Issue</th>
+                    <th>Volume</th>
+                    <th>Tahun</th>
+                    <th>Quartile</th>
+                    <th>Index</th>
+                    <th>Link</th>
                 </tr>
             </thead>
             <tbody>
+                <?php  $nomor=1; ?>
+                @foreach ($data as $d)
                 <tr>
-                    <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita, itaque.</td>
-                    <td>System Architect</td>
-                    <td>Edinburgh</td>
-                    <td>61</td>
-                    <td>2011-04-25</td>
-                    <td>$320,800</td>
-                    <td>$320,800</td>
-                    <td>$320,800</td>
-                    <td>$320,800</td>
-                    <td>$320,800</td>
-                    <td>$320,800</td>
+                    <td>{{$nomor}}</td>
+                    <td>{{$d->judul}}</td>
+                    <td>{{$d->jenis}}</td>
+                    <td>{{$d->nama_jurnal}}</td>
+                    <td>{{$d->issue}}</td>
+                    <td>{{$d->volume}}</td>
+                    <td>{{$d->tahun}}</td>
+                    <td>{{$d->quartile}}</td>
+                    <td>{{$d->index}}</td>
+                    <td>{{$d->link}}</td>
                 </tr>
-                <tr>
-                    <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita, itaque.</td>
-                    <td>System Architect</td>
-                    <td>Edinburgh</td>
-                    <td>61</td>
-                    <td>2011-04-25</td>
-                    <td>$320,800</td>
-                    <td>$320,800</td>
-                    <td>$320,800</td>
-                    <td>$320,800</td>
-                    <td>$320,800</td>
-                    <td>$320,800</td>
-                </tr>
-                <tr>
-                    <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita, itaque.</td>
-                    <td>System Architect</td>
-                    <td>Edinburgh</td>
-                    <td>61</td>
-                    <td>2011-04-25</td>
-                    <td>$320,800</td>
-                    <td>$320,800</td>
-                    <td>$320,800</td>
-                    <td>$320,800</td>
-                    <td>$320,800</td>
-                    <td>$320,800</td>
-                </tr>
-                <tr>
-                    <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita, itaque.</td>
-                    <td>System Architect</td>
-                    <td>Edinburgh</td>
-                    <td>61</td>
-                    <td>2011-04-25</td>
-                    <td>$320,800</td>
-                    <td>$320,800</td>
-                    <td>$320,800</td>
-                    <td>$320,800</td>
-                    <td>$320,800</td>
-                    <td>$320,800</td>
-                </tr>
-                <tr>
-                    <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita, itaque.</td>
-                    <td>System Architect</td>
-                    <td>Edinburgh</td>
-                    <td>61</td>
-                    <td>2011-04-25</td>
-                    <td>$320,800</td>
-                    <td>$320,800</td>
-                    <td>$320,800</td>
-                    <td>$320,800</td>
-                    <td>$320,800</td>
-                    <td>$320,800</td>
-                </tr>
+                <?php $nomor++; ?>
+                @endforeach
             </tbody>
         </table>
     </div>
@@ -128,7 +121,9 @@ Publikasi
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>new DataTable('#example');</script>
+<script>$('#example').dataTable( {
+    "scrollX": true
+  } );</script>
 
 {{-- PIE CHART --}}
 <script>
@@ -165,19 +160,10 @@ const piechart =new Chart(ctx2, config2);
 const ctx3 = document.getElementById('dougnatchart');
 
 const data3 = {
-  labels: [
-    'Red',
-    'Blue',
-    'Yellow'
-  ],
+  labels: {{$label}},
   datasets: [{
-    label: 'My First Dataset',
-    data: [300, 50, 100],
-    backgroundColor: [
-      'rgb(255, 99, 132)',
-      'rgb(54, 162, 235)',
-      'rgb(255, 205, 86)'
-    ],
+    label: 'Jumlah Hasil Research Pertahun',
+    data: {{$total}},
     hoverOffset: 4
   }]
 };
@@ -194,21 +180,17 @@ const dougnatchart =new Chart(ctx3, config3);
     const ctx = document.getElementById('linechart');
     const labels = ["Q1", 'Q2', 'Q3', 'Q4'];
     const data = {
-    labels: labels,
-    datasets: [
-        {
-        label: 'HKI',
-        data: ["0",'2','3',"4",'4','5']
-        },
-        {
-        label: 'PUBLIKASI',
-        data: ["2",'4','10',100]
-        }
-    ]
+    labels: {!! $label_jenis !!},
+    datasets: [{
+        label: 'Paper',
+        data: {!! $total_jenis !!},
+        hoverOffset: 4
+    }]
+
     };
 
     const config = {
-    type: 'line',
+    type: 'bar',
     data: data,
     options: {
         responsive: true,
