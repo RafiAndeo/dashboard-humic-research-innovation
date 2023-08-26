@@ -16,11 +16,60 @@ use Illuminate\Support\Facades\Auth;
 
 class researchController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $research = research::all();
-        $research_count = research::count();
-        return view('research.index', ['data' => $research, 'count' => $research_count]);
+        $research = research::query();
+        $riset_tahun_diterima = research::select('tahun_diterima', DB::raw('count(*) as total'))->groupBy('tahun_diterima');
+        $riset_tipe_pendanaan = research::select('tipe_pendanaan', DB::raw('count(*) as total'))->groupBy('tipe_pendanaan');
+
+        $tahun_diterima_option = research::select('tahun_diterima')->distinct()->pluck('tahun_diterima');
+        $tahun_berakhir_option = research::select('tahun_berakhir')->distinct()->pluck('tahun_berakhir');
+        $tipe_pendanaan_option = research::select('tipe_pendanaan')->distinct()->pluck('tipe_pendanaan');
+
+        if ($request->has('tahun_diterima') && $request->tahun_diterima != 'all') {
+            $research = $research->where('tahun_diterima', (int)$request->tahun_diterima);
+            $riset_tahun_diterima = $riset_tahun_diterima->where('tahun_diterima', (int)$request->tahun_diterima);
+            $riset_tipe_pendanaan = $riset_tipe_pendanaan->where('tahun_diterima', (int)$request->tahun_diterima);
+        }
+
+        if ($request->has('tahun_berakhir') && $request->tahun_berakhir != 'all') {
+            $research = $research->where('tahun_berakhir', (int)$request->tahun_berakhir);
+            $riset_tahun_diterima = $riset_tahun_diterima->where('tahun_berakhir', (int)$request->tahun_berakhir);
+            $riset_tipe_pendanaan = $riset_tipe_pendanaan->where('tahun_berakhir', (int)$request->tahun_berakhir);
+        }
+
+        if ($request->has('tipe_pendanaan') && $request->tipe_pendanaan != 'all') {
+            $research = $research->where('tipe_pendanaan', $request->tipe_pendanaan);
+            $riset_tahun_diterima = $riset_tahun_diterima->where('tipe_pendanaan', $request->tipe_pendanaan);
+            $riset_tipe_pendanaan = $riset_tipe_pendanaan->where('tipe_pendanaan', $request->tipe_pendanaan);
+        }
+        $research = $research->get();
+        $research_count = $research->count();
+
+        $riset_tahun_diterima = $riset_tahun_diterima->get();
+        $label_tahun_diterima = $riset_tahun_diterima->pluck('tahun_diterima');
+        $total_tahun_diterima = $riset_tahun_diterima->pluck('total');
+
+        $riset_tipe_pendanaan = $riset_tipe_pendanaan->get();
+        $label_tipe_pendanaan = $riset_tipe_pendanaan->pluck('tipe_pendanaan');
+        $total_tipe_pendanaan = $riset_tipe_pendanaan->pluck('total');
+
+
+
+        return view('research.index', [
+            'data' => $research,
+            'count' => $research_count,
+            'tahun_diterima_option' => $tahun_diterima_option,
+            'tahun_berakhir_option' => $tahun_berakhir_option,
+            'tipe_pendanaan_option' => $tipe_pendanaan_option,
+            'tahun_diterima_selected' => $request->tahun_diterima,
+            'tahun_berakhir_selected' => $request->tahun_berakhir,
+            'tipe_pendanaan_selected' => $request->tipe_pendanaan,
+            'label_tahun_diterima' => $label_tahun_diterima,
+            'total_tahun_diterima' => $total_tahun_diterima,
+            'label_tipe_pendanaan' => $label_tipe_pendanaan,
+            'total_tipe_pendanaan' => $total_tipe_pendanaan,
+        ]);
     }
 
     public function index_admin()

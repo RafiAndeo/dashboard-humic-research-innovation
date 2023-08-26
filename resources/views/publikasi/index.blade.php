@@ -24,14 +24,10 @@ Paper
         <div class="w-9/12">
             <div class="bg-white rounded py-8 px-5">
                 <div class="mb-3 text-sm space-y-2">
+                    @if($tahun_selected)
                     <div class="font-medium">Grafik Jenis Riset</div>
-                    <div>Tahun
-                        @if($quartile_selected)
-                        {{$tahun_selected}}
-                        @else
-                        2023
-                        @endif
-                    </div>
+                    <div>Tahun {{$tahun_selected}}</div>
+                    @endif
                 </div>
                 <canvas id="linechart"></canvas>
             </div>
