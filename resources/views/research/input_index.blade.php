@@ -15,7 +15,7 @@ Research
             <div class="bg-white flex justify-center py-8 rounded">
                 <div class="w-10/12">
                     <div class="mb-3 text-sm space-y-2">
-                        <div class="font-medium">Jumlah Hasil Research Pertahun</div>
+                        <div class="font-medium">Grafik Research Pertahun (Tahun Diterima)</div>
                     </div>
                     <canvas id="dougnatchart"></canvas>
                 </div>
@@ -24,8 +24,7 @@ Research
         <div class="w-9/12">
             <div class="bg-white rounded py-8 px-5">
                 <div class="mb-3 text-sm space-y-2">
-                    <div class="font-medium">Grafik Jumlah Riset & Inovasi per Triwulan</div>
-                    <div>Tahun 2023</div>
+                    <div class="font-medium">Grafik Tipe Pendanaan Reseach</div>
                 </div>
                 <canvas id="linechart"></canvas>
             </div>
@@ -129,35 +128,6 @@ $('#example').dataTable( {
 } );
 </script>
 
-{{-- PIE CHART --}}
-<script>
-const ctx2 = document.getElementById('piechart');
-const DATA_COUNT = 5;
-const NUMBER_CFG = {count: DATA_COUNT, min: 0, max: 100};
-
-const data2 = {
-  labels: [
-    'Red',
-    'Blue',
-    'Yellow'
-  ],
-  datasets: [{
-    label: 'My First Dataset',
-    data: [300, 50, 100],
-    backgroundColor: [
-      'rgb(255, 99, 132)',
-      'rgb(54, 162, 235)',
-      'rgb(255, 205, 86)'
-    ],
-    hoverOffset: 4
-  }]
-};
-const config2 = {
-  type: 'pie',
-  data: data2,
-};
-const piechart =new Chart(ctx2, config2);
-</script>
 
 {{-- dougnatchart --}}
 <script>
@@ -168,11 +138,6 @@ const data3 = {
   datasets: [{
     label: 'Jumlah Hasil Research Pertahun',
     data: {{$tahun_diterima_1}},
-    backgroundColor: [
-      'rgb(255, 99, 132)',
-      'rgb(54, 162, 235)',
-      'rgb(255, 205, 86)'
-    ],
     hoverOffset: 4
   }]
 };
@@ -187,23 +152,19 @@ const dougnatchart =new Chart(ctx3, config3);
 {{-- LINE CHART --}}
 <script>
     const ctx = document.getElementById('linechart');
-    const labels = ["Q1", 'Q2', 'Q3', 'Q4'];
+    const labels = {!! $label_tipe_pendanaan !!};
     const data = {
     labels: labels,
     datasets: [
         {
-        label: 'HKI',
-        data: ["0",'2','3',"4",'4','5']
+        label: 'Research',
+        data: {!! $total_tipe_pendanaan !!},
         },
-        {
-        label: 'PUBLIKASI',
-        data: ["2",'4','10',100]
-        }
     ]
     };
 
     const config = {
-    type: 'line',
+    type: 'bar',
     data: data,
     options: {
         responsive: true,

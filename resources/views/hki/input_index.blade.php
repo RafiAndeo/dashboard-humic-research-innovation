@@ -115,50 +115,16 @@ $('#example').dataTable( {
 } );
 </script>
 
-{{-- PIE CHART --}}
-<script>
-const ctx2 = document.getElementById('piechart');
-const DATA_COUNT = 5;
-const NUMBER_CFG = {count: DATA_COUNT, min: 0, max: 100};
-
-const data2 = {
-  labels: [
-    'Red',
-    'Blue',
-    'Yellow'
-  ],
-  datasets: [{
-    label: 'My First Dataset',
-    data: [300, 50, 100],
-    backgroundColor: [
-      'rgb(255, 99, 132)',
-      'rgb(54, 162, 235)',
-      'rgb(255, 205, 86)'
-    ],
-    hoverOffset: 4
-  }]
-};
-const config2 = {
-  type: 'pie',
-  data: data2,
-};
-const piechart =new Chart(ctx2, config2);
-</script>
 
 {{-- dougnatchart --}}
 <script>
 const ctx3 = document.getElementById('dougnatchart');
 
 const data3 = {
-  labels: {!!$label!!},
+  labels: {!!$label_tahun!!},
   datasets: [{
     label: 'Jumlah Hasil Research Pertahun',
-    data: {!!$total!!},
-    backgroundColor: [
-      'rgb(255, 99, 132)',
-      'rgb(54, 162, 235)',
-      'rgb(255, 205, 86)'
-    ],
+    data: {!!$total_tahun!!},
     hoverOffset: 4
   }]
 };
@@ -173,23 +139,19 @@ const dougnatchart =new Chart(ctx3, config3);
 {{-- LINE CHART --}}
 <script>
     const ctx = document.getElementById('linechart');
-    const labels = ["Q1", 'Q2', 'Q3', 'Q4'];
+    const labels = {!!$label!!};
     const data = {
     labels: labels,
     datasets: [
         {
         label: 'HKI',
-        data: ["0",'2','3',"4",'4','5']
+        data: {!!$total!!},
         },
-        {
-        label: 'PUBLIKASI',
-        data: ["2",'4','10',100]
-        }
     ]
     };
 
     const config = {
-    type: 'line',
+    type: 'bar',
     data: data,
     options: {
         responsive: true,

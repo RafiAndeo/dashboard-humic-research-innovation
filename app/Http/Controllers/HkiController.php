@@ -16,10 +16,56 @@ use Illuminate\Support\Facades\DB;
 
 class HKIController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data = hki::all();
-        return view('hki.index', ['data' => $data]);
+        $data = hki::query();
+
+        $tahun_option = hki::select('tahun')->distinct()->pluck('tahun');
+        $jenis_option = hki::select('jenis')->distinct()->pluck('jenis');
+
+        $hki_tahun = hki::select('tahun', DB::raw('count(*) as total'))->groupBy('tahun');
+        $hki_jenis = hki::select('jenis', DB::raw('count(*) as total'))->groupBy('jenis');
+
+        if ($request->has('tahun') && $request->tahun != 'all') {
+            $data = $data->where('tahun', $request->tahun);
+            $hki_tahun = $hki_tahun->where('tahun', $request->tahun);
+            $hki_jenis = $hki_jenis->where('tahun', $request->tahun);
+        }
+
+        if ($request->has('jenis') && $request->jenis != 'all') {
+            $data = $data->where('jenis', $request->jenis);
+            $hki_tahun = $hki_tahun->where('jenis', $request->jenis);
+            $hki_jenis = $hki_jenis->where('jenis', $request->jenis);
+        }
+
+        $data = $data->get();
+        $count = $data->count();
+
+        $hki_tahun = $hki_tahun->get();
+        $label_tahun = $hki_tahun->pluck('tahun');
+        $total_tahun = $hki_tahun->pluck('total');
+
+        $hki_jenis = $hki_jenis->get();
+        $label_jenis = $hki_jenis->pluck('jenis');
+        $total_jenis = $hki_jenis->pluck('total');
+
+
+
+        return view('hki.index', [
+            'data' => $data,
+            'count' => $count,
+
+            'tahun_option' => $tahun_option,
+            'jenis_option' => $jenis_option,
+            'tahun_selected' => $request->tahun,
+            'jenis_selected' => $request->jenis,
+
+            'label_tahun' => $label_tahun,
+            'total_tahun' => $total_tahun,
+
+            'label_jenis' => $label_jenis,
+            'total_jenis' => $total_jenis,
+        ]);
     }
 
     public function index_admin()
@@ -38,7 +84,15 @@ class HKIController extends Controller
             ->get();
         $label = $raw->pluck('jenis');
         $total = $raw->pluck('total');
-        return view('hki.input_index', ['data' => $data, 'count' => $count, 'label' => $label, 'total' => $total]);
+
+        $tahun = hki::select('tahun', DB::raw('count(*) as total'))
+            ->groupBy('tahun')
+            ->get();
+        $label_tahun = $tahun->pluck('tahun');
+        $total_tahun = $tahun->pluck('total');
+
+
+        return view('hki.input_index', ['data' => $data, 'count' => $count, 'label' => $label, 'total' => $total, 'label_tahun' => $label_tahun, 'total_tahun' => $total_tahun]);
     }
 
     public function create()
