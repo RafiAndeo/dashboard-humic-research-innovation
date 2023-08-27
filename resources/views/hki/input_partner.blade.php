@@ -28,7 +28,7 @@ Add Data HKI Partner
                 <label for="partner_id" class="">Partner</label>
                 <select name="partner_id" value="{{old('partner_id')}}" class="w-full py-2 px-4 rounded border border-black" placeholder="Partner" required>
                     @foreach ($partner as $m)
-                        <option value="{{$m->id}}">{{$m->nama_partner}} </option>
+                        <option value="{{$m->id}}">{{$m->nama_partner}} ({{$m->institusi}} - {{$m->jabatan}} - {{$m->negara}}) </option>
                     @endforeach
                 </select>
             </div>
