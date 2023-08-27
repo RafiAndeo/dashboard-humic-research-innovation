@@ -9,7 +9,7 @@
   <title>Research & Innovation - HUMIC RC</title>
 </head>
 <body class="font-poppins">
-    <div class="w-full bg-red-primary py-1 fixed">
+    <div class="w-full bg-red-primary py-1 fixed z-10">
         <div class="flex justify-between px-10 items-center">
             <div class="text-xl font-bold w-2/12 text-white">Research and Innovation HUMIC RC</div>
             @guest

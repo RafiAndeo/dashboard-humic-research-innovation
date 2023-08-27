@@ -13,10 +13,57 @@ use Psy\CodeCleaner\FunctionReturnInWriteContextPass;
 
 class MemberController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data = member::all();
-        return view('anggota.index', ['data' => $data]);
+        $data = member::query();
+        $member_fakultas = member::select('fakultas', DB::raw('count(*) as total'))
+            ->groupBy('fakultas');
+        $member_pendidikan = member::select('pendidikan', DB::raw('count(*) as total'))
+            ->groupBy('pendidikan');
+
+
+
+        $fakultas_option = member::select('fakultas')->distinct()->pluck('fakultas');
+        $pendidikan_option = member::select('pendidikan')->distinct()->pluck('pendidikan');
+
+        if ($request->has('fakultas') && $request->fakultas != 'all') {
+            $data = $data->where('fakultas', $request->fakultas);
+            $member_fakultas = $member_fakultas->where('fakultas', $request->fakultas);
+            $member_pendidikan = $member_pendidikan->where('fakultas', $request->fakultas);
+        }
+
+        if ($request->has('pendidikan') && $request->pendidikan != 'all') {
+            $data = $data->where('pendidikan', $request->pendidikan);
+            $member_fakultas = $member_fakultas->where('pendidikan', $request->pendidikan);
+            $member_pendidikan = $member_pendidikan->where('pendidikan', $request->pendidikan);
+        }
+
+        $count = $data->count();
+        $data = $data->get();
+
+        $member_fakultas = $member_fakultas->get();
+        $label_fakultas = $member_fakultas->pluck('fakultas');
+        $total_fakultas = $member_fakultas->pluck('total');
+
+        $member_pendidikan = $member_pendidikan->get();
+        $label_pendidikan = $member_pendidikan->pluck('pendidikan');
+        $total_pendidikan = $member_pendidikan->pluck('total');
+
+
+
+
+        return view('anggota.index', [
+            'data' => $data,
+            'count' => $count,
+            'label_fakultas' => $label_fakultas,
+            'total_fakultas' => $total_fakultas,
+            'fakultas_option' => $fakultas_option,
+            'pendidikan_option' => $pendidikan_option,
+            'fakultas_selected' => $request->fakultas,
+            'pendidikan_selected' => $request->pendidikan,
+            'label_pendidikan' => $label_pendidikan,
+            'total_pendidikan' => $total_pendidikan,
+        ]);
     }
 
     public function index_admin()

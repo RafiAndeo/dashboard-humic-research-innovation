@@ -90,7 +90,21 @@ class researchController extends Controller
         // tahun diterima di pisah dengan 1 array
         $tahun_diterima_0 = $tahun_diterima->pluck('tahun_diterima');
         $tahun_diterima_1 = $tahun_diterima->pluck('total');
-        return view('research.input_index', ['data' => $research, 'count' => $research_count, 'tahun_diterima_0' => $tahun_diterima_0, 'tahun_diterima_1' => $tahun_diterima_1]);
+
+        $riset_tipe_pendanaan = research::select('tipe_pendanaan', DB::raw('count(*) as total'))->groupBy('tipe_pendanaan');
+
+        $riset_tipe_pendanaan = $riset_tipe_pendanaan->get();
+        $label_tipe_pendanaan = $riset_tipe_pendanaan->pluck('tipe_pendanaan');
+        $total_tipe_pendanaan = $riset_tipe_pendanaan->pluck('total');
+
+        return view('research.input_index', [
+            'data' => $research,
+            'count' => $research_count,
+            'tahun_diterima_0' => $tahun_diterima_0,
+            'tahun_diterima_1' => $tahun_diterima_1,
+            'label_tipe_pendanaan' => $label_tipe_pendanaan,
+            'total_tipe_pendanaan' => $total_tipe_pendanaan,
+        ]);
     }
 
     public function create()
