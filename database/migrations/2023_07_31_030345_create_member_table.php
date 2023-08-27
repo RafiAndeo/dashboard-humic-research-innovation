@@ -20,7 +20,6 @@ return new class extends Migration {
             $table->string('jabatan');
             $table->string('kelompok_keahlian');
             $table->string('email');
-            $table->string('photo');
             $table->string('membership');
             $table->string('status');
             $table->bigInteger('NIP');
@@ -29,6 +28,9 @@ return new class extends Migration {
             $table->rememberToken();
             $table->timestamps();
         });
+
+
+        DB::statement("ALTER TABLE member ADD photo LONGBLOB");
     }
 
     /**

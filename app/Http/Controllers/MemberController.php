@@ -10,6 +10,8 @@ use App\Imports\MemberImport;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Psy\CodeCleaner\FunctionReturnInWriteContextPass;
+use Illuminate\Support\Facades\Response;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class MemberController extends Controller
 {
@@ -116,7 +118,6 @@ class MemberController extends Controller
             'jabatan' => 'required',
             'kelompok_keahlian' => 'required',
             'email' => 'required',
-            'photo' => 'required',
             'membership' => 'required',
             'status' => 'required',
             'NIP' => 'required',
@@ -132,7 +133,6 @@ class MemberController extends Controller
         $data->jabatan = $request->jabatan;
         $data->kelompok_keahlian = $request->kelompok_keahlian;
         $data->email = $request->email;
-        $data->photo = $request->photo;
         $data->membership = $request->membership;
         $data->status = $request->status;
         $data->NIP = $request->NIP;
@@ -142,6 +142,39 @@ class MemberController extends Controller
         $data->save();
 
         return redirect()->route('member.index_admin')->with('success', 'Berhasil Menambahkan Data');
+    }
+
+    function insert_image(Request $request, $id)
+    {
+        $request->validate([
+            'photo' => 'required|image|max:2048'
+        ]);
+
+        $image_file = $request->photo;
+
+        $image = Image::make($image_file);
+
+        Response::make($image->encode('jpeg'));
+
+        $member = member::find($id);
+        $member->update([
+            "photo" => $image,
+        ]);
+
+        return $image;
+    }
+
+    function fetch_image($id)
+    {
+        $member = member::find($id);
+
+        $image_file = Image::make($member->photo);
+
+        $response = Response::make($image_file->encode('jpeg'));
+
+        $response->header('Content-Type', 'image/jpeg');
+
+        return $response;
     }
 
     public function login_index()
@@ -184,7 +217,6 @@ class MemberController extends Controller
             'jabatan' => 'required',
             'kelompok_keahlian' => 'required',
             'email' => 'required',
-            'photo' => 'required',
             'membership' => 'required',
             'status' => 'required',
             'NIP' => 'required',
@@ -199,7 +231,6 @@ class MemberController extends Controller
         $member->jabatan = $request->jabatan;
         $member->kelompok_keahlian = $request->kelompok_keahlian;
         $member->email = $request->email;
-        $member->photo = $request->photo;
         $member->membership = $request->membership;
         $member->status = $request->status;
         $member->NIP = $request->NIP;

@@ -23,7 +23,6 @@ class DatabaseSeeder extends Seeder
             'jabatan' => Str::random(10),
             'kelompok_keahlian' => Str::random(10),
             'email' => Str::random(10) . '@gmail.com',
-            'photo' => Str::random(10),
             'membership' => Str::random(10),
             'status' => Str::random(10),
             'NIP' => random_int(10000000, 99999999),

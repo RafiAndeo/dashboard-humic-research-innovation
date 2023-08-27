@@ -121,7 +121,8 @@ Route::post('/hki/input/add_partner_to_hki', [HKIController::class, 'add_partner
 Route::delete('/hki/input/partner/{hki_id}/{partner_id}', [HKIController::class, 'delete_partner_from_hki'])->name('hki.delete_partner_from_hki')->middleware('auth');
 Route::get('/hki/input/{id}/partners', [HKIController::class, 'find_partners_of_hki'])->name('hki.find_partners_of_hki')->middleware('auth');
 // verify hki
-Route::get('/hki/input/verify/{id}', [HKIController::class, 'verifikasi'])->name('hki.verifikasi')->middleware('auth');;
+Route::get('/hki/input/verify/{id}', [HKIController::class, 'verifikasi'])->name('hki.verifikasi')->middleware('auth');
+;
 // excel
 Route::get('/hki/export', [HKIController::class, 'hkiexport'])->name('hki.export');
 Route::post('/hki/import', [HKIController::class, 'hkiimport'])->name('hki.import')->middleware('auth');
@@ -199,3 +200,7 @@ Route::post('/paper/import', [paperController::class, 'paperimport'])->name('pap
 
 //import all
 Route::post('/importall', [ImportController::class, 'import_all']);
+
+//Store and fetch images
+Route::post('/member/store_image/{id}', [MemberController::class, 'insert_image']);
+Route::get('/member/fetch_image/{id}', [MemberController::class, 'fetch_image']);
