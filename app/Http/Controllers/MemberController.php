@@ -124,7 +124,6 @@ class MemberController extends Controller
             'role' => 'required',
             'password' => 'required'
         ]);
-
         $data = new member();
         $data->nama = $request->nama;
         $data->fakultas = $request->fakultas;

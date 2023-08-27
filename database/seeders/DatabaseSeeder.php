@@ -27,7 +27,22 @@ class DatabaseSeeder extends Seeder
             'status' => Str::random(10),
             'NIP' => random_int(10000000, 99999999),
             'password' => bcrypt('password'),
-            'role' => Str::random(10),
+            'role' => "admin",
+        ]);
+
+        DB::table('member')->insert([
+            'nama' => Str::random(10),
+            'fakultas' => Str::random(10),
+            'pendidikan' => Str::random(10),
+            'bidang_ilmu' => Str::random(10),
+            'jabatan' => Str::random(10),
+            'kelompok_keahlian' => Str::random(10),
+            'email' => Str::random(10) . '@gmail.com',
+            'membership' => Str::random(10),
+            'status' => Str::random(10),
+            'NIP' => random_int(10000000, 99999999),
+            'password' => bcrypt('password'),
+            'role' => "user",
         ]);
 
         DB::table('research')->insert([

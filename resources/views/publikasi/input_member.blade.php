@@ -28,11 +28,12 @@ Add Data Paper Member
                 <label for="member_id" class="">Member</label>
                 <select name="member_id" value="{{old('member_id')}}" class="w-full py-2 px-4 rounded border border-black" placeholder="Member" required>
                     @foreach ($member as $m)
-                        <option value="{{$m->id}}">{{$m->nama}} </option>
+                        <option value="{{$m->id}}">{{$m->nama}} (NIP: {{$m->NIP}})</option>
                     @endforeach
                 </select>
-                <input type="hidden" name="paper_id" value="{{$id}}">
             </div>
+            <x-role_member />
+            <input type="hidden" name="paper_id" value="{{$id}}">
             <div class="space-y-2">
                 <button type="submit" class="py-2 px-4 w-full bg-red-primary rounded text-white">Submit</button>
             </div>
@@ -47,6 +48,7 @@ Add Data Paper Member
                     <tr>
                         <th>No</th>
                         <th>Nama</th>
+                        <th>Role</th>
                         @if (Auth::user()->role == 'admin' ||  $data->isVerified == false)
                         <th>Action</th>
                         @endif
@@ -58,6 +60,7 @@ Add Data Paper Member
                     <tr>
                         <td>{{$nomor}}</td>
                         <td>{{$d->nama}}</td>
+                        <td>{{$d->role_member}}</td>
                         @if (Auth::user()->role == 'admin' ||  $data->isVerified == false)
                         <td>
                             <div class="flex space-x-3">

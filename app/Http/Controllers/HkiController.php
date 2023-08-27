@@ -142,9 +142,10 @@ class HKIController extends Controller
 
         $data->save();
 
-        if (Auth::user() && Auth::user()->role == 'user') {
+        if (Auth::user()->role != 'admin') {
             $hki_member = new member_hki;
             $hki_member->hki_id = $data->id;
+            $hki_member->role = $request->role;
             $hki_member->member_id = Auth::user()->id;
             $hki_member->save();
         }
@@ -209,6 +210,7 @@ class HKIController extends Controller
         $member = member::all();
         $hki_member = member_hki::join('member', 'member.id', '=', 'member_hki.member_id')
             ->where('hki_id', $id)
+            ->select('member.*', 'member_hki.*', 'member_hki.role as role_member')
             ->get();
         return view('hki.input_member', ['data' => $data, 'member' => $member, 'hki_member' => $hki_member, 'id' => $id]);
     }
@@ -240,6 +242,7 @@ class HKIController extends Controller
         $partner = partner::all();
         $hki_partner = partner_hki::join('partner', 'partner.id', '=', 'partner_hki.partner_id')
             ->where('hki_id', $id)
+            ->select('partner.*', 'partner_hki.*', 'partner_hki.role as role_partner')
             ->get();
         return view('hki.input_partner', ['data' => $data, 'partner' => $partner, 'hki_partner' => $hki_partner, 'id' => $id]);
     }
