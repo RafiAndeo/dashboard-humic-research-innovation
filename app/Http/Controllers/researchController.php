@@ -162,9 +162,10 @@ class researchController extends Controller
         $research->isVerified = false;
         $research->save();
 
-        if (Auth::user() && Auth::user()->role == 'user') {
+        if (Auth::user()->role != 'admin') {
             $research_member = new member_research;
             $research_member->research_id = $research->id;
+            $research_member->role = $request->role;
             $research_member->member_id = Auth::user()->id;
             $research_member->save();
         }
@@ -241,7 +242,10 @@ class researchController extends Controller
     {
         $research = research::find($id);
         $member = member::all();
-        $research_member = member_research::join('member', 'member.id', '=', 'member_research.member_id')->where('member_research.research_id', $id)->get();
+        $research_member = member_research::join('member', 'member.id', '=', 'member_research.member_id')
+            ->where('member_research.research_id', $id)
+            ->select('member.*', 'member_research.*', 'member_research.role as role_member')
+            ->get();
         return view('research.input_member', ['data' => $research, 'member' => $member, 'research_member' => $research_member, 'id' => $id]);
     }
 
@@ -270,7 +274,10 @@ class researchController extends Controller
     {
         $research = research::find($id);
         $partner = partner::all();
-        $research_partner = partner_research::join('partner', 'partner.id', '=', 'partner_research.partner_id')->where('partner_research.research_id', $id)->get();
+        $research_partner = partner_research::join('partner', 'partner.id', '=', 'partner_research.partner_id')
+            ->where('partner_research.research_id', $id)
+            ->select('partner.*', 'partner_research.*', 'partner_research.role as role_partner')
+            ->get();
         return view('research.input_partner', ['data' => $research, 'partner' => $partner, 'research_partner' => $research_partner, 'id' => $id]);
     }
 

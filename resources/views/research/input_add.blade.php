@@ -27,6 +27,9 @@ Add Data Research
                 <label for="judul" class="">Judul</label>
                 <input type="text" name="judul" value="{{old('judul')}}" class="w-full py-2 px-4 rounded border border-black" placeholder="Judul" required>
             </div>
+            @if (Auth::user()->role != 'admin')
+            <x-role_member />
+            @endif
             <div class="space-y-2">
                 <label for="tkt" class="">TKT</label>
                 <input type="number" name="tkt" value="{{old('tkt')}}" class="w-full py-2 px-4 rounded border border-black" placeholder="TKT" required>

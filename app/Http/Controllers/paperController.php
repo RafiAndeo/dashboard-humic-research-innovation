@@ -149,9 +149,10 @@ class paperController extends Controller
 
         $paper->save();
 
-        if (Auth::user()->role == 'user') {
+        if (Auth::user()->role != 'admin') {
             $member_paper = new member_paper;
             $member_paper->paper_id = $paper->id;
+            $member_paper->role = $request->role;
             $member_paper->member_id = Auth::user()->id;
             $member_paper->save();
         }
@@ -233,7 +234,7 @@ class paperController extends Controller
     {
         $data = paper::find($id);
         $member = member::all();
-        $paper_member = member_paper::join('member', 'member.id', '=', 'member_paper.member_id')->where('member_paper.paper_id', $id)->get();
+        $paper_member = member_paper::join('member', 'member.id', '=', 'member_paper.member_id')->where('member_paper.paper_id', $id)->select('member.*', 'member_paper.*', 'member_paper.role as role_member')->get();
         return view('publikasi.input_member', ['data' => $data, 'member' => $member, 'paper_member' => $paper_member, 'id' => $id]);
     }
 
@@ -262,7 +263,10 @@ class paperController extends Controller
     {
         $data = paper::find($id);
         $partner = partner::all();
-        $paper_partner = partner_paper::join('partner', 'partner.id', '=', 'partner_paper.partner_id')->where('partner_paper.paper_id', $id)->get();
+        $paper_partner = partner_paper::join('partner', 'partner.id', '=', 'partner_paper.partner_id')
+            ->where('partner_paper.paper_id', $id)
+            ->select('partner.*', 'partner_paper.*', 'partner_paper.role as role_partner')
+            ->get();
         return view('publikasi.input_partner', ['data' => $data, 'partner' => $partner, 'paper_partner' => $paper_partner, 'id' => $id]);
     }
 

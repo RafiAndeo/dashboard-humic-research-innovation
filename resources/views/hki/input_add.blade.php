@@ -23,6 +23,9 @@ Add Data HKI
                 <label for="judul" class="">Judul</label>
                 <input type="text" name="judul" value="{{old('judul')}}" class="w-full py-2 px-4 rounded border border-black" placeholder="Judul" required>
             </div>
+            @if (Auth::user()->role != 'admin')
+            <x-role_member />
+            @endif
             <div class="space-y-2">
                 <label for="jenis" class="">Jenis</label>
                 <select name="jenis" class="w-full py-2 px-4 rounded border border-black" placeholder="Jenis">

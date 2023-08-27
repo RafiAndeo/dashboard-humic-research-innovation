@@ -34,8 +34,9 @@ Add Data Research Member
                         <option value="{{$m->id}}">{{$m->nama_partner}} </option>
                     @endforeach
                 </select>
-                <input type="hidden" name="research_id" value="{{$id}}">
             </div>
+            <x-role_member />
+            <input type="hidden" name="research_id" value="{{$id}}">
             <div class="space-y-2">
                 <button type="submit" class="py-2 px-4 w-full bg-red-primary rounded text-white">Submit</button>
             </div>
@@ -50,6 +51,7 @@ Add Data Research Member
                     <tr>
                         <th>No</th>
                         <th>Nama</th>
+                        <th>Role</th>
                         @if (Auth::user()->role == 'admin' ||  $data->isVerified == false)
                         <th>Action</th>
                         @endif
@@ -60,7 +62,8 @@ Add Data Research Member
                     @foreach ($research_partner as $d)
                     <tr>
                         <td>{{$nomor}}</td>
-                        <td>{{$d->nama_partner}} - {{$d->partner_id}}</td>
+                        <td>{{$d->nama_partner}}</td>
+                        <td>{{$d->role_partner}}</td>
                         @if (Auth::user()->role == 'admin' ||  $data->isVerified == false)
                         <td>
                             <div class="flex space-x-3">
