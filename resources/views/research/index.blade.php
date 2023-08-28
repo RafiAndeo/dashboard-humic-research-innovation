@@ -97,7 +97,9 @@ Research
                     <th>Tahun Diterima</th>
                     <th>Tahun Berakhir</th>
                     <th>TKT</th>
+                    @auth
                     <th>Grant</th>
+                    @endauth
                     <th>Skema</th>
                     <th>Tipe Pendanaan</th>
                     <th>Pendanaan External</th>
@@ -115,7 +117,9 @@ Research
                     <td>{{$d->tahun_diterima}}</td>
                     <td>{{$d->tahun_berakhir}}</td>
                     <td>{{$d->tkt}}</td>
+                    @auth
                     <td>{{$d->grant}}</td>
+                    @endauth
                     <td>{{$d->skema}}</td>
                     <td>{{$d->tipe_pendanaan}}</td>
                     <td>{{$d->pendanaan_external}}</td>
