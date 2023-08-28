@@ -27,7 +27,7 @@ class MemberImport implements ToModel, WithHeadingRow
             'photo' => $row['photo'],
             'membership' => $row['membership'],
             'status' => $row['status'],
-            'role' => "user",
+            'role' => $row['role'],
             'NIP' => $row['nip'],
             'password' => Hash::make("password"),
         ]);

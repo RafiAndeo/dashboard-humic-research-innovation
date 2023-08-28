@@ -19,6 +19,7 @@ class ImportController extends Controller
         Excel::import(new PaperImport, 'paper.xlsx', 'public');
         Excel::import(new PartnerImport, 'partner.xlsx', 'public');
         Excel::import(new ResearchImport, 'research.xlsx', 'public');
+        Excel::import(new MemberImport, 'member.xlsx', 'public');
 
         return "OK";
     }

@@ -26,10 +26,10 @@ class member extends Authenticatable
         "status",
         "NIP",
         "role",
+        "password",
     ];
 
     protected $hidden = [
-        "password",
         'remember_token',
     ];
 }
