@@ -66,6 +66,21 @@ HKI
                 </select>
             </div>
         </div>
+        <div class="flex w-2/12">
+            <div class="w-full">
+                <label for="" class="block font-medium">Status</label>
+                <select name="status" class="w-full py-2 rounded block" id="">
+                    {{-- get request tahun --}}
+                    @if($status_selected)
+                    <option value="{{$status_selected}}">{{$status_selected}}</option>
+                    @endif
+                    <option value="all">ALL</option>
+                    @foreach ($status_option as $a)
+                    <option value="{{$a}}">{{$a}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
 
         <div>
             <button type="submit" class="bg-blue-500 text-white px-5 py-2 rounded">Filter</button>

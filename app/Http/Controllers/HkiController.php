@@ -22,20 +22,31 @@ class HKIController extends Controller
 
         $tahun_option = hki::select('tahun')->distinct()->pluck('tahun');
         $jenis_option = hki::select('jenis')->distinct()->pluck('jenis');
+        $status_option = hki::select('status')->distinct()->pluck('status');
 
         $hki_tahun = hki::select('tahun', DB::raw('count(*) as total'))->groupBy('tahun');
         $hki_jenis = hki::select('jenis', DB::raw('count(*) as total'))->groupBy('jenis');
+        $hki_status = hki::select('status', DB::raw('count(*) as total'))->groupBy('status');
 
         if ($request->has('tahun') && $request->tahun != 'all') {
             $data = $data->where('tahun', $request->tahun);
             $hki_tahun = $hki_tahun->where('tahun', $request->tahun);
             $hki_jenis = $hki_jenis->where('tahun', $request->tahun);
+            $hki_status = $hki_status->where('tahun', $request->tahun);
         }
 
         if ($request->has('jenis') && $request->jenis != 'all') {
             $data = $data->where('jenis', $request->jenis);
             $hki_tahun = $hki_tahun->where('jenis', $request->jenis);
             $hki_jenis = $hki_jenis->where('jenis', $request->jenis);
+            $hki_status = $hki_status->where('jenis', $request->jenis);
+        }
+
+        if ($request->has('status') && $request->status != 'all') {
+            $data = $data->where('status', $request->status);
+            $hki_tahun = $hki_tahun->where('status', $request->status);
+            $hki_jenis = $hki_jenis->where('status', $request->status);
+            $hki_status = $hki_status->where('status', $request->status);
         }
 
         $data = $data->get();
@@ -49,6 +60,10 @@ class HKIController extends Controller
         $label_jenis = $hki_jenis->pluck('jenis');
         $total_jenis = $hki_jenis->pluck('total');
 
+        $hki_status = $hki_status->get();
+        $label_status = $hki_status->pluck('status');
+        $total_status = $hki_status->pluck('total');
+
 
 
         return view('hki.index', [
@@ -57,14 +72,20 @@ class HKIController extends Controller
 
             'tahun_option' => $tahun_option,
             'jenis_option' => $jenis_option,
+            'status_option' => $status_option,
+
             'tahun_selected' => $request->tahun,
             'jenis_selected' => $request->jenis,
+            'status_selected' => $request->status,
 
             'label_tahun' => $label_tahun,
             'total_tahun' => $total_tahun,
 
             'label_jenis' => $label_jenis,
             'total_jenis' => $total_jenis,
+
+            'label_status' => $label_status,
+            'total_status' => $total_status,
         ]);
     }
 
