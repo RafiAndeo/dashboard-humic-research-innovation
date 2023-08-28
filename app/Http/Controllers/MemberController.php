@@ -122,7 +122,8 @@ class MemberController extends Controller
             'status' => 'required',
             'NIP' => 'required',
             'role' => 'required',
-            'password' => 'required'
+            'password' => 'required',
+            'photo' => 'image|max:2048'
         ]);
         $data = new member();
         $data->nama = $request->nama;
@@ -137,6 +138,9 @@ class MemberController extends Controller
         $data->NIP = $request->NIP;
         $data->role = $request->role;
         $data->password = bcrypt($request->password);
+        $iamge_file = $request->photo;
+        $image = Image::make($iamge_file);
+        $data->photo = $image;
 
         $data->save();
 
