@@ -29,6 +29,24 @@ class ReportController extends Controller
         // return $pdf->stream();
     }
 
+    public function hki()
+    {
+        $hki = hki::all();
+        return view('report.report_hki', ['data' => $hki]);
+        // $pdf = Pdf::loadview('report.report_paper', ['data' => $paper]);
+        // return $pdf->download('laporan-paper-pdf');
+        // return $pdf->stream();
+    }
+   
+    public function research()
+    {
+        $research = research::all();
+        return view('report.report_research', ['data' => $research]);
+        // $pdf = Pdf::loadview('report.report_paper', ['data' => $paper]);
+        // return $pdf->download('laporan-paper-pdf');
+        // return $pdf->stream();
+    }
+
     public function cetak_pdf_research()
     {
         $research = research::all();

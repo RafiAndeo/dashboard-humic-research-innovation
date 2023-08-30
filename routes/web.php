@@ -208,3 +208,5 @@ Route::get('/member/fetch_image/{id}', [MemberController::class, 'fetch_image'])
 
 // report
 Route::get('/report/paper', [ReportController::class, 'paper'])->name('report.paper');
+Route::get('/report/hki', [ReportController::class, 'hki'])->name('report.hki');
+Route::get('/report/research', [ReportController::class, 'research'])->name('report.research');

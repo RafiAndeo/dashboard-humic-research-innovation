@@ -21,6 +21,8 @@ class researchController extends Controller
         $research = research::query();
         $riset_tahun_diterima = research::select('tahun_diterima', DB::raw('count(*) as total'))->groupBy('tahun_diterima');
         $riset_tipe_pendanaan = research::select('tipe_pendanaan', DB::raw('count(*) as total'))->groupBy('tipe_pendanaan');
+        $riset_tkt = research::select('tkt', DB::raw('count(*) as total'))->groupBy('tkt');
+        $riset_skema = research::select('skema', DB::raw('count(*) as total'))->groupBy('skema');
 
         $tahun_diterima_option = research::select('tahun_diterima')->distinct()->pluck('tahun_diterima');
         $tahun_berakhir_option = research::select('tahun_berakhir')->distinct()->pluck('tahun_berakhir');
@@ -46,6 +48,21 @@ class researchController extends Controller
             $riset_tipe_pendanaan = $riset_tipe_pendanaan->where('tipe_pendanaan', $request->tipe_pendanaan);
         }
         
+        if ($request->has('tkt') && $request->tkt != 'all') {
+            $research = $research->where('tkt', $request->tkt);
+            $riset_tahun_diterima = $riset_tahun_diterima->where('tipe_pendanaan', $request->tipe_pendanaan);
+            $riset_tipe_pendanaan = $riset_tipe_pendanaan->where('tipe_pendanaan', $request->tipe_pendanaan);
+            $riset_tkt = $riset_tkt->where('tkt', $request->tkt);
+        }
+        
+        if ($request->has('skema') && $request->skema != 'all') {
+            $research = $research->where('skema', $request->skema);
+            $riset_tahun_diterima = $riset_tahun_diterima->where('tipe_pendanaan', $request->tipe_pendanaan);
+            $riset_tipe_pendanaan = $riset_tipe_pendanaan->where('tipe_pendanaan', $request->tipe_pendanaan);
+            $riset_tkt = $riset_tkt->where('tkt', $request->tkt);
+            $riset_skema = $riset_skema->where('skema', $request->skema);
+        }
+        
         $research = $research->get();
         $research_count = $research->count();
 
@@ -56,6 +73,10 @@ class researchController extends Controller
         $riset_tipe_pendanaan = $riset_tipe_pendanaan->get();
         $label_tipe_pendanaan = $riset_tipe_pendanaan->pluck('tipe_pendanaan');
         $total_tipe_pendanaan = $riset_tipe_pendanaan->pluck('total');
+        
+        $riset_tkt = $riset_tkt->get();
+        $label_tkt = $riset_tkt->pluck('tkt');
+        $total_tkt = $riset_tkt->pluck('total');
 
 
 

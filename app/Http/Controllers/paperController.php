@@ -38,6 +38,14 @@ class paperController extends Controller
             $tahun = $tahun->where('tahun', $request->tahun);
             $data_count = $data_count->where('tahun', $request->tahun);
         }
+        
+        if ($request->has('jenis') && $request->jenis != 'all') {
+            $data = $data->where('jenis', $request->jenis);
+
+            $paper_jenis = $paper_jenis->where('tahun', $request->tahun);
+            $tahun = $tahun->where('tahun', $request->tahun);
+            $data_count = $data_count->where('tahun', $request->tahun);
+        }
 
         $data = $data->get();
         $data_count = $data_count->count();

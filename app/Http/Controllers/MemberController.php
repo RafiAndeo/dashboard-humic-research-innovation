@@ -22,8 +22,8 @@ class MemberController extends Controller
             ->groupBy('fakultas');
         $member_pendidikan = member::select('pendidikan', DB::raw('count(*) as total'))
             ->groupBy('pendidikan');
-
-
+        $member_kelompok_keahlian = member::select('kelompok_keahlian', DB::raw('count(*) as total'))
+            ->groupBy('kelompok_keahlian');
 
         $fakultas_option = member::select('fakultas')->distinct()->pluck('fakultas');
         $pendidikan_option = member::select('pendidikan')->distinct()->pluck('pendidikan');
@@ -33,12 +33,20 @@ class MemberController extends Controller
             $data = $data->where('fakultas', $request->fakultas);
             $member_fakultas = $member_fakultas->where('fakultas', $request->fakultas);
             $member_pendidikan = $member_pendidikan->where('fakultas', $request->fakultas);
+            $member_kelompok_keahlian = $member_kelompok_keahlian->where('fakultas', $request->fakultas);
         }
 
         if ($request->has('pendidikan') && $request->pendidikan != 'all') {
             $data = $data->where('pendidikan', $request->pendidikan);
             $member_fakultas = $member_fakultas->where('pendidikan', $request->pendidikan);
             $member_pendidikan = $member_pendidikan->where('pendidikan', $request->pendidikan);
+            $member_kelompok_keahlian = $member_kelompok_keahlian->where('pendidikan', $request->pendidikan);
+        }
+        
+        if ($request->has('kelompok_keahlian') && $request->kelompok_keahlian != 'all') {
+            $data = $data->where('kelompok_keahlian', $request->kelompok_keahlian);
+            $member_fakultas = $member_fakultas->where('kelompok_keahlian', $request->kelompok_keahlian);
+            $member_kelompok_keahlian = $member_kelompok_keahlian->where('kelompok_keahlian', $request->kelompok_keahlian);
         }
 
         $count = $data->count();
@@ -51,6 +59,10 @@ class MemberController extends Controller
         $member_pendidikan = $member_pendidikan->get();
         $label_pendidikan = $member_pendidikan->pluck('pendidikan');
         $total_pendidikan = $member_pendidikan->pluck('total');
+        
+        $member_kelompok_keahlian = $member_kelompok_keahlian->get();
+        $label_kelompok_keahlian = $member_kelompok_keahlian->pluck('kelompok_keahlian');
+        $total_kelompok_keahlian = $member_kelompok_keahlian->pluck('total');
 
 
 

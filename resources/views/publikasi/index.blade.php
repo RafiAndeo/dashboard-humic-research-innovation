@@ -72,7 +72,7 @@ Paper
         <div class="flex w-2/12">
             <div class="w-full">
                 <label for="" class="block font-medium">Jenis</label>
-                <select name="quartile" class="w-full py-2 rounded block" id="">
+                <select name="jenis" class="w-full py-2 rounded block" id="">
                     {{-- get request quartile --}}
                     @if($jenis_selected)
                     <option value="{{$jenis_selected}}">{{$jenis_selected}}</option>
