@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Exports\MemberExport;
 use App\Imports\MemberImport;
+use App\Models\hki;
+use App\Models\paper;
+use App\Models\research;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Psy\CodeCleaner\FunctionReturnInWriteContextPass;
@@ -120,7 +123,25 @@ class MemberController extends Controller
     public function show($id)
     {
         $data = member::find($id);
-        return $data;
+        $paper = paper::join('member_paper', 'member_paper.paper_id', '=', 'paper.id')
+            ->where('member_paper.member_id', $id)
+            ->get();
+
+        $research = research::join('member_research', 'member_research.research_id', '=', 'research.id')
+            ->where('member_research.member_id', $id)
+            ->get();
+
+        $hki = hki::join('member_hki', 'member_hki.hki_id', '=', 'hki.id')
+            ->where('member_hki.member_id', $id)
+            ->get();
+
+        return view('anggota.show', [
+            'data' => $data,
+            'id' => $id,
+            'paper' => $paper,
+            'research' => $research,
+            'hki' => $hki
+        ]);
     }
 
     public function store(Request $request)
