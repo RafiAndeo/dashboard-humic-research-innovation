@@ -83,6 +83,36 @@ Research
                 </select>
             </div>
         </div>
+        <div class="flex w-2/12">
+            <div class="w-full">
+                <label for="" class="block font-medium">TKT</label>
+                <select name="tkt" class="w-full py-2 rounded block" id="">
+                    {{-- get request tahun --}}
+                    @if($tkt_selected)
+                    <option value="{{$tkt_selected}}">{{$tkt_selected}}</option>
+                    @endif
+                    <option value="all">ALL</option>
+                    @foreach ($tkt_option as $a)
+                    <option value="{{$a}}">{{$a}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        <div class="flex w-2/12">
+            <div class="w-full">
+                <label for="" class="block font-medium">Skema</label>
+                <select name="skema" class="w-full py-2 rounded block" id="">
+                    {{-- get request tahun --}}
+                    @if($skema_selected)
+                    <option value="{{$skema_selected}}">{{$skema_selected}}</option>
+                    @endif
+                    <option value="all">ALL</option>
+                    @foreach ($skema_option as $a)
+                    <option value="{{$a}}">{{$a}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
         <div>
             <button type="submit" class="bg-blue-500 text-white px-5 py-2 rounded">Filter</button>
         </div>

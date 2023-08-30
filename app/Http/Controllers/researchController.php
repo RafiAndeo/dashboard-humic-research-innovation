@@ -25,6 +25,8 @@ class researchController extends Controller
         $tahun_diterima_option = research::select('tahun_diterima')->distinct()->pluck('tahun_diterima');
         $tahun_berakhir_option = research::select('tahun_berakhir')->distinct()->pluck('tahun_berakhir');
         $tipe_pendanaan_option = research::select('tipe_pendanaan')->distinct()->pluck('tipe_pendanaan');
+        $tkt_option = research::select('tkt')->distinct()->pluck('tkt');
+        $skema_option = research::select('skema')->distinct()->pluck('skema');
 
         if ($request->has('tahun_diterima') && $request->tahun_diterima != 'all') {
             $research = $research->where('tahun_diterima', (int)$request->tahun_diterima);
@@ -43,6 +45,7 @@ class researchController extends Controller
             $riset_tahun_diterima = $riset_tahun_diterima->where('tipe_pendanaan', $request->tipe_pendanaan);
             $riset_tipe_pendanaan = $riset_tipe_pendanaan->where('tipe_pendanaan', $request->tipe_pendanaan);
         }
+        
         $research = $research->get();
         $research_count = $research->count();
 
@@ -62,9 +65,13 @@ class researchController extends Controller
             'tahun_diterima_option' => $tahun_diterima_option,
             'tahun_berakhir_option' => $tahun_berakhir_option,
             'tipe_pendanaan_option' => $tipe_pendanaan_option,
+            'tkt_option' => $tkt_option,
+            'skema_option' => $skema_option,
             'tahun_diterima_selected' => $request->tahun_diterima,
             'tahun_berakhir_selected' => $request->tahun_berakhir,
             'tipe_pendanaan_selected' => $request->tipe_pendanaan,
+            'tkt_selected' => $request->tkt,
+            'skema_selected' => $request->skema,
             'label_tahun_diterima' => $label_tahun_diterima,
             'total_tahun_diterima' => $total_tahun_diterima,
             'label_tipe_pendanaan' => $label_tipe_pendanaan,

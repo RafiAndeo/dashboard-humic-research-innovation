@@ -52,6 +52,8 @@ class paperController extends Controller
 
         $quartile_option = paper::select('quartile')->distinct()->pluck('quartile');
         $tahun_option = paper::select('tahun')->distinct()->pluck('tahun');
+        $jenis_option = paper::select('jenis')->distinct()->pluck('jenis');
+
 
         return view('publikasi.index', [
             'data' => $data,
@@ -62,8 +64,10 @@ class paperController extends Controller
             'total' => $total,
             'quartile' => $quartile_option,
             'tahun' => $tahun_option,
+            'jenis' => $jenis_option,
             'quartile_selected' => $request->quartile,
             'tahun_selected' => $request->tahun,
+            'jenis_selected' => $request->jenis,
         ]);
     }
 

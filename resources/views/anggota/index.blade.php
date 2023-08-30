@@ -65,6 +65,21 @@ Anggota
                 </select>
             </div>
         </div>
+        <div class="flex w-2/12">
+            <div class="w-full">
+                <label for="" class="block font-medium">Kelompok Keahlian</label>
+                <select name="kelompok_keahlian" class="w-full py-2 rounded block" id="">
+                    {{-- get request tahun --}}
+                    @if($kelompok_keahlian_selected)
+                    <option value="{{$kelompok_keahlian_selected}}">{{$kelompok_keahlian_selected}}</option>
+                    @endif
+                    <option value="all">ALL</option>
+                    @foreach ($kelompok_keahlian_option as $a)
+                    <option value="{{$a}}">{{$a}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
 
         <div>
             <button type="submit" class="bg-blue-500 text-white px-5 py-2 rounded">Filter</button>
@@ -76,14 +91,18 @@ Anggota
             <thead>
                 <tr>
                     <th>No</th>
+                    @auth
                     <th>NIP</th>
+                    @endauth
                     <th>Nama</th>
                     <th>Fakultas</th>
                     <th>Pendidikan</th>
                     <th>Bidang Ilmu</th>
                     <th>Jabatan</th>
                     <th>Kelompok Keahlian</th>
-                    <th>Email</th>
+                    @auth
+                    <th>Email</th>    
+                    @endauth
                     <th>Photo</th>
                     <th>Membership</th>
                     <th>Status</th>
@@ -94,14 +113,18 @@ Anggota
                 @foreach ($data as $d)
                 <tr>
                     <td>{{$nomor}}</td>
-                    <td>{{$d->NIP}}</td>
+                    @auth
+                    <td>{{$d->NIP}}</td>    
+                    @endauth
                     <td>{{$d->nama}}</td>
                     <td>{{$d->fakultas}}</td>
                     <td>{{$d->pendidikan}}</td>
                     <td>{{$d->bidang_ilmu}}</td>
                     <td>{{$d->jabatan}}</td>
                     <td>{{$d->kelompok_keahlian}}</td>
+                    @auth
                     <td>{{$d->email}}</td>
+                    @endauth
                     <td>{{$d->photo}}</td>
                     <td>{{$d->membership}}</td>
                     <td>{{$d->status}}</td>

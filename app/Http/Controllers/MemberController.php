@@ -27,6 +27,7 @@ class MemberController extends Controller
 
         $fakultas_option = member::select('fakultas')->distinct()->pluck('fakultas');
         $pendidikan_option = member::select('pendidikan')->distinct()->pluck('pendidikan');
+        $kelompok_keahlian_option = member::select('kelompok_keahlian')->distinct()->pluck('kelompok_keahlian');
 
         if ($request->has('fakultas') && $request->fakultas != 'all') {
             $data = $data->where('fakultas', $request->fakultas);
@@ -61,8 +62,10 @@ class MemberController extends Controller
             'total_fakultas' => $total_fakultas,
             'fakultas_option' => $fakultas_option,
             'pendidikan_option' => $pendidikan_option,
+            'kelompok_keahlian_option' => $kelompok_keahlian_option,
             'fakultas_selected' => $request->fakultas,
             'pendidikan_selected' => $request->pendidikan,
+            'kelompok_keahlian_selected' => $request->kelompok_keahlian,
             'label_pendidikan' => $label_pendidikan,
             'total_pendidikan' => $total_pendidikan,
         ]);
