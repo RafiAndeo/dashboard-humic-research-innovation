@@ -89,20 +89,20 @@ Anggota
     <div class="py-3">
         <div class="grid grid-cols-4 gap-4">
             @foreach ($data as $d)
-            <div class="rounded">
+            <a href="/member/{{$d->id}}" class="rounded">
                 @if($d->photo == null)
-                <img src="/storage/default.png" alt="" srcset="">
+                <img src="/storage/default.png" class="rounded" alt="" srcset="">
                 @else
-                <img src="{{$d->photo}}" class="w-full h-72" alt="" srcset="">
+                <img src="{{$d->photo}}" class="w-full h-72 rounded" alt="" srcset="">
                 @endif
-                <div class="space-y-1 p-2 border-b border-l border-r border-black h-32">
+                <div class="space-y-1 p-2 border-b border-l border-r border-black h-32 rounded ">
                     <div class="font-bold">{{$d->nama}}</div>
                     <div class="text-gray-500 text-sm">
                         <div>{{$d->pendidikan}} {{$d->fakultas}}</div>
                         <div>{{$d->jabatan}}</div>
                     </div>
                 </div>
-            </div>
+            </a>
             @endforeach
         </div>
     </div>
