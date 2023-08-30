@@ -86,61 +86,16 @@ Anggota
         </div>
     </form>
 
-    <div class="bg-white p-3 rounded">
-        <table id="example" class="display nowrap" style="width:100%">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    @auth
-                    <th>NIP</th>
-                    @endauth
-                    <th>Nama</th>
-                    <th>Fakultas</th>
-                    <th>Pendidikan</th>
-                    <th>Bidang Ilmu</th>
-                    <th>Jabatan</th>
-                    <th>Kelompok Keahlian</th>
-                    @auth
-                    <th>Email</th>    
-                    @endauth
-                    <th>Photo</th>
-                    <th>Membership</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php  $nomor=1; ?>
-                @foreach ($data as $d)
-                <tr>
-                    <td>{{$nomor}}</td>
-                    @auth
-                    <td>{{$d->NIP}}</td>    
-                    @endauth
-                    <td>{{$d->nama}}</td>
-                    <td>{{$d->fakultas}}</td>
-                    <td>{{$d->pendidikan}}</td>
-                    <td>{{$d->bidang_ilmu}}</td>
-                    <td>{{$d->jabatan}}</td>
-                    <td>{{$d->kelompok_keahlian}}</td>
-                    @auth
-                    <td>{{$d->email}}</td>
-                    @endauth
-                    <td>{{$d->photo}}</td>
-                    <td>{{$d->membership}}</td>
-                    <td>{{$d->status}}</td>
-                </tr>
-                <?php $nomor++; ?>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-
     <div class="py-3">
         <div class="grid grid-cols-4 gap-4">
             @foreach ($data as $d)
-            <div class="space-y-2">
-                <div class="w-full bg-red-100 h-60 rounded-md"></div>
-                <div class="space-y-1">
+            <div class="rounded">
+                @if($d->photo == null)
+                <img src="/storage/default.png" alt="" srcset="">
+                @else
+                <img src="{{$d->photo}}" class="w-full h-72" alt="" srcset="">
+                @endif
+                <div class="space-y-1 p-2 border-b border-l border-r border-black h-32">
                     <div class="font-bold">{{$d->nama}}</div>
                     <div class="text-gray-500 text-sm">
                         <div>{{$d->pendidikan}} {{$d->fakultas}}</div>

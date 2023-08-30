@@ -20,12 +20,13 @@ class ReportController extends Controller
         return $pdf->download('laporan-hki-pdf');
     }
 
-    public function cetak_pdf_paper()
+    public function paper()
     {
         $paper = paper::all();
-
-        $pdf = Pdf::loadview('paper_pdf', ['paper' => $paper]);
-        return $pdf->download('laporan-paper-pdf');
+        return view('report.report_paper', ['data' => $paper]);
+        // $pdf = Pdf::loadview('report.report_paper', ['data' => $paper]);
+        // return $pdf->download('laporan-paper-pdf');
+        // return $pdf->stream();
     }
 
     public function cetak_pdf_research()
