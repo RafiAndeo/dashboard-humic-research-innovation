@@ -50,15 +50,15 @@ class researchController extends Controller
         
         if ($request->has('tkt') && $request->tkt != 'all') {
             $research = $research->where('tkt', $request->tkt);
-            $riset_tahun_diterima = $riset_tahun_diterima->where('tipe_pendanaan', $request->tipe_pendanaan);
-            $riset_tipe_pendanaan = $riset_tipe_pendanaan->where('tipe_pendanaan', $request->tipe_pendanaan);
+            $riset_tahun_diterima = $riset_tahun_diterima->where('tkt', $request->tkt);
+            $riset_tipe_pendanaan = $riset_tipe_pendanaan->where('tkt', $request->tkt);
             $riset_tkt = $riset_tkt->where('tkt', $request->tkt);
         }
         
         if ($request->has('skema') && $request->skema != 'all') {
             $research = $research->where('skema', $request->skema);
-            $riset_tahun_diterima = $riset_tahun_diterima->where('tipe_pendanaan', $request->tipe_pendanaan);
-            $riset_tipe_pendanaan = $riset_tipe_pendanaan->where('tipe_pendanaan', $request->tipe_pendanaan);
+            $riset_tahun_diterima = $riset_tahun_diterima->where('skema', $request->skema);
+            $riset_tipe_pendanaan = $riset_tipe_pendanaan->where('skema', $request->skema);
             $riset_tkt = $riset_tkt->where('tkt', $request->tkt);
             $riset_skema = $riset_skema->where('skema', $request->skema);
         }
@@ -76,7 +76,7 @@ class researchController extends Controller
         
         $riset_tkt = $riset_tkt->get();
         $label_tkt = $riset_tkt->pluck('tkt');
-        $total_tkt = $riset_tkt->pluck('total');
+        $total_tkt = $riset_tkt->pluck('tkt');
 
 
 

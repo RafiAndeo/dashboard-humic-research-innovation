@@ -27,10 +27,13 @@ class MemberController extends Controller
             ->groupBy('pendidikan');
         $member_kelompok_keahlian = member::select('kelompok_keahlian', DB::raw('count(*) as total'))
             ->groupBy('kelompok_keahlian');
+        $member_jabatan = member::select('jabatan', DB::raw('count(*) as total'))
+            ->groupBy('jabatan');
 
         $fakultas_option = member::select('fakultas')->distinct()->pluck('fakultas');
         $pendidikan_option = member::select('pendidikan')->distinct()->pluck('pendidikan');
         $kelompok_keahlian_option = member::select('kelompok_keahlian')->distinct()->pluck('kelompok_keahlian');
+        $jabatan_option = member::select('jabatan')->distinct()->pluck('jabatan');
 
         if ($request->has('fakultas') && $request->fakultas != 'all') {
             $data = $data->where('fakultas', $request->fakultas);
@@ -51,6 +54,13 @@ class MemberController extends Controller
             $member_fakultas = $member_fakultas->where('kelompok_keahlian', $request->kelompok_keahlian);
             $member_kelompok_keahlian = $member_kelompok_keahlian->where('kelompok_keahlian', $request->kelompok_keahlian);
         }
+        
+        if ($request->has('jabatan') && $request->jabatan != 'all') {
+            $data = $data->where('jabatan', $request->jabatan);
+            $member_fakultas = $member_fakultas->where('kelompok_keahlian', $request->kelompok_keahlian);
+            $member_kelompok_keahlian = $member_kelompok_keahlian->where('kelompok_keahlian', $request->kelompok_keahlian);
+            $member_jabatan = $member_jabatan->where('jabatan', $request->jabatan);
+        }
 
         $count = $data->count();
         $data = $data->get();
@@ -66,6 +76,10 @@ class MemberController extends Controller
         $member_kelompok_keahlian = $member_kelompok_keahlian->get();
         $label_kelompok_keahlian = $member_kelompok_keahlian->pluck('kelompok_keahlian');
         $total_kelompok_keahlian = $member_kelompok_keahlian->pluck('total');
+        
+        $member_jabatan = $member_jabatan->get();
+        $label_jabatan = $member_jabatan->pluck('jabatan');
+        $total_jabatan = $member_jabatan->pluck('total');
 
 
 
@@ -78,9 +92,11 @@ class MemberController extends Controller
             'fakultas_option' => $fakultas_option,
             'pendidikan_option' => $pendidikan_option,
             'kelompok_keahlian_option' => $kelompok_keahlian_option,
+            'jabatan_option' => $jabatan_option,
             'fakultas_selected' => $request->fakultas,
             'pendidikan_selected' => $request->pendidikan,
             'kelompok_keahlian_selected' => $request->kelompok_keahlian,
+            'jabatan_selected' => $request->jabatan,
             'label_pendidikan' => $label_pendidikan,
             'total_pendidikan' => $total_pendidikan,
         ]);

@@ -143,7 +143,8 @@ Route::get('/login', [MemberController::class, 'login_index'])->name('member.log
 Route::get('/member/export', [MemberController::class, 'memberexport'])->name('member.export');
 Route::post('/member/import', [MemberController::class, 'memberimport'])->name('member.import')->middleware('auth');
 
-Route::get('/partner/input', [PartnerController::class, 'index'])->name('partner.index')->middleware('auth');
+Route::get('/partner', [PartnerController::class, 'index'])->name('partner.index')->middleware('auth');
+Route::get('/partner/input', [PartnerController::class, 'index_admin'])->name('partner.index_admin')->middleware('auth');
 Route::get('/partner/input/add', [PartnerController::class, 'create'])->name('partner.create')->middleware('auth');
 Route::post('/partner/input/add', [PartnerController::class, 'store'])->name('partner.store')->middleware('auth');
 Route::get('/partner/input/edit/{id}', [PartnerController::class, 'edit'])->name('partner.edit')->middleware('auth');

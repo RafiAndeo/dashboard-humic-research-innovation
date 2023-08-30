@@ -24,8 +24,7 @@ HKI
         <div class="w-9/12">
             <div class="bg-white rounded py-8 px-5">
                 <div class="mb-3 text-sm space-y-2">
-                    <div class="font-medium">Grafik Jumlah Riset & Inovasi per Triwulan</div>
-                    <div>Tahun 2023</div>
+                    <div class="font-medium">Grafik Jenis HKI</div>
                 </div>
                 <canvas id="linechart"></canvas>
             </div>
