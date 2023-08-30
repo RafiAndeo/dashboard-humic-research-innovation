@@ -6,6 +6,7 @@ use App\Http\Controllers\paperController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\researchController;
 use App\Http\Controllers\ImportController;
+use App\Http\Controllers\ReportController;
 use App\Models\paper;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -121,8 +122,7 @@ Route::post('/hki/input/add_partner_to_hki', [HKIController::class, 'add_partner
 Route::delete('/hki/input/partner/{hki_id}/{partner_id}', [HKIController::class, 'delete_partner_from_hki'])->name('hki.delete_partner_from_hki')->middleware('auth');
 Route::get('/hki/input/{id}/partners', [HKIController::class, 'find_partners_of_hki'])->name('hki.find_partners_of_hki')->middleware('auth');
 // verify hki
-Route::get('/hki/input/verify/{id}', [HKIController::class, 'verifikasi'])->name('hki.verifikasi')->middleware('auth');
-;
+Route::get('/hki/input/verify/{id}', [HKIController::class, 'verifikasi'])->name('hki.verifikasi')->middleware('auth');;
 // excel
 Route::get('/hki/export', [HKIController::class, 'hkiexport'])->name('hki.export');
 Route::post('/hki/import', [HKIController::class, 'hkiimport'])->name('hki.import')->middleware('auth');
@@ -142,12 +142,12 @@ Route::get('/login', [MemberController::class, 'login_index'])->name('member.log
 Route::get('/member/export', [MemberController::class, 'memberexport'])->name('member.export');
 Route::post('/member/import', [MemberController::class, 'memberimport'])->name('member.import')->middleware('auth');
 
-Route::get('/partner/input', [PartnerController::class, 'index'])->name('partner.index');
-Route::get('/partner/input/add', [PartnerController::class, 'create'])->name('partner.create');
-Route::post('/partner/input/add', [PartnerController::class, 'store'])->name('partner.store');
-Route::get('/partner/input/edit/{id}', [PartnerController::class, 'edit'])->name('partner.edit');
-Route::put('/partner/input/edit/{id}', [PartnerController::class, 'update'])->name('partner.update');
-Route::delete('/partner/input/delete/{id}', [PartnerController::class, 'destroy'])->name('partner.destroy');
+Route::get('/partner/input', [PartnerController::class, 'index'])->name('partner.index')->middleware('auth');
+Route::get('/partner/input/add', [PartnerController::class, 'create'])->name('partner.create')->middleware('auth');
+Route::post('/partner/input/add', [PartnerController::class, 'store'])->name('partner.store')->middleware('auth');
+Route::get('/partner/input/edit/{id}', [PartnerController::class, 'edit'])->name('partner.edit')->middleware('auth');
+Route::put('/partner/input/edit/{id}', [PartnerController::class, 'update'])->name('partner.update')->middleware('auth');
+Route::delete('/partner/input/delete/{id}', [PartnerController::class, 'destroy'])->name('partner.destroy')->middleware('auth');
 
 Route::get('/research', [researchController::class, 'index'])->name('research.index');
 Route::get('/research/input', [researchController::class, 'index_admin'])->name('research.index_admin')->middleware('auth');
@@ -164,10 +164,10 @@ Route::post('/research/input/add_member_to_research', [researchController::class
 Route::delete('/research/input/{research_id}/{member_id}', [researchController::class, 'delete_member_from_research'])->name('research.delete_member_from_research')->middleware('auth');
 Route::get('/research/input/{id}/members', [researchController::class, 'find_members_of_research'])->name('research.find_members_of_research')->middleware('auth');
 // add partner research
-Route::get('/research/input/add_partner_to_research/{id}', [researchController::class, 'add_partner_to_research_view'])->name('research.add_partner_to_research_view');
-Route::post('/research/input/add_partner_to_research', [researchController::class, 'add_partner_to_research'])->name('research.add_partner_to_research');
-Route::delete('/research/input/{research_id}/{partner_id}', [researchController::class, 'delete_partner_from_research'])->name('research.delete_partner_from_research');
-Route::get('/research/input/{id}/partners', [researchController::class, 'find_partners_of_research'])->name('research.find_partners_of_research');
+Route::get('/research/input/add_partner_to_research/{id}', [researchController::class, 'add_partner_to_research_view'])->name('research.add_partner_to_research_view')->middleware('auth');;
+Route::post('/research/input/add_partner_to_research', [researchController::class, 'add_partner_to_research'])->name('research.add_partner_to_research')->middleware('auth');;
+Route::delete('/research/input/{research_id}/{partner_id}', [researchController::class, 'delete_partner_from_research'])->name('research.delete_partner_from_research')->middleware('auth');;
+Route::get('/research/input/{id}/partners', [researchController::class, 'find_partners_of_research'])->name('research.find_partners_of_research')->middleware('auth');;
 // excel
 Route::get('/research/export', [researchController::class, 'researchexport'])->name('research.export')->middleware('auth');
 Route::post('/research/import', [researchController::class, 'researchimport'])->name('research.import')->middleware('auth');
@@ -204,3 +204,7 @@ Route::post('/importall', [ImportController::class, 'import_all']);
 //Store and fetch images
 Route::post('/member/store_image/{id}', [MemberController::class, 'insert_image']);
 Route::get('/member/fetch_image/{id}', [MemberController::class, 'fetch_image']);
+
+
+// report
+Route::get('/report/paper', [ReportController::class, 'paper'])->name('report.paper');
