@@ -115,10 +115,10 @@ $('#example').dataTable( {
 const ctx3 = document.getElementById('dougnatchart');
 
 const data3 = {
-  labels: {!!$label!!},
+  labels: {!! $label_pendidikan !!},
   datasets: [{
-    label: 'Jumlah Hasil Research Pertahun',
-    data: {!!$total!!},
+    label: 'My First Dataset',
+    data: {!! $total_pendidikan !!},
     hoverOffset: 4
   }]
 };
@@ -133,23 +133,19 @@ const dougnatchart =new Chart(ctx3, config3);
 {{-- LINE CHART --}}
 <script>
     const ctx = document.getElementById('linechart');
-    const labels = ["Q1", 'Q2', 'Q3', 'Q4'];
+    const labels = {!! $label_fakultas !!};
     const data = {
     labels: labels,
     datasets: [
         {
-        label: 'HKI',
-        data: ["0",'2','3',"4",'4','5']
+        label: 'Fakultas',
+        data: {!! $total_fakultas !!},
         },
-        {
-        label: 'PUBLIKASI',
-        data: ["2",'4','10',100]
-        }
     ]
     };
 
     const config = {
-    type: 'line',
+    type: 'bar',
     data: data,
     options: {
         responsive: true,

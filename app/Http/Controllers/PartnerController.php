@@ -32,7 +32,7 @@ class PartnerController extends Controller
             $partner_negara = $partner_negara->where('institusi', $request->institusi);
             $partner_type = $partner_type->where('institusi', $request->institusi);
         }
-        
+
         if ($request->has('jabatan') && $request->jabatan != 'all') {
             $data = $data->where('jabatan', $request->jabatan);
             $partner_institusi = $partner_institusi->where('jabatan', $request->jabatan);
@@ -40,7 +40,7 @@ class PartnerController extends Controller
             $partner_negara = $partner_negara->where('jabatan', $request->jabatan);
             $partner_type = $partner_type->where('jabatan', $request->jabatan);
         }
-        
+
         if ($request->has('negara') && $request->negara != 'all') {
             $data = $data->where('negara', $request->negara);
             $partner_institusi = $partner_institusi->where('negara', $request->negara);
@@ -48,7 +48,7 @@ class PartnerController extends Controller
             $partner_negara = $partner_negara->where('negara', $request->negara);
             $partner_type = $partner_type->where('negara', $request->negara);
         }
-        
+
         if ($request->has('type') && $request->type != 'all') {
             $data = $data->where('type', $request->type);
             $partner_institusi = $partner_institusi->where('type', $request->type);
@@ -57,10 +57,8 @@ class PartnerController extends Controller
             $partner_type = $partner_type->where('type', $request->type);
         }
 
-        $partner = partner::all();
         $count = $data->count();
         $data = $data->get();
-        
 
         $partner_institusi = $partner_institusi->get();
         $label_institusi = $partner_institusi->pluck('institusi');
@@ -73,7 +71,7 @@ class PartnerController extends Controller
         $partner_negara = $partner_negara->get();
         $label_negara = $partner_negara->pluck('negara');
         $total_negara = $partner_negara->pluck('total');
-        
+
         $partner_type = $partner_type->get();
         $label_type = $partner_type->pluck('type');
         $total_type = $partner_type->pluck('total');
@@ -86,9 +84,9 @@ class PartnerController extends Controller
         $total = $negara_raw->pluck('total'); */
 
         return view('partner.index', [
-            'data' => $data, 
-            'count' => $count, 
-            
+            'data' => $data,
+            'count' => $count,
+
             'institusi_option' => $institusi_option,
             'jabatan_option' => $jabatan_option,
             'negara_option' => $negara_option,
@@ -107,7 +105,7 @@ class PartnerController extends Controller
 
             'label_negara' => $label_negara,
             'total_negara' => $total_negara,
-            
+
             'label_type' => $label_type,
             'total_type' => $total_type,
         ]);
@@ -122,7 +120,16 @@ class PartnerController extends Controller
             ->get();
         $negara = $negara_raw->pluck('negara');
         $total = $negara_raw->pluck('total');
-        return view('partner.input_index', ['data' => $partner, 'count' => $count, 'negara' => $negara, 'total' => $total]);
+
+        $partner_negara = partner::select('negara', DB::raw('count(*) as total'))->groupBy('negara');
+        $label_negara = $partner_negara->pluck('negara');
+        $total_negara = $partner_negara->pluck('total');
+
+        $partner_type = partner::select('type', DB::raw('count(*) as total'))->groupBy('type');
+        $label_type = $partner_type->pluck('type');
+        $total_type = $partner_type->pluck('total');
+
+        return view('partner.input_index', ['data' => $partner, 'count' => $count, 'negara' => $negara, 'total' => $total, 'label_negara' => $label_negara, 'total_negara' => $total_negara, 'label_type' => $label_type, 'total_type' => $total_type]);
     }
 
     public function create()

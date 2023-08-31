@@ -79,11 +79,17 @@ Add Data Research
             </div>
             <div class="space-y-2">
                 <label for="pendanaan_external" class="">Pendanaan External</label>
-                <input type="text" name="pendanaan_external" value="{{old('pendanaan_external')}}" class="w-full py-2 px-4 rounded border border-black" placeholder="Pendanaan External" required>
+                <select name="pendanaan_external" id="" class="w-full py-2 px-4 rounded border border-black" placeholder="Tipe Pendanaan" required>
+                    <option value="In Kind">In Kind</option>
+                    <option value="In Cash">In Cash</option>
+                </select>
             </div>
             <div class="space-y-2">
                 <label for="tipe_external" class="">Tipe External</label>
-                <input type="text" name="tipe_external" value="{{old('tipe_external')}}" class="w-full py-2 px-4 rounded border border-black" placeholder="Tipe External" required>
+                <select name="tipe_external" id="" class="w-full py-2 px-4 rounded border border-black" placeholder="Tipe Pendanaan" required>
+                    <option value="Industri">Industri</option>
+                    <option value="Pemerintah">Pemerintah</option>
+                </select>
             </div>
             <div class="space-y-2">
                 <label for="lama_penelitian" class="">Lama Penelitian (Tahun)</label>

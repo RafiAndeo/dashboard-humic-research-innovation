@@ -84,6 +84,10 @@ HKI
         <div>
             <button type="submit" class="bg-blue-500 text-white px-5 py-2 rounded">Filter</button>
         </div>
+
+        <div>
+            <a href="{{route('report.hki')}}" class="bg-green-500 text-white px-5 py-2 rounded block">Report Download</a>
+        </div>
     </form>
 
     <div class="bg-white p-3 rounded">

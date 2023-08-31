@@ -98,21 +98,25 @@ Anggota
         <div>
             <button type="submit" class="bg-blue-500 text-white px-5 py-2 rounded">Filter</button>
         </div>
+
+        <div>
+            <a href="{{route('report.member')}}" class="bg-green-500 text-white px-5 py-2 rounded block">Report Download</a>
+        </div>
     </form>
 
     <div class="py-3">
         <div class="grid grid-cols-4 gap-4">
             @foreach ($data as $d)
-            <a href="/member/{{$d->id}}" class="rounded">
+            <a href="{{route('member.show', $d->id)}}" class="rounded">
                 @if($d->photo == null)
-                <img src="/storage/default.png" class="rounded" alt="" srcset="">
+                <img src="/storage/default.png" class="rounded-t" alt="" srcset="">
                 @else
-                <img src="{{$d->photo}}" class="w-full h-72 rounded" alt="" srcset="">
+                <img src="{{$d->photo}}" class="w-full h-72 rounded-t" alt="" srcset="">
                 @endif
-                <div class="space-y-1 p-2 border-b border-l border-r border-black h-32 rounded ">
+                <div class="space-y-1 p-2 border-b border-l border-r border-black h-32 rounded-b">
                     <div class="font-bold">{{$d->nama}}</div>
                     <div class="text-gray-500 text-sm">
-                        <div>{{$d->pendidikan}} {{$d->fakultas}}</div>
+                        <div>{{$d->kelompok_keahlian}}</div>
                         <div>{{$d->jabatan}}</div>
                     </div>
                 </div>
