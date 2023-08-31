@@ -118,6 +118,10 @@ Research
         </div>
     </form>
 
+    <div class="pb-2 -pt-3">
+        <a href="{{route('report.research')}}" class="bg-green-500 text-white px-5 py-2 rounded block w-2/12 text-center">Report Download</a>
+    </div>
+
     <div class="bg-white p-3 rounded">
         <table id="example" class="display nowrap" style="width:100%">
             <thead>

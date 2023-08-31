@@ -98,12 +98,16 @@ Anggota
         <div>
             <button type="submit" class="bg-blue-500 text-white px-5 py-2 rounded">Filter</button>
         </div>
+
+        <div>
+            <a href="{{route('report.member')}}" class="bg-green-500 text-white px-5 py-2 rounded block">Report Download</a>
+        </div>
     </form>
 
     <div class="py-3">
         <div class="grid grid-cols-4 gap-4">
             @foreach ($data as $d)
-            <a href="/member/{{$d->id}}" class="rounded">
+            <a href="{{route('member.show', $d->id)}}" class="rounded">
                 @if($d->photo == null)
                 <img src="/storage/default.png" class="rounded-t" alt="" srcset="">
                 @else

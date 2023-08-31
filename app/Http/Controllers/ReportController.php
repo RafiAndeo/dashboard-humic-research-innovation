@@ -37,7 +37,19 @@ class ReportController extends Controller
         // return $pdf->download('laporan-paper-pdf');
         // return $pdf->stream();
     }
-   
+
+    public function member()
+    {
+        $member = member::all();
+        return view('report.report_member', ['data' => $member]);
+    }
+
+    public function partner()
+    {
+        $partner = partner::all();
+        return view('report.report_partner', ['data' => $partner]);
+    }
+
     public function research()
     {
         $research = research::all();
