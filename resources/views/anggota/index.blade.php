@@ -105,14 +105,14 @@ Anggota
             @foreach ($data as $d)
             <a href="/member/{{$d->id}}" class="rounded">
                 @if($d->photo == null)
-                <img src="/storage/default.png" class="rounded" alt="" srcset="">
+                <img src="/storage/default.png" class="rounded-t" alt="" srcset="">
                 @else
-                <img src="{{$d->photo}}" class="w-full h-72 rounded" alt="" srcset="">
+                <img src="{{$d->photo}}" class="w-full h-72 rounded-t" alt="" srcset="">
                 @endif
-                <div class="space-y-1 p-2 border-b border-l border-r border-black h-32 rounded ">
+                <div class="space-y-1 p-2 border-b border-l border-r border-black h-32 rounded-b">
                     <div class="font-bold">{{$d->nama}}</div>
                     <div class="text-gray-500 text-sm">
-                        <div>{{$d->pendidikan}} {{$d->fakultas}}</div>
+                        <div>{{$d->kelompok_keahlian}}</div>
                         <div>{{$d->jabatan}}</div>
                     </div>
                 </div>

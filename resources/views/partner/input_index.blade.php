@@ -15,7 +15,7 @@ Manage Partner
             <div class="bg-white flex justify-center py-8 rounded">
                 <div class="w-10/12">
                     <div class="mb-3 text-sm space-y-2">
-                        <div class="font-medium">Jumlah Negara Partner</div>
+                        <div class="font-medium">Jumlah Type Partner</div>
                     </div>
                     <canvas id="dougnatchart"></canvas>
                 </div>
@@ -24,8 +24,7 @@ Manage Partner
         <div class="w-9/12">
             <div class="bg-white rounded py-8 px-5">
                 <div class="mb-3 text-sm space-y-2">
-                    <div class="font-medium">Grafik Jumlah Riset & Inovasi per Triwulan</div>
-                    <div>Tahun 2023</div>
+                    <div class="font-medium">Grafik Negara Partner</div>
                 </div>
                 <canvas id="linechart"></canvas>
             </div>
@@ -95,46 +94,40 @@ $('#example').dataTable( {
 } );
 </script>
 
-{{-- dougnatchart --}}
 <script>
-const ctx3 = document.getElementById('dougnatchart');
+    const ctx3 = document.getElementById('dougnatchart');
 
-const data3 = {
-  labels: {!!$negara!!},
-  datasets: [{
-    label: 'Jumlah Hasil Research Pertahun',
-    data: {!!$total!!},
-    hoverOffset: 4
-  }]
-};
-const config3 = {
-  type: 'pie',
-  data: data3,
-};
+    const data3 = {
+      labels: {!!$label_type!!},
+      datasets: [{
+        label: 'Grafik Type Partner',
+        data: {!!$total_type!!},
+        hoverOffset: 4
+      }]
+    };
+    const config3 = {
+      type: 'pie',
+      data: data3,
+    };
 
-const dougnatchart =new Chart(ctx3, config3);
-</script>
+    const dougnatchart =new Chart(ctx3, config3);
+    </script>
 
-{{-- LINE CHART --}}
 <script>
     const ctx = document.getElementById('linechart');
-    const labels = ["Q1", 'Q2', 'Q3', 'Q4'];
+    const labels = {!!$label_negara!!};
     const data = {
     labels: labels,
     datasets: [
         {
-        label: 'HKI',
-        data: ["0",'2','3',"4",'4','5']
+        label: 'Negara Partner',
+        data: {!!$total_negara!!}
         },
-        {
-        label: 'PUBLIKASI',
-        data: ["2",'4','10',100]
-        }
     ]
     };
 
     const config = {
-    type: 'line',
+    type: 'bar',
     data: data,
     options: {
         responsive: true,

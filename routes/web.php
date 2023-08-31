@@ -131,7 +131,7 @@ Route::post('/login', [MemberController::class, 'login'])->name('member.login_pr
 Route::post('/logout', [MemberController::class, 'logout'])->name('member.logout');
 
 Route::get('/member', [MemberController::class, 'index'])->name('member.index');
-Route::get('/member/{id}', [MemberController::class, 'show'])->name('member.show');
+// Route::get('/member/{id}', [MemberController::class, 'show'])->name('member.show');
 Route::get('/member/input/', [MemberController::class, 'index_admin'])->name('member.index_admin')->middleware('auth');
 // Route::get('/member/input/{id}', [MemberController::class, 'show'])->name('member.show')->middleware('auth');
 Route::get('/member/input/add', [MemberController::class, 'create'])->name('member.create')->middleware('auth');

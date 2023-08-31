@@ -15,7 +15,7 @@ Partner
             <div class="bg-white flex justify-center py-8 rounded">
                 <div class="w-10/12">
                     <div class="mb-3 text-sm space-y-2">
-                        <div class="font-medium">Jumlah Negara Partner</div>
+                        <div class="font-medium">Jumlah Type Partner</div>
                     </div>
                     <canvas id="dougnatchart"></canvas>
                 </div>
@@ -24,13 +24,13 @@ Partner
         <div class="w-9/12">
             <div class="bg-white rounded py-8 px-5">
                 <div class="mb-3 text-sm space-y-2">
-                    <div class="font-medium">Grafik Jumlah Partner</div>
+                    <div class="font-medium">Grafik Negara Partner</div>
                 </div>
                 <canvas id="linechart"></canvas>
             </div>
         </div>
     </div>
-    
+
     <div class="block mt-10 mb-2 font-bold text-lg">
         Filter
     </div>
@@ -107,7 +107,6 @@ Partner
                     <th>No</th>
                     <th>Nama Partner</th>
                     <th>Sumber</th>
-                    <th>Jenis</th>
                     <th>Institusi</th>
                     <th>Jabatan</th>
                     <th>Negara</th>
@@ -119,9 +118,8 @@ Partner
                 @foreach ($data as $d)
                 <tr>
                     <td>{{$nomor}}</td>
-                    <td>{{$d->partner}}</td>
+                    <td>{{$d->nama_partner}}</td>
                     <td>{{$d->sumber}}</td>
-                    <td>{{$d->jenis}}</td>
                     <td>{{$d->institusi}}</td>
                     <td>{{$d->jabatan}}</td>
                     <td>{{$d->negara}}</td>
@@ -131,7 +129,7 @@ Partner
                 @endforeach
             </tbody>
         </table>
-    </div>    
+    </div>
 @endsection
 
 @section('script')
@@ -149,10 +147,10 @@ $('#example').dataTable( {
 const ctx3 = document.getElementById('dougnatchart');
 
 const data3 = {
-  labels: {!!$label_negara!!},
+  labels: {!!$label_type!!},
   datasets: [{
-    label: 'Jumlah Hasil Research Pertahun',
-    data: {!!$total_negara!!},
+    label: 'Grafik Type Partner',
+    data: {!!$total_type!!},
     hoverOffset: 4
   }]
 };
@@ -167,23 +165,19 @@ const dougnatchart =new Chart(ctx3, config3);
 {{-- LINE CHART --}}
 <script>
     const ctx = document.getElementById('linechart');
-    const labels = ["Q1", 'Q2', 'Q3', 'Q4'];
+    const labels = {!!$label_negara!!};
     const data = {
     labels: labels,
     datasets: [
         {
-        label: 'HKI',
-        data: ["0",'2','3',"4",'4','5']
+        label: 'Negara Partner',
+        data: {!!$total_negara!!}
         },
-        {
-        label: 'PUBLIKASI',
-        data: ["2",'4','10',100]
-        }
     ]
     };
 
     const config = {
-    type: 'line',
+    type: 'bar',
     data: data,
     options: {
         responsive: true,
