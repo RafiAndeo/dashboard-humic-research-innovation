@@ -31,6 +31,9 @@ class PartnerController extends Controller
             $partner_jabatan = $partner_jabatan->where('institusi', $request->institusi);
             $partner_negara = $partner_negara->where('institusi', $request->institusi);
             $partner_type = $partner_type->where('institusi', $request->institusi);
+
+            $negara_option = partner::select('negara')->where('institusi', $request->institusi)->distinct()->pluck('negara');
+
         }
 
         if ($request->has('jabatan') && $request->jabatan != 'all') {
@@ -47,6 +50,8 @@ class PartnerController extends Controller
             $partner_jabatan = $partner_jabatan->where('negara', $request->negara);
             $partner_negara = $partner_negara->where('negara', $request->negara);
             $partner_type = $partner_type->where('negara', $request->negara);
+
+            $institusi_option = partner::select('institusi')->where('negara', $request->negara)->distinct()->pluck('institusi');
         }
 
         if ($request->has('type') && $request->type != 'all') {
