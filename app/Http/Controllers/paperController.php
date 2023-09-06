@@ -263,8 +263,8 @@ class paperController extends Controller
         } else {
             if (member_paper::where('paper_id', $request->paper_id)->where('member_id', $request->member_id)->exists()) {
                 return "member sudah ada!";
-            } else if (partner_paper::where('paper_id', $request->paper_id)->where('partner_id', $request->member_id)->exists()) {
-                return "member sudah ada!";
+            } else if (member_paper::where('paper_id', $request->paper_id)->where('role', $request->role)->exists()) {
+                return "role member sudah ada!";
             } else {
                 $paper_member = new member_paper;
                 $paper_member->paper_id = $request->paper_id;
@@ -298,10 +298,10 @@ class paperController extends Controller
         if (!(paper::where('id', $request->paper_id)->exists()) || !(partner::where('id', $request->partner_id)->exists())) {
             return "paper atau partner tidak ditemukan";
         } else {
-            if (member_paper::where('paper_id', $request->paper_id)->where('member_id', $request->partner_id)->exists()) {
+            if (partner_paper::where('paper_id', $request->paper_id)->where('partner_id', $request->partner_id)->exists()) {
                 return "partner sudah ada!";
-            } else if (partner_paper::where('paper_id', $request->paper_id)->where('partner_id', $request->partner_id)->exists()) {
-                return "partner sudah ada!";
+            } else if (partner_paper::where('paper_id', $request->paper_id)->where('role', $request->role)->exists()) {
+                return "role partner sudah ada!";
             } else {
                 $paper_partner = new partner_paper;
                 $paper_partner->paper_id = $request->paper_id;

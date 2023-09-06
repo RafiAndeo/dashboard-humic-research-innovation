@@ -290,8 +290,8 @@ class researchController extends Controller
         } else {
             if (member_research::where('research_id', $request->research_id)->where('member_id', $request->member_id)->exists()) {
                 return "member sudah ada!";
-            } else if (partner_research::where('research_id', $request->research_id)->where('partner_id', $request->member_id)->exists()) {
-                return "member sudah ada!";
+            } else if (member_research::where('research_id', $request->research_id)->where('role', $request->role)->exists()) {
+                return "role member sudah ada!";
             } else {
                 $research_member = new member_research;
                 $research_member->research_id = $request->research_id;
@@ -326,10 +326,10 @@ class researchController extends Controller
         if (!(research::where('id', $request->research_id)->exists()) || !(partner::where('id', $request->partner_id)->exists())) {
             return "research atau partner tidak ditemukan";
         } else {
-            if (member_research::where('research_id', $request->research_id)->where('member_id', $request->patner_id)->exists()) {
-                return "member sudah ada!";
-            } else if (partner_research::where('research_id', $request->research_id)->where('partner_id', $request->partner_id)->exists()) {
-                return "member sudah ada!";
+            if (partner_research::where('research_id', $request->research_id)->where('partner_id', $request->partner_id)->exists()) {
+                return "partner sudah ada!";
+            } else if (partner_research::where('research_id', $request->research_id)->where('role', $request->role)->exists()) {
+                return "role partner sudah ada!";
             } else {
                 $research_partner = new partner_research;
                 $research_partner->research_id = $request->research_id;
