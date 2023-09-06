@@ -31,15 +31,15 @@ class researchController extends Controller
         $skema_option = research::select('skema')->distinct()->pluck('skema');
 
         if ($request->has('tahun_diterima') && $request->tahun_diterima != 'all') {
-            $research = $research->where('tahun_diterima', (int)$request->tahun_diterima);
-            $riset_tahun_diterima = $riset_tahun_diterima->where('tahun_diterima', (int)$request->tahun_diterima);
-            $riset_tipe_pendanaan = $riset_tipe_pendanaan->where('tahun_diterima', (int)$request->tahun_diterima);
+            $research = $research->where('tahun_diterima', (int) $request->tahun_diterima);
+            $riset_tahun_diterima = $riset_tahun_diterima->where('tahun_diterima', (int) $request->tahun_diterima);
+            $riset_tipe_pendanaan = $riset_tipe_pendanaan->where('tahun_diterima', (int) $request->tahun_diterima);
         }
 
         if ($request->has('tahun_berakhir') && $request->tahun_berakhir != 'all') {
-            $research = $research->where('tahun_berakhir', (int)$request->tahun_berakhir);
-            $riset_tahun_diterima = $riset_tahun_diterima->where('tahun_berakhir', (int)$request->tahun_berakhir);
-            $riset_tipe_pendanaan = $riset_tipe_pendanaan->where('tahun_berakhir', (int)$request->tahun_berakhir);
+            $research = $research->where('tahun_berakhir', (int) $request->tahun_berakhir);
+            $riset_tahun_diterima = $riset_tahun_diterima->where('tahun_berakhir', (int) $request->tahun_berakhir);
+            $riset_tipe_pendanaan = $riset_tipe_pendanaan->where('tahun_berakhir', (int) $request->tahun_berakhir);
         }
 
         if ($request->has('tipe_pendanaan') && $request->tipe_pendanaan != 'all') {
@@ -47,14 +47,14 @@ class researchController extends Controller
             $riset_tahun_diterima = $riset_tahun_diterima->where('tipe_pendanaan', $request->tipe_pendanaan);
             $riset_tipe_pendanaan = $riset_tipe_pendanaan->where('tipe_pendanaan', $request->tipe_pendanaan);
         }
-        
+
         if ($request->has('tkt') && $request->tkt != 'all') {
             $research = $research->where('tkt', $request->tkt);
             $riset_tahun_diterima = $riset_tahun_diterima->where('tkt', $request->tkt);
             $riset_tipe_pendanaan = $riset_tipe_pendanaan->where('tkt', $request->tkt);
             $riset_tkt = $riset_tkt->where('tkt', $request->tkt);
         }
-        
+
         if ($request->has('skema') && $request->skema != 'all') {
             $research = $research->where('skema', $request->skema);
             $riset_tahun_diterima = $riset_tahun_diterima->where('skema', $request->skema);
@@ -62,7 +62,7 @@ class researchController extends Controller
             $riset_tkt = $riset_tkt->where('tkt', $request->tkt);
             $riset_skema = $riset_skema->where('skema', $request->skema);
         }
-        
+
         $research = $research->get();
         $research_count = $research->count();
 
@@ -73,7 +73,7 @@ class researchController extends Controller
         $riset_tipe_pendanaan = $riset_tipe_pendanaan->get();
         $label_tipe_pendanaan = $riset_tipe_pendanaan->pluck('tipe_pendanaan');
         $total_tipe_pendanaan = $riset_tipe_pendanaan->pluck('total');
-        
+
         $riset_tkt = $riset_tkt->get();
         $label_tkt = $riset_tkt->pluck('tkt');
         $total_tkt = $riset_tkt->pluck('tkt');
@@ -286,15 +286,21 @@ class researchController extends Controller
         ]);
 
         if (!(research::where('id', $request->research_id)->exists()) || !(member::where('id', $request->member_id)->exists())) {
-            return "Salah satu id tidak valid";
+            return "research atau member tidak ditemukan";
         } else {
-            $research_member = new member_research;
-            $research_member->research_id = $request->research_id;
-            $research_member->member_id = $request->member_id;
-            $research_member->role = $request->role;
+            if (member_research::where('research_id', $request->research_id)->where('member_id', $request->member_id)->exists()) {
+                return "member sudah ada!";
+            } else if (partner_research::where('research_id', $request->research_id)->where('partner_id', $request->member_id)->exists()) {
+                return "member sudah ada!";
+            } else {
+                $research_member = new member_research;
+                $research_member->research_id = $request->research_id;
+                $research_member->member_id = $request->member_id;
+                $research_member->role = $request->role;
 
-            $research_member->save();
-            return redirect()->back()->with('success', 'Berhasil Menambahkan Member');
+                $research_member->save();
+                return redirect()->back()->with('success', 'Berhasil Menambahkan Member');
+            }
         }
     }
 
@@ -318,15 +324,21 @@ class researchController extends Controller
         ]);
 
         if (!(research::where('id', $request->research_id)->exists()) || !(partner::where('id', $request->partner_id)->exists())) {
-            return "Salah satu id tidak valid";
+            return "research atau partner tidak ditemukan";
         } else {
-            $research_partner = new partner_research;
-            $research_partner->research_id = $request->research_id;
-            $research_partner->partner_id = $request->partner_id;
-            $research_partner->role = $request->role;
+            if (member_research::where('research_id', $request->research_id)->where('member_id', $request->patner_id)->exists()) {
+                return "member sudah ada!";
+            } else if (partner_research::where('research_id', $request->research_id)->where('partner_id', $request->partner_id)->exists()) {
+                return "member sudah ada!";
+            } else {
+                $research_partner = new partner_research;
+                $research_partner->research_id = $request->research_id;
+                $research_partner->partner_id = $request->partner_id;
+                $research_partner->role = $request->role;
 
-            $research_partner->save();
-            return redirect()->back()->with('success', 'Berhasil Menambahkan Partner');
+                $research_partner->save();
+                return redirect()->back()->with('success', 'Berhasil Menambahkan Partner');
+            }
         }
     }
 

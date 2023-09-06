@@ -247,13 +247,19 @@ class HKIController extends Controller
         if (!(hki::where('id', $request->hki_id)->exists()) || !(member::where('id', $request->member_id)->exists())) {
             return "hki atau member tidak ditemukan";
         } else {
-            $hki_member = new member_hki;
-            $hki_member->hki_id = $request->hki_id;
-            $hki_member->member_id = $request->member_id;
-            $hki_member->role = $request->role;
+            if (member_hki::where('hki_id', $request->hki_id)->where('member_id', $request->member_id)->exists()) {
+                return "member sudah ada!";
+            } else if (partner_hki::where('hki_id', $request->hki_id)->where('partner_id', $request->member_id)->exists()) {
+                return "member sudah ada!";
+            } else {
+                $hki_member = new member_hki;
+                $hki_member->hki_id = $request->hki_id;
+                $hki_member->member_id = $request->member_id;
+                $hki_member->role = $request->role;
 
-            $hki_member->save();
-            return redirect()->back()->with('success', 'Berhasil Tambah Member');
+                $hki_member->save();
+                return redirect()->back()->with('success', 'Berhasil Tambah Member');
+            }
         }
     }
 
@@ -276,16 +282,22 @@ class HKIController extends Controller
             'role' => 'required',
         ]);
 
-        if (!(hki::where('id', $request->hki_id)->exists()) || !(partner::where('id', $request->partner_id)->exists())) {
+        if (!(hki::where('id', $request->paper_id)->exists()) || !(partner::where('id', $request->partner_id)->exists())) {
             return "hki atau partner tidak ditemukan";
         } else {
-            $hki_partner = new partner_hki;
-            $hki_partner->hki_id = $request->hki_id;
-            $hki_partner->partner_id = $request->partner_id;
-            $hki_partner->role = $request->role;
+            if (member_hki::where('hki_id', $request->hki_id)->where('member_id', $request->partner_id)->exists()) {
+                return "partner sudah ada!";
+            } else if (partner_hki::where('hki_id', $request->hki_id)->where('partner_id', $request->partner_id)->exists()) {
+                return "partner sudah ada!";
+            } else {
+                $hki_partner = new partner_hki;
+                $hki_partner->hki_id = $request->hki_id;
+                $hki_partner->partner_id = $request->partner_id;
+                $hki_partner->role = $request->role;
 
-            $hki_partner->save();
-            return redirect()->back()->with('success', 'Berhasil Tambah Partner');
+                $hki_partner->save();
+                return redirect()->back()->with('success', 'Berhasil Tambah Partner');
+            }
         }
     }
 

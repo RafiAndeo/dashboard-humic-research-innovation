@@ -38,7 +38,7 @@ class paperController extends Controller
             $tahun = $tahun->where('tahun', $request->tahun);
             $data_count = $data_count->where('tahun', $request->tahun);
         }
-        
+
         if ($request->has('jenis') && $request->jenis != 'all') {
             $data = $data->where('jenis', $request->jenis);
 
@@ -261,13 +261,19 @@ class paperController extends Controller
         if (!(paper::where('id', $request->paper_id)->exists()) || !(member::where('id', $request->member_id)->exists())) {
             return "paper atau member tidak ditemukan";
         } else {
-            $paper_member = new member_paper;
-            $paper_member->paper_id = $request->paper_id;
-            $paper_member->member_id = $request->member_id;
-            $paper_member->role = $request->role;
+            if (member_paper::where('paper_id', $request->paper_id)->where('member_id', $request->member_id)->exists()) {
+                return "member sudah ada!";
+            } else if (partner_paper::where('paper_id', $request->paper_id)->where('partner_id', $request->member_id)->exists()) {
+                return "member sudah ada!";
+            } else {
+                $paper_member = new member_paper;
+                $paper_member->paper_id = $request->paper_id;
+                $paper_member->member_id = $request->member_id;
+                $paper_member->role = $request->role;
 
-            $paper_member->save();
-            return redirect()->back()->with('success', 'Berhasil Menambahkan Member');
+                $paper_member->save();
+                return redirect()->back()->with('success', 'Berhasil Menambahkan Member');
+            }
         }
     }
 
@@ -292,13 +298,19 @@ class paperController extends Controller
         if (!(paper::where('id', $request->paper_id)->exists()) || !(partner::where('id', $request->partner_id)->exists())) {
             return "paper atau partner tidak ditemukan";
         } else {
-            $paper_partner = new partner_paper;
-            $paper_partner->paper_id = $request->paper_id;
-            $paper_partner->partner_id = $request->partner_id;
-            $paper_partner->role = $request->role;
+            if (member_paper::where('paper_id', $request->paper_id)->where('member_id', $request->partner_id)->exists()) {
+                return "partner sudah ada!";
+            } else if (partner_paper::where('paper_id', $request->paper_id)->where('partner_id', $request->partner_id)->exists()) {
+                return "partner sudah ada!";
+            } else {
+                $paper_partner = new partner_paper;
+                $paper_partner->paper_id = $request->paper_id;
+                $paper_partner->partner_id = $request->partner_id;
+                $paper_partner->role = $request->role;
 
-            $paper_partner->save();
-            return redirect()->back()->with('success', 'Berhasil Menambahkan Partner');
+                $paper_partner->save();
+                return redirect()->back()->with('success', 'Berhasil Menambahkan Partner');
+            }
         }
     }
 
