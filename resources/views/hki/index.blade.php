@@ -15,7 +15,7 @@ HKI
             <div class="bg-white flex justify-center py-8 rounded">
                 <div class="w-10/12">
                     <div class="mb-3 text-sm space-y-2">
-                        <div class="font-medium">Jumlah Hasil Research Pertahun</div>
+                        <div class="font-medium">Grafik HKI Pertahun</div>
                     </div>
                     <canvas id="dougnatchart"></canvas>
                 </div>

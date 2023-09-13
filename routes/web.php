@@ -28,14 +28,14 @@ Route::get('/token', function () {
 
 Route::get('/', function () {
     // ->where('isVerified', '=', 1)
-    $paper_count = DB::table('paper')->count();
-    $research_count = DB::table('research')->count();
-    $hki_count = DB::table('hki')->count();
+    $paper_count = DB::table('paper')->where('isVerified', 1)->count();
+    $research_count = DB::table('research')->where('isVerified', 1)->count();
+    $hki_count = DB::table('hki')->where('isVerified', 1)->count();
     $member_count = DB::table('member')->count();
 
-    $raw_paper = DB::table('paper')->select('tahun')->get();
-    $raw_research = DB::table('research')->select('tahun_diterima')->get();
-    $raw_hki = DB::table('hki')->select('tahun')->get();
+    $raw_paper = DB::table('paper')->where('isVerified', 1)->select('tahun')->get();
+    $raw_research = DB::table('research')->where('isVerified', 1)->select('tahun_diterima')->get();
+    $raw_hki = DB::table('hki')->where('isVerified', 1)->select('tahun')->get();
 
     $paper = [];
     $research = [];
@@ -62,9 +62,9 @@ Route::get('/', function () {
     $hki_count_by_year = [];
 
     foreach ($label as $l) {
-        $paper_count_by_year[] = DB::table('paper')->where('tahun', $l)->count();
-        $research_count_by_year[] = DB::table('research')->where('tahun_diterima', $l)->count();
-        $hki_count_by_year[] = DB::table('hki')->where('tahun', $l)->count();
+        $paper_count_by_year[] = DB::table('paper')->where('isVerified', 1)->where('tahun', $l)->count();
+        $research_count_by_year[] = DB::table('research')->where('isVerified', 1)->where('tahun_diterima', $l)->count();
+        $hki_count_by_year[] = DB::table('hki')->where('isVerified', 1)->where('tahun', $l)->count();
     }
 
     // to string
@@ -75,12 +75,14 @@ Route::get('/', function () {
 
     $paper_quartile = paper::select('quartile', DB::raw('count(*) as total'))
         ->groupBy('quartile')
+        ->where('isVerified', 1)
         ->get();
     $label_quartile = $paper_quartile->pluck('quartile');
     $value_quartile = $paper_quartile->pluck('total');
 
     $paper_jenis = paper::select('jenis', DB::raw('count(*) as total'))
         ->groupBy('jenis')
+        ->where('isVerified', 1)
         ->get();
     $label_jenis = $paper_jenis->pluck('jenis');
     $value_jenis = $paper_jenis->pluck('total');
@@ -143,7 +145,7 @@ Route::get('/login', [MemberController::class, 'login_index'])->name('member.log
 Route::get('/member/export', [MemberController::class, 'memberexport'])->name('member.export');
 Route::post('/member/import', [MemberController::class, 'memberimport'])->name('member.import')->middleware('auth');
 
-Route::get('/partner', [PartnerController::class, 'index'])->name('partner.index')->middleware('auth');
+Route::get('/partner', [PartnerController::class, 'index'])->name('partner.index');
 Route::get('/partner/input', [PartnerController::class, 'index_admin'])->name('partner.index_admin')->middleware('auth');
 Route::get('/partner/input/add', [PartnerController::class, 'create'])->name('partner.create')->middleware('auth');
 Route::post('/partner/input/add', [PartnerController::class, 'store'])->name('partner.store')->middleware('auth');
@@ -213,4 +215,5 @@ Route::get('/report/paper', [ReportController::class, 'paper'])->name('report.pa
 Route::get('/report/hki', [ReportController::class, 'hki'])->name('report.hki');
 Route::get('/report/research', [ReportController::class, 'research'])->name('report.research');
 Route::get('/report/member', [ReportController::class, 'member'])->name('report.member');
+Route::get('/report/member/{id}', [ReportController::class, 'membershow'])->name('report.membershow');
 Route::get('/report/partner', [ReportController::class, 'partner'])->name('report.partner');

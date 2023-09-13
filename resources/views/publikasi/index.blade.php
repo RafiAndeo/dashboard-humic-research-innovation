@@ -105,7 +105,9 @@ Paper
                     <th>Tahun</th>
                     <th>Quartile</th>
                     <th>Index</th>
+                    @auth
                     <th>Link</th>
+                    @endauth
                 </tr>
             </thead>
             <tbody>
@@ -121,7 +123,9 @@ Paper
                     <td>{{$d->tahun}}</td>
                     <td>{{$d->quartile}}</td>
                     <td>{{$d->index}}</td>
+                    @auth
                     <td>{{$d->link}}</td>
+                    @endauth
                 </tr>
                 <?php $nomor++; ?>
                 @endforeach
