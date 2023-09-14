@@ -24,11 +24,11 @@ class researchController extends Controller
         $riset_tkt = research::select('tkt', DB::raw('count(*) as total'))->groupBy('tkt');
         $riset_skema = research::select('skema', DB::raw('count(*) as total'))->groupBy('skema');
 
-        $tahun_diterima_option = research::select('tahun_diterima')->distinct()->pluck('tahun_diterima');
-        $tahun_berakhir_option = research::select('tahun_berakhir')->distinct()->pluck('tahun_berakhir');
-        $tipe_pendanaan_option = research::select('tipe_pendanaan')->distinct()->pluck('tipe_pendanaan');
-        $tkt_option = research::select('tkt')->distinct()->pluck('tkt');
-        $skema_option = research::select('skema')->distinct()->pluck('skema');
+        $tahun_diterima_option = research::select('tahun_diterima')->where('isVerified', 1)->distinct()->pluck('tahun_diterima');
+        $tahun_berakhir_option = research::select('tahun_berakhir')->where('isVerified', 1)->distinct()->pluck('tahun_berakhir');
+        $tipe_pendanaan_option = research::select('tipe_pendanaan')->where('isVerified', 1)->distinct()->pluck('tipe_pendanaan');
+        $tkt_option = research::select('tkt')->distinct()->where('isVerified', 1)->pluck('tkt');
+        $skema_option = research::select('skema')->distinct()->where('isVerified', 1)->pluck('skema');
 
         if ($request->has('tahun_diterima') && $request->tahun_diterima != 'all') {
             $research = $research->where('tahun_diterima', (int) $request->tahun_diterima);
@@ -63,21 +63,20 @@ class researchController extends Controller
             $riset_skema = $riset_skema->where('skema', $request->skema);
         }
 
-        $research = $research->get();
+        $research = $research->where('isVerified', 1)->get();
         $research_count = $research->count();
 
-        $riset_tahun_diterima = $riset_tahun_diterima->get();
+        $riset_tahun_diterima = $riset_tahun_diterima->where('isVerified', 1)->get();
         $label_tahun_diterima = $riset_tahun_diterima->pluck('tahun_diterima');
         $total_tahun_diterima = $riset_tahun_diterima->pluck('total');
 
-        $riset_tipe_pendanaan = $riset_tipe_pendanaan->get();
+        $riset_tipe_pendanaan = $riset_tipe_pendanaan->where('isVerified', 1)->get();
         $label_tipe_pendanaan = $riset_tipe_pendanaan->pluck('tipe_pendanaan');
         $total_tipe_pendanaan = $riset_tipe_pendanaan->pluck('total');
 
-        $riset_tkt = $riset_tkt->get();
+        $riset_tkt = $riset_tkt->where('isVerified', 1)->get();
         $label_tkt = $riset_tkt->pluck('tkt');
         $total_tkt = $riset_tkt->pluck('tkt');
-
 
 
         return view('research.index', [

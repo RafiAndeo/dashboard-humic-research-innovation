@@ -32,8 +32,11 @@
         </center>
 </body>
 <script>
-    window.onload = function () {
+    // settimeout
+    setTimeout(function() {
         window.print();
-    }
+    }, 1500);
 </script>
+
+@yield('script')
 </html>

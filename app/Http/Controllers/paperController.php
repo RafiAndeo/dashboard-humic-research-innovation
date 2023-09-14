@@ -47,20 +47,20 @@ class paperController extends Controller
             $data_count = $data_count->where('jenis', $request->jenis);
         }
 
-        $data = $data->get();
-        $data_count = $data_count->count();
+        $data = $data->where('isVerified', 1)->get();
+        $data_count = $data_count->where('isVerified', 1)->count();
 
-        $paper_jenis = $paper_jenis->get();
+        $paper_jenis = $paper_jenis->where('isVerified', 1)->get();
         $label_jenis = $paper_jenis->pluck('jenis');
         $total_jenis = $paper_jenis->pluck('total');
 
-        $tahun = $tahun->get();
+        $tahun = $tahun->where('isVerified', 1)->get();
         $label = $tahun->pluck('tahun');
         $total = $tahun->pluck('total');
 
-        $quartile_option = paper::select('quartile')->distinct()->pluck('quartile');
-        $tahun_option = paper::select('tahun')->distinct()->pluck('tahun');
-        $jenis_option = paper::select('jenis')->distinct()->pluck('jenis');
+        $quartile_option = paper::select('quartile')->where('isVerified', 1)->distinct()->pluck('quartile');
+        $tahun_option = paper::select('tahun')->where('isVerified', 1)->distinct()->pluck('tahun');
+        $jenis_option = paper::select('jenis')->where('isVerified', 1)->distinct()->pluck('jenis');
 
 
         return view('publikasi.index', [

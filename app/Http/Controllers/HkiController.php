@@ -20,9 +20,9 @@ class HKIController extends Controller
     {
         $data = hki::query();
 
-        $tahun_option = hki::select('tahun')->distinct()->pluck('tahun');
-        $jenis_option = hki::select('jenis')->distinct()->pluck('jenis');
-        $status_option = hki::select('status')->distinct()->pluck('status');
+        $tahun_option = hki::select('tahun')->where('isVerified', 1)->distinct()->pluck('tahun');
+        $jenis_option = hki::select('jenis')->where('isVerified', 1)->distinct()->pluck('jenis');
+        $status_option = hki::select('status')->where('isVerified', 1)->distinct()->pluck('status');
 
         $hki_tahun = hki::select('tahun', DB::raw('count(*) as total'))->groupBy('tahun');
         $hki_jenis = hki::select('jenis', DB::raw('count(*) as total'))->groupBy('jenis');
@@ -49,18 +49,18 @@ class HKIController extends Controller
             $hki_status = $hki_status->where('status', $request->status);
         }
 
-        $data = $data->get();
+        $data = $data->where('isVerified', 1)->get();
         $count = $data->count();
 
-        $hki_tahun = $hki_tahun->get();
+        $hki_tahun = $hki_tahun->where('isVerified', 1)->get();
         $label_tahun = $hki_tahun->pluck('tahun');
         $total_tahun = $hki_tahun->pluck('total');
 
-        $hki_jenis = $hki_jenis->get();
+        $hki_jenis = $hki_jenis->where('isVerified', 1)->get();
         $label_jenis = $hki_jenis->pluck('jenis');
         $total_jenis = $hki_jenis->pluck('total');
 
-        $hki_status = $hki_status->get();
+        $hki_status = $hki_status->where('isVerified', 1)->get();
         $label_status = $hki_status->pluck('status');
         $total_status = $hki_status->pluck('total');
 
