@@ -60,7 +60,9 @@
             </div>
         </div>
     </div>
-
+    <div class="mt-10">
+        <a href="{{route('report.membershow', ['id' => $data->id])}}" class="bg-green-500 hover:bg-green-600 hover:cursor-pointer text-white px-5 py-2 rounded">Download Report</a>
+    </div>
     <div class="my-5 space-y-4">
         <div class="font-semibold text-xl">Data Paper</div>
         <div>
@@ -77,7 +79,9 @@
                             <th>Tahun</th>
                             <th>Quartile</th>
                             <th>Index</th>
+                            @auth
                             <th>Link</th>
+                            @endauth
                         </tr>
                     </thead>
                     <tbody>
@@ -93,7 +97,9 @@
                             <td>{{$d->tahun}}</td>
                             <td>{{$d->quartile}}</td>
                             <td>{{$d->index}}</td>
+                            @auth
                             <td>{{$d->link}}</td>
+                            @endauth
                         </tr>
                         <?php $nomor++; ?>
                         @endforeach
@@ -152,6 +158,8 @@
             </div>
         </div>
     </div>
+
+
 
     <div class="my-5 space-y-4">
         <div class="font-semibold text-xl">Data HKI</div>

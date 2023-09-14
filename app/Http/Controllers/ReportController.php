@@ -7,6 +7,9 @@ use App\Models\paper;
 use App\Models\research;
 use App\Models\hki;
 use App\Models\member;
+use App\Models\member_hki;
+use App\Models\member_paper;
+use App\Models\member_research;
 use App\Models\partner;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
@@ -399,6 +402,16 @@ class ReportController extends Controller
 
     public function membershow($id)
     {
-        return "ok";
+        $member = member::find($id);
+        $hki = member_hki::join('hki', 'hki.id', '=', 'member_hki.hki_id')->where('member_hki.member_id', $id)->where('hki.isVerified', 1)->get();
+        $research = member_research::join('research', 'research.id', '=', 'member_research.research_id')->where('member_research.member_id', $id)->where('research.isVerified', 1)->get();
+        $paper = member_paper::join('paper', 'paper.id', '=', 'member_paper.paper_id')->where('member_paper.member_id', $id)->where('paper.isVerified', 1)->get();
+        // dd(count($research));
+        return view('report.report_member_perorang', [
+            'data' => $member,
+            'hki' => $hki,
+            'research' => $research,
+            'paper' => $paper,
+        ]);
     }
 }
